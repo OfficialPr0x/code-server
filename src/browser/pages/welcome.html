@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Cursor - The AI-Powered IDE</title>
+  <link rel="stylesheet" href="theme.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--body-bg);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .welcome-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      flex: 1;
+    }
+    
+    .welcome-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 3rem;
+    }
+    
+    .logo {
+      height: 60px;
+      margin-right: 1rem;
+    }
+    
+    .logo-text {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .welcome-hero {
+      display: flex;
+      align-items: center;
+      margin-bottom: 4rem;
+      gap: 3rem;
+    }
+    
+    .hero-content {
+      flex: 1;
+    }
+    
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+    
+    .hero-title span {
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .hero-description {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: var(--text-secondary);
+    }
+    
+    .hero-image {
+      flex: 1;
+      max-width: 50%;
+      position: relative;
+    }
+    
+    .hero-image img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+    }
+    
+    .glow-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      border-radius: 12px;
+      background: radial-gradient(circle at 30% 20%, rgba(212, 175, 55, 0.2), transparent 70%);
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn-primary {
+      background: var(--gradient-gold);
+      color: var(--dark-color);
+      border: none;
+    }
+    
+    .btn-primary:hover {
+      filter: brightness(1.1);
+      transform: translateY(-3px);
+    }
+    
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-3px);
+    }
+    
+    .features-section {
+      margin-bottom: 4rem;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    
+    .feature-card {
+      background: var(--panel-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      border-color: var(--primary-gold);
+    }
+    
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary-gold);
+    }
+    
+    .feature-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    
+    .feature-description {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+    
+    .recent-projects {
+      margin-bottom: 3rem;
+    }
+    
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    
+    .project-card {
+      background: var(--panel-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      border-color: var(--primary-gold);
+    }
+    
+    .project-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .project-path {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .project-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    
+    .project-time {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .footer-link {
+      color: var(--text-color);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    
+    .footer-link:hover {
+      color: var(--primary-gold);
+    }
+    
+    @media (max-width: 1024px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .project-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .welcome-hero {
+        flex-direction: column;
+      }
+      
+      .hero-image {
+        max-width: 100%;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .project-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="welcome-container">
+    <header class="welcome-header">
+      <img src="images/cursor-logo.svg" alt="Cursor Logo" class="logo">
+      <div class="logo-text">Cursor</div>
+    </header>
+    
+    <section class="welcome-hero">
+      <div class="hero-content">
+        <h1 class="hero-title">Code with <span>AI Superpowers</span></h1>
+        <p class="hero-description">
+          Welcome to Cursor, the next-generation IDE powered by Claude 3.7 Sonnet. 
+          Experience the future of coding with intelligent AI agents that learn and 
+          evolve as you work.
+        </p>
+        <div class="cta-buttons">
+          <a href="ai-warroom.html" class="btn btn-primary">
+            <i class='bx bx-code-alt'></i>
+            Start Coding
+          </a>
+          <a href="#" class="btn btn-secondary">
+            <i class='bx bx-book-open'></i>
+            Learn More
+          </a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="images/cursor-screenshot.png" alt="Cursor IDE Screenshot">
+        <div class="glow-overlay"></div>
+      </div>
+    </section>
+    
+    <section class="features-section">
+      <h2 class="section-title">Revolutionary Features</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <i class='bx bx-bot feature-icon'></i>
+          <h3 class="feature-title">AI Agent Ecosystem</h3>
+          <p class="feature-description">
+            Work with specialized AI agents for different tasks. From coding to debugging, 
+            each agent learns and improves as you use them.
+          </p>
+        </div>
+        <div class="feature-card">
+          <i class='bx bx-code-block feature-icon'></i>
+          <h3 class="feature-title">Code Understanding</h3>
+          <p class="feature-description">
+            Claude 3.7 Sonnet understands your entire codebase, providing context-aware
+            assistance that truly understands your project.
+          </p>
+        </div>
+        <div class="feature-card">
+          <i class='bx bx-brain feature-icon'></i>
+          <h3 class="feature-title">Intelligent Completions</h3>
+          <p class="feature-description">
+            Get smart code completions that go beyond simple suggestions, offering entire
+            function implementations and intelligent solutions.
+          </p>
+        </div>
+        <div class="feature-card">
+          <i class='bx bx-store feature-icon'></i>
+          <h3 class="feature-title">Agent Marketplace</h3>
+          <p class="feature-description">
+            Discover and purchase specialized AI agents from the marketplace to enhance
+            your development workflow with new capabilities.
+          </p>
+        </div>
+        <div class="feature-card">
+          <i class='bx bx-git-branch feature-icon'></i>
+          <h3 class="feature-title">Git Integration</h3>
+          <p class="feature-description">
+            Seamless git integration with AI assistance for commit messages, PR reviews,
+            and understanding code changes.
+          </p>
+        </div>
+        <div class="feature-card">
+          <i class='bx bx-customize feature-icon'></i>
+          <h3 class="feature-title">Extensible Platform</h3>
+          <p class="feature-description">
+            Built on VS Code, Cursor supports thousands of extensions and can be customized
+            to fit your development workflow.
+          </p>
+        </div>
+      </div>
+    </section>
+    
+    <section class="recent-projects">
+      <h2 class="section-title">Recent Projects</h2>
+      <div class="project-grid">
+        <div class="project-card">
+          <h3 class="project-name">Web Application</h3>
+          <p class="project-path">/Users/developer/Projects/web-app</p>
+          <div class="project-meta">
+            <span>React • TypeScript</span>
+            <span class="project-time">
+              <i class='bx bx-time-five'></i> 2 days ago
+            </span>
+          </div>
+        </div>
+        <div class="project-card">
+          <h3 class="project-name">API Service</h3>
+          <p class="project-path">/Users/developer/Projects/api-service</p>
+          <div class="project-meta">
+            <span>Node.js • Express</span>
+            <span class="project-time">
+              <i class='bx bx-time-five'></i> 5 days ago
+            </span>
+          </div>
+        </div>
+        <div class="project-card">
+          <h3 class="project-name">Mobile App</h3>
+          <p class="project-path">/Users/developer/Projects/mobile-app</p>
+          <div class="project-meta">
+            <span>React Native</span>
+            <span class="project-time">
+              <i class='bx bx-time-five'></i> 1 week ago
+            </span>
+          </div>
+        </div>
+        <div class="project-card">
+          <h3 class="project-name">Data Analysis</h3>
+          <p class="project-path">/Users/developer/Projects/data-analysis</p>
+          <div class="project-meta">
+            <span>Python • Pandas</span>
+            <span class="project-time">
+              <i class='bx bx-time-five'></i> 2 weeks ago
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="#" class="footer-link">Documentation</a>
+      <a href="#" class="footer-link">Discord Community</a>
+      <a href="#" class="footer-link">GitHub</a>
+      <a href="#" class="footer-link">Twitter</a>
+    </div>
+    <p>© 2023 Cursor • The AI-Powered IDE</p>
+  </footer>
+  
+  <script>
+    // Simple script to handle the "Start Coding" button
+    document.addEventListener('DOMContentLoaded', () => {
+      const startCodingBtn = document.querySelector('.btn-primary');
+      
+      if (startCodingBtn) {
+        startCodingBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.location.href = 'ai-warroom.html';
+        });
+      }
+      
+      // Fetch recent projects (could be replaced with actual data in a real implementation)
+      // This is a placeholder for demonstration purposes
+      const fetchRecentProjects = async () => {
+        // In a real implementation, this would fetch from an API or local storage
+        console.log('Would fetch recent projects here');
+      };
+      
+      fetchRecentProjects().catch(console.error);
+    });
+  </script>
+</body>
+</html> 

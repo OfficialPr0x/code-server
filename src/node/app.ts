@@ -11,6 +11,8 @@ import { disposer } from "./http"
 import { isNodeJSErrnoException } from "./util"
 import { EditorSessionManager, makeEditorSessionManagerServer } from "./vscodeSocket"
 import { handleUpgrade } from "./wsRouter"
+import { AgentService } from "./agents/agent-service"
+
 
 type SocketOptions = { socket: string; "socket-mode"?: string }
 type ListenOptions = DefaultedArgs | SocketOptions

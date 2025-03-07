@@ -7,33 +7,36 @@
   "bugs": {
     "url": "https://github.com/coder/code-server/issues"
   },
-  "repository": "https://github.com/coder/code-server",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coder/code-server.git"
+  },
   "scripts": {
-    "clean": "./ci/build/clean.sh",
-    "build": "./ci/build/build-code-server.sh",
-    "build:vscode": "./ci/build/build-vscode.sh",
-    "doctoc": "./ci/dev/doctoc.sh",
-    "release": "./ci/build/build-release.sh",
-    "release:standalone": "./ci/build/build-standalone-release.sh",
-    "release:prep": "./ci/build/release-prep.sh",
-    "test:e2e": "VSCODE_IPC_HOOK_CLI= ./ci/dev/test-e2e.sh",
-    "test:e2e:proxy": "USE_PROXY=1 ./ci/dev/test-e2e.sh",
-    "test:unit": "./ci/dev/test-unit.sh --forceExit --detectOpenHandles",
-    "test:integration": "./ci/dev/test-integration.sh",
-    "test:native": "./ci/dev/test-native.sh",
-    "test:scripts": "./ci/dev/test-scripts.sh",
-    "package": "./ci/build/build-packages.sh",
+    "clean": "ci/build/clean.sh",
+    "build": "ci/build/build-code-server.sh",
+    "build:vscode": "ci/build/build-vscode.sh",
+    "doctoc": "ci/dev/doctoc.sh",
+    "release": "ci/build/build-release.sh",
+    "release:standalone": "ci/build/build-standalone-release.sh",
+    "release:prep": "ci/build/release-prep.sh",
+    "test:e2e": "VSCODE_IPC_HOOK_CLI= ci/dev/test-e2e.sh",
+    "test:e2e:proxy": "USE_PROXY=1 ci/dev/test-e2e.sh",
+    "test:unit": "ci/dev/test-unit.sh --forceExit --detectOpenHandles",
+    "test:integration": "ci/dev/test-integration.sh",
+    "test:native": "ci/dev/test-native.sh",
+    "test:scripts": "ci/dev/test-scripts.sh",
+    "package": "ci/build/build-packages.sh",
     "prettier": "prettier --write --log-level=warn --cache .",
     "preinstall": "node ./ci/dev/preinstall.js",
-    "postinstall": "./ci/dev/postinstall.sh",
-    "publish:npm": "./ci/steps/publish-npm.sh",
-    "publish:docker": "./ci/steps/docker-buildx-push.sh",
-    "fmt": "npm run prettier && ./ci/dev/doctoc.sh",
-    "lint:scripts": "./ci/dev/lint-scripts.sh",
+    "postinstall": "ci/dev/postinstall.sh",
+    "publish:npm": "ci/steps/publish-npm.sh",
+    "publish:docker": "ci/steps/docker-buildx-push.sh",
+    "fmt": "npm run prettier && ci/dev/doctoc.sh",
+    "lint:scripts": "ci/dev/lint-scripts.sh",
     "lint:ts": "eslint --max-warnings=0 --fix $(git ls-files '*.ts' '*.js' | grep -v 'lib/vscode' | grep -v test-plugin)",
-    "test": "echo 'Run npm run test:unit or npm run test:e2e' && exit 1",
+    "test": "npm run test:unit || npm run test:e2e",
     "watch": "VSCODE_DEV=1 VSCODE_IPC_HOOK_CLI= NODE_OPTIONS='--max_old_space_size=32384 --trace-warnings' ts-node ./ci/dev/watch.ts",
-    "icons": "./ci/dev/gen_icons.sh"
+    "icons": "ci/dev/gen_icons.sh"
   },
   "main": "out/node/entry.js",
   "devDependencies": {
@@ -150,5 +153,11 @@
       "^.+\\.(css|less)$": "<rootDir>/test/utils/cssStub.ts"
     },
     "globalSetup": "<rootDir>/test/utils/globalUnitSetup.ts"
-  }
+  },
+  "directories": {
+    "doc": "docs",
+    "lib": "lib",
+    "test": "test"
+  },
+  "author": ""
 }

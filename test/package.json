@@ -27,5 +27,9 @@
     "tmpl": "^1.0.5",
     "path-parse": "^1.0.7",
     "json-schema": "^0.4.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/node/server.js"
   }
 }

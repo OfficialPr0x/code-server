@@ -138,13 +138,21 @@ router.get("/", ensureVSCodeLoaded, async (req, res, next) => {
     const HAS_FOLDER_OR_WORKSPACE_FROM_CLI = req.args._.length > 0
     const to = self(req)
 
-    let folder = undefined
-    let workspace = undefined
+    let folder: string | undefined = undefined
+    let workspace: string | undefined = undefined
 
     // Redirect to the last folder/workspace if nothing else is opened.
     if (HAS_LAST_OPENED_FOLDER_OR_WORKSPACE && !IGNORE_LAST_OPENED) {
-      folder = lastOpened.folder
-      workspace = lastOpened.workspace
+      const folderValue = lastOpened.folder;
+      const workspaceValue = lastOpened.workspace;
+      
+      if (typeof folderValue === 'string') {
+        folder = folderValue;
+      }
+      
+      if (typeof workspaceValue === 'string') {
+        workspace = workspaceValue;
+      }
     } else if (HAS_FOLDER_OR_WORKSPACE_FROM_CLI) {
       const lastEntry = path.resolve(req.args._[req.args._.length - 1])
       const entryIsFile = await isFile(lastEntry)

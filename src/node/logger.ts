@@ -2,6 +2,8 @@
  * Simple logger for the Agent system
  */
 
+import { logger as coderLogger } from "@coder/logger"
+
 export interface Logger {
   debug(message: string, meta?: any): void;
   info(message: string, meta?: any): void;
@@ -51,3 +53,6 @@ class ConsoleLogger implements Logger {
 
 // Create and export a singleton instance
 export const logger: Logger = new ConsoleLogger(); 
+
+// Also export the coder logger for backward compatibility
+export { coderLogger }; 

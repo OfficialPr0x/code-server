@@ -1,0 +1,49 @@
+name: AI Warroom CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+    - run: npm ci
+    - run: npm run build
+    - run: npm run test
+    - name: Security Scan
+      uses: shiftleft/scan-action@master
+      with:
+        output: reports/
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-reports
+        path: reports/
+
+  deploy:
+    needs: build-test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+    - run: npm ci
+    - run: npm run build
+    - name: Deploy to IPFS
+      uses: aquiladev/ipfs-action@v1
+      with:
+        path: dist/
+    - name: Deploy Contracts
+      run: npx hardhat run scripts/deploy.ts --network mainnet
+      env:
+        MAINNET_RPC_URL: ${{ secrets.MAINNET_RPC_URL }}
+        PRIVATE_KEY: ${{ secrets.DEPLOYER_KEY }} 

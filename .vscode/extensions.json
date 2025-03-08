@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "ms-vscode.live-server",
+        "github.vscode-pull-request-github",
+        "ms-vscode.remote-repositories",
+        "github.remotehub",
+        "github.codespaces",
+        "eamodio.gitlens"
+    ]
+}

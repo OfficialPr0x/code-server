@@ -10,6 +10,15 @@ import safeCompare from "safe-compare"
 import * as util from "util"
 import xdgBasedir from "xdg-basedir"
 
+declare module 'pem' {
+  export interface CertificateCreationResult {
+    certificate: string;
+    clientKey: string;
+    serviceKey: string;
+  }
+  export function createCertificate(options: any, callback: (error: Error | null, result: CertificateCreationResult) => void): void;
+}
+
 export interface Paths {
   data: string
   config: string

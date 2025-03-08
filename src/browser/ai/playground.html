@@ -1,0 +1,3149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI War Room - Agent Command Center</title>
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@monaco-editor/loader@1.3.3/dist/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --secondary: #10b981;
+            --secondary-dark: #059669;
+            --accent: #8b5cf6;
+            --accent-dark: #7c3aed;
+            --dark: #1f2937;
+            --darker: #111827;
+            --darkest: #0a0a0a;
+            --light: #f3f4f6;
+            --lighter: #f9fafb;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --success: #10b981;
+            --cyber-yellow: #FFD700;
+            --cyber-pink: #FF0080;
+            --cyber-blue: #00BFFF;
+            --cyber-green: #00FF9F;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(0, 191, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 128, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(0, 255, 159, 0.05) 0%, transparent 30%);
+        }
+
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .cyber-border {
+            position: relative;
+            border: 1px solid rgba(0, 191, 255, 0.3);
+            overflow: hidden;
+        }
+
+        .cyber-border::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyber-blue), transparent);
+            animation: cyber-border-flow 3s linear infinite;
+        }
+
+        @keyframes cyber-border-flow {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .cyber-glow {
+            box-shadow: 0 0 8px var(--cyber-blue), 0 0 16px rgba(0, 191, 255, 0.3);
+        }
+
+        .agent-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--dark), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .agent-card {
+            border-radius: 12px;
+            background: rgba(31, 41, 55, 0.7);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .agent-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 191, 255, 0.2);
+            border-color: rgba(59, 130, 246, 0.6);
+        }
+
+        .agent-card.legendary {
+            background: linear-gradient(135deg, rgba(31, 41, 55, 0.8), rgba(17, 24, 39, 0.9));
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 16px rgba(255, 215, 0, 0.2);
+        }
+
+        .agent-card.legendary:hover {
+            box-shadow: 0 0 24px rgba(255, 215, 0, 0.4);
+        }
+
+        .agent-card.rare {
+            background: linear-gradient(135deg, rgba(31, 41, 55, 0.8), rgba(17, 24, 39, 0.9));
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            box-shadow: 0 0 16px rgba(139, 92, 246, 0.2);
+        }
+
+        .agent-card.rare:hover {
+            box-shadow: 0 0 24px rgba(139, 92, 246, 0.4);
+        }
+
+        .chat-message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            max-width: 88%;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .user-message {
+            background-color: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            margin-left: auto;
+            border-top-right-radius: 0;
+        }
+
+        .agent-message {
+            background-color: rgba(31, 41, 55, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-right: auto;
+            border-top-left-radius: 0;
+        }
+
+        .editor-container {
+            height: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 260px 1fr 320px;
+            grid-template-rows: 60px 1fr 240px;
+            grid-template-areas:
+                "header header header"
+                "sidebar content agents"
+                "sidebar terminal agents";
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        .header {
+            grid-area: header;
+            background-color: rgba(17, 24, 39, 0.9);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+        }
+
+        .sidebar {
+            grid-area: sidebar;
+            background-color: rgba(31, 41, 55, 0.9);
+            border-right: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .content {
+            grid-area: content;
+            padding: 20px;
+            overflow: hidden;
+            background-color: rgba(17, 24, 39, 0.7);
+        }
+
+        .terminal {
+            grid-area: terminal;
+            background-color: rgba(10, 10, 10, 0.9);
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-y: auto;
+            font-size: 0.875rem;
+            color: #e2e8f0;
+        }
+
+        .agents-panel {
+            grid-area: agents;
+            background-color: rgba(31, 41, 55, 0.9);
+            border-left: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .tab {
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab.active {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: white;
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.15);
+        }
+
+        .tab:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .tab i {
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            background-color: var(--primary-dark);
+            box-shadow: 0 0 16px rgba(59, 130, 246, 0.3);
+        }
+
+        button::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: -100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        button:hover::after {
+            left: 100%;
+        }
+
+        button.secondary {
+            background-color: var(--secondary);
+        }
+
+        button.secondary:hover {
+            background-color: var(--secondary-dark);
+            box-shadow: 0 0 16px rgba(16, 185, 129, 0.3);
+        }
+
+        button.accent {
+            background-color: var(--accent);
+        }
+
+        button.accent:hover {
+            background-color: var(--accent-dark);
+            box-shadow: 0 0 16px rgba(139, 92, 246, 0.3);
+        }
+
+        button.outlined {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        button.outlined:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
+        }
+
+        input,
+        textarea,
+        select {
+            background-color: rgba(17, 24, 39, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            padding: 10px 14px;
+            border-radius: 6px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+        }
+
+        .agent-item {
+            padding: 12px;
+            border-radius: 8px;
+            background-color: rgba(31, 41, 55, 0.5);
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .agent-item:hover {
+            background-color: rgba(31, 41, 55, 0.8);
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .agent-item.active {
+            background-color: rgba(59, 130, 246, 0.15);
+            border-left: 3px solid var(--primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--cyber-blue));
+            transition: width 0.5s ease-in-out;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .badge i {
+            margin-right: 4px;
+            font-size: 0.875rem;
+        }
+
+        .badge-primary {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: var(--primary-light);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .badge-secondary {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--secondary);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .badge-accent {
+            background-color: rgba(139, 92, 246, 0.2);
+            color: var(--accent);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .badge-warning {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .badge-danger {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .badge-legendary {
+            background-color: rgba(255, 215, 0, 0.2);
+            color: var(--cyber-yellow);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .chat-input-container {
+            position: relative;
+        }
+
+        .chat-input {
+            width: 100%;
+            padding-right: 50px;
+            resize: none;
+            background-color: rgba(17, 24, 39, 0.7);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            background-color: rgba(17, 24, 39, 0.9);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 0 16px rgba(59, 130, 246, 0.15);
+        }
+
+        .send-button {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .send-button:hover {
+            background-color: var(--primary-dark);
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .agent-config-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .agent-config-form>.full-width {
+            grid-column: 1 / 3;
+        }
+
+        .task-item {
+            padding: 16px;
+            background-color: rgba(31, 41, 55, 0.5);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .task-item:hover {
+            background-color: rgba(31, 41, 55, 0.7);
+            border-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 20px;
+            border-radius: 8px;
+            background-color: rgba(16, 185, 129, 0.9);
+            color: white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 400px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification i {
+            font-size: 1.5rem;
+        }
+
+        .code-suggestion {
+            padding: 16px;
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 8px;
+            margin: 16px 0;
+            position: relative;
+        }
+
+        .code-suggestion::before {
+            content: '✓ AI Suggestion';
+            position: absolute;
+            top: -10px;
+            left: 16px;
+            background-color: var(--secondary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .floating-action-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            cursor: pointer;
+            z-index: 900;
+            transition: all 0.3s ease;
+        }
+
+        .floating-action-button:hover {
+            background-color: var(--primary-dark);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+            transform: translateY(-4px);
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #f9fafb;
+        }
+
+        .panel-title i {
+            color: var(--primary);
+        }
+
+        .tab-container {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .level-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .level-badge {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .agent-skill {
+            display: inline-flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-right: 4px;
+            margin-bottom: 4px;
+            color: #e2e8f0;
+        }
+
+        .agent-skill i {
+            margin-right: 4px;
+            font-size: 0.875rem;
+            color: var(--primary);
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 6px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 2px;
+            font-size: 0.875rem;
+        }
+
+        .file-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .file-item i {
+            margin-right: 8px;
+            font-size: 1rem;
+        }
+
+        .file-item.file i {
+            color: #d1d5db;
+        }
+
+        .file-item.folder i {
+            color: #60a5fa;
+        }
+
+        .file-item.active {
+            background-color: rgba(59, 130, 246, 0.2);
+            font-weight: 500;
+        }
+
+        .terminal-line {
+            margin: 4px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8125rem;
+        }
+
+        .terminal-prompt {
+            color: var(--cyber-green);
+        }
+
+        .terminal-command {
+            color: #e2e8f0;
+        }
+
+        .terminal-output {
+            color: #9ca3af;
+        }
+
+        .terminal-error {
+            color: #ef4444;
+        }
+
+        .terminal-success {
+            color: #10b981;
+        }
+
+        .nft-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #111;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .crypto-address {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #9ca3af;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+            }
+
+            100% {
+                box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+            }
+        }
+
+        .glowing {
+            animation: glow 2s infinite;
+        }
+
+        .typing-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin: 4px 0;
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+
+        .typing-indicator span:nth-child(1) {
+            animation: typing 1s infinite 0s;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation: typing 1s infinite 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation: typing 1s infinite 0.4s;
+        }
+
+        @keyframes typing {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .ai-benefits {
+            margin: 24px 0;
+            padding: 24px;
+            background: rgba(17, 24, 39, 0.7);
+            border-radius: 12px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            gap: 12px;
+        }
+
+        .benefit-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .tab-content {
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .tab-content.hidden {
+            display: none;
+            opacity: 0;
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, rgba(31, 41, 55, 0.8), rgba(17, 24, 39, 0.9));
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(0, 191, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 0, 128, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(12px);
+            min-width: 220px;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            padding: 12px 0;
+            z-index: 1000;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-content {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .dropdown-item i {
+            color: var(--primary);
+        }
+
+        .pulse {
+            box-shadow: 0 0 0 rgba(59, 130, 246, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+            }
+        }
+
+        .cyber-panel {
+            background: rgba(17, 24, 39, 0.95);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+        }
+
+        .dna-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .gene-option {
+            background: rgba(31, 41, 55, 0.7);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .cyber-select {
+            background: rgba(17, 24, 39, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            color: var(--primary-light);
+            padding: 0.5rem;
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        .neon-btn {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .neon-btn:hover {
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .dna-preview {
+            margin-top: 2rem;
+            height: 400px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-grid">
+        <!-- Header -->
+        <div class="header">
+            <div class="flex items-center gap-3">
+                <div class="flex items-center text-xl font-bold">
+                    <i class='bx bx-code-block text-2xl text-blue-500 mr-2'></i>
+                    <span>AI War Room</span>
+                    <span class="text-xs bg-blue-500 text-white px-2 py-1 rounded ml-2">ALPHA</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="tab-container">
+                    <div class="tab active" data-tab="editor">
+                        <i class='bx bx-code-alt'></i> Editor
+                    </div>
+                    <div class="tab" data-tab="agents">
+                        <i class='bx bx-bot'></i> Agents
+                    </div>
+                    <div class="tab" data-tab="tasks">
+                        <i class='bx bx-task'></i> Tasks
+                    </div>
+                    <div class="tab" data-tab="marketplace">
+                        <i class='bx bx-store'></i> Marketplace
+                    </div>
+                </div>
+
+                <button id="connectWallet" class="pulse">
+                    <i class='bx bx-wallet'></i> Connect Wallet
+                </button>
+
+                <div class="dropdown">
+                    <button class="outlined">
+                        <i class='bx bx-user-circle'></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <div class="dropdown-item">
+                            <i class='bx bx-user'></i> Profile
+                        </div>
+                        <div class="dropdown-item">
+                            <i class='bx bx-cog'></i> Settings
+                        </div>
+                        <div class="dropdown-item">
+                            <i class='bx bx-coin-stack'></i> My NFTs
+                        </div>
+                        <div class="dropdown-item">
+                            <i class='bx bx-history'></i> Transaction History
+                        </div>
+                        <div class="dropdown-item">
+                            <i class='bx bx-help-circle'></i> Help & Support
+                        </div>
+                        <div class="dropdown-item">
+                            <i class='bx bx-log-out'></i> Logout
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="panel-title">
+                <i class='bx bx-folder'></i> Project Explorer
+            </div>
+            <div id="fileExplorer" class="mt-2">
+                <!-- File tree will be populated here -->
+                <div class="file-item folder">
+                    <i class='bx bx-folder'></i> src
+                </div>
+                <div class="file-item file" style="padding-left: 24px;">
+                    <i class='bx bx-code-curly'></i> index.js
+                </div>
+                <div class="file-item file" style="padding-left: 24px;">
+                    <i class='bx bx-code-curly'></i> app.js
+                </div>
+                <div class="file-item folder">
+                    <i class='bx bx-folder'></i> components
+                </div>
+                <div class="file-item file" style="padding-left: 24px;">
+                    <i class='bx bx-code-curly'></i> Header.jsx
+                </div>
+                <div class="file-item file active" style="padding-left: 24px;">
+                    <i class='bx bx-code-curly'></i> Dashboard.jsx
+                </div>
+                <div class="file-item folder">
+                    <i class='bx bx-folder'></i> utils
+                </div>
+                <div class="file-item folder">
+                    <i class='bx bx-folder'></i> hooks
+                </div>
+                <div class="file-item folder">
+                    <i class='bx bx-folder'></i> styles
+                </div>
+                <div class="file-item folder">
+                    <i class='bx bx-folder'></i> assets
+                </div>
+            </div>
+
+            <div class="mt-6 panel-title">
+                <i class='bx bx-git-branch'></i> Git
+            </div>
+            <div class="mt-2 text-sm text-gray-300">
+                <div class="mb-2">
+                    <div class="text-xs text-gray-400">BRANCH</div>
+                    <div class="flex items-center mt-1">
+                        <i class='bx bx-git-branch text-blue-400 mr-2'></i> main
+                    </div>
+                </div>
+                <div>
+                    <div class="text-xs text-gray-400">CHANGES</div>
+                    <div class="mt-1">
+                        <div class="flex items-center text-green-400">
+                            <i class='bx bx-plus-circle mr-2'></i> 3 added
+                        </div>
+                        <div class="flex items-center text-yellow-400">
+                            <i class='bx bx-edit mr-2'></i> 2 modified
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content">
+            <div class="tab-content" id="editor-tab">
+                <div class="welcome-banner mb-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h1 class="text-2xl font-bold mb-2">🚀 Welcome to the AI War Room IDE</h1>
+                            <p class="text-gray-300 mb-4">Your elite team of AI agents is ready to revolutionize your
+                                development workflow</p>
+                            <div class="flex gap-3 mt-4">
+                                <button class="secondary">
+                                    <i class='bx bx-play'></i> Quick Tour
+                                </button>
+                                <button class="outlined">
+                                    <i class='bx bx-book'></i> Documentation
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="text-3xl mr-3 text-blue-500">
+                                <i class='bx bx-chip'></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-semibold">21 AI Agents Active</div>
+                                <div class="text-xs text-gray-400">4 Legendary · 7 Rare · 10 Common</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="editor-container" id="monaco-editor-container"></div>
+            </div>
+
+            <div class="tab-content hidden" id="agents-tab">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold">AI Agent Squad</h2>
+                    <div class="flex gap-2">
+                        <button class="secondary" id="createAgentBtn">
+                            <i class='bx bx-plus'></i> New Agent
+                        </button>
+                        <button class="outlined">
+                            <i class='bx bx-filter'></i> Filter
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4" id="agentSquad">
+                    <!-- Agent cards -->
+                    <div class="agent-card legendary p-4 relative">
+                        <div class="nft-tag">
+                            <i class='bx bx-coin'></i> NFT
+                        </div>
+                        <div class="flex items-start mb-3">
+                            <div class="agent-avatar mr-3">
+                                <i class='bx bx-code-block'></i>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-bold">CodeMaster Pro</h3>
+                                <div class="text-xs text-gray-300">Legendary Full-Stack Agent</div>
+                                <div class="level-indicator">
+                                    <div class="level-badge">Lv. 42</div>
+                                    <div class="progress-bar flex-grow">
+                                        <div class="progress-bar-fill" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-xs text-gray-400 mb-1">SPECIALIZATIONS</div>
+                            <div>
+                                <span class="agent-skill"><i class='bx bxl-react'></i>React</span>
+                                <span class="agent-skill"><i class='bx bxl-nodejs'></i>Node.js</span>
+                                <span class="agent-skill"><i class='bx bx-data'></i>GraphQL</span>
+                                <span class="agent-skill"><i class='bx bxl-typescript'></i>TypeScript</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between mt-3">
+                            <span class="crypto-address">0x7a...42fb</span>
+                            <button class="secondary text-xs py-1 px-3">Deploy</button>
+                        </div>
+                    </div>
+
+                    <div class="agent-card rare p-4 relative">
+                        <div class="nft-tag">
+                            <i class='bx bx-coin'></i> NFT
+                        </div>
+                        <div class="flex items-start mb-3">
+                            <div class="agent-avatar mr-3"
+                                style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                                <i class='bx bx-shield-quarter'></i>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-bold">SecuritySentinel</h3>
+                                <div class="text-xs text-gray-300">Rare Security Expert</div>
+                                <div class="level-indicator">
+                                    <div class="level-badge">Lv. 28</div>
+                                    <div class="progress-bar flex-grow">
+                                        <div class="progress-bar-fill" style="width: 45%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-xs text-gray-400 mb-1">SPECIALIZATIONS</div>
+                            <div>
+                                <span class="agent-skill"><i class='bx bx-check-shield'></i>Pentest</span>
+                                <span class="agent-skill"><i class='bx bx-lock'></i>OAuth</span>
+                                <span class="agent-skill"><i class='bx bx-fingerprint'></i>Auth</span>
+                                <span class="agent-skill"><i class='bx bx-code-alt'></i>OWASP</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between mt-3">
+                            <span class="crypto-address">0x3b...78cd</span>
+                            <button class="secondary text-xs py-1 px-3">Deploy</button>
+                        </div>
+                    </div>
+
+                    <div class="agent-card p-4">
+                        <div class="flex items-start mb-3">
+                            <div class="agent-avatar mr-3"
+                                style="background: linear-gradient(135deg, #6a85b6, #bac8e0);">
+                                <i class='bx bx-line-chart'></i>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-bold">PerformanceTuner</h3>
+                                <div class="text-xs text-gray-300">Optimization Specialist</div>
+                                <div class="level-indicator">
+                                    <div class="level-badge">Lv. 17</div>
+                                    <div class="progress-bar flex-grow">
+                                        <div class="progress-bar-fill" style="width: 30%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-xs text-gray-400 mb-1">SPECIALIZATIONS</div>
+                            <div>
+                                <span class="agent-skill"><i class='bx bx-time'></i>Algorithms</span>
+                                <span class="agent-skill"><i class='bx bx-memory-card'></i>Memory</span>
+                                <span class="agent-skill"><i class='bx bx-analyse'></i>Profiling</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between mt-3">
+                            <button class="outlined text-xs py-1 px-3">Upgrade</button>
+                            <button class="secondary text-xs py-1 px-3">Deploy</button>
+                        </div>
+                    </div>
+
+                    <div class="agent-card p-4">
+                        <div class="flex items-start mb-3">
+                            <div class="agent-avatar mr-3"
+                                style="background: linear-gradient(135deg, #38ef7d, #11998e);">
+                                <i class='bx bx-paint'></i>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-bold">UIDesigner</h3>
+                                <div class="text-xs text-gray-300">Frontend Specialist</div>
+                                <div class="level-indicator">
+                                    <div class="level-badge">Lv. 21</div>
+                                    <div class="progress-bar flex-grow">
+                                        <div class="progress-bar-fill" style="width: 55%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-xs text-gray-400 mb-1">SPECIALIZATIONS</div>
+                            <div>
+                                <span class="agent-skill"><i class='bx bxl-css3'></i>CSS</span>
+                                <span class="agent-skill"><i class='bx bxl-tailwind-css'></i>Tailwind</span>
+                                <span class="agent-skill"><i class='bx bx-shape-square'></i>Layouts</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between mt-3">
+                            <button class="outlined text-xs py-1 px-3">Upgrade</button>
+                            <button class="secondary text-xs py-1 px-3">Deploy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content hidden" id="tasks-tab">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold">Task Management</h2>
+                    <button class="secondary" id="createTaskBtn">
+                        <i class='bx bx-plus'></i> New Task
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <h3 class="font-semibold mb-2 flex items-center">
+                            <i class='bx bx-loader text-yellow-400 mr-2'></i> Pending
+                            <span
+                                class="bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center ml-2">2</span>
+                        </h3>
+                        <div id="pendingTasks" class="tasks-column">
+                            <div class="task-item">
+                                <div class="flex justify-between mb-2">
+                                    <h4 class="font-semibold">Optimize API Response Time</h4>
+                                    <span class="badge badge-warning">High Priority</span>
+                                </div>
+                                <p class="text-sm text-gray-300 mb-3">Improve the response time of user data API
+                                    endpoint by implementing caching and optimizing database queries.</p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <div class="agent-avatar w-6 h-6 mr-2">
+                                            <i class='bx bx-line-chart text-sm'></i>
+                                        </div>
+                                        <span class="text-xs">PerformanceTuner</span>
+                                    </div>
+                                    <button class="text-xs py-1 px-2">Start</button>
+                                </div>
+                            </div>
+
+                            <div class="task-item">
+                                <div class="flex justify-between mb-2">
+                                    <h4 class="font-semibold">Update Auth Flow</h4>
+                                    <span class="badge badge-primary">Medium</span>
+                                </div>
+                                <p class="text-sm text-gray-300 mb-3">Implement OAuth 2.0 and JWT tokens for the
+                                    authentication system.</p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <div class="agent-avatar w-6 h-6 mr-2"
+                                            style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                                            <i class='bx bx-shield-quarter text-sm'></i>
+                                        </div>
+                                        <span class="text-xs">SecuritySentinel</span>
+                                    </div>
+                                    <button class="text-xs py-1 px-2">Start</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-semibold mb-2 flex items-center">
+                            <i class='bx bx-sync text-blue-400 mr-2'></i> In Progress
+                            <span
+                                class="bg-blue-400 text-blue-900 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center ml-2">1</span>
+                        </h3>
+                        <div id="inProgressTasks" class="tasks-column">
+                            <div class="task-item">
+                                <div class="flex justify-between mb-2">
+                                    <h4 class="font-semibold">Refactor Component Structure</h4>
+                                    <span class="badge badge-secondary">Low</span>
+                                </div>
+                                <p class="text-sm text-gray-300 mb-3">Create reusable component library and implement
+                                    atomic design principles.</p>
+                                <div class="flex flex-col gap-2">
+                                    <div class="bg-gray-800 rounded-md p-2 text-xs">
+                                        <div class="font-semibold text-blue-400 mb-1">AI Progress Update:</div>
+                                        <p class="text-gray-300">Analyzing component dependencies and creating
+                                            abstraction layers. 45% complete.</p>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-bar-fill" style="width: 45%"></div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center mt-3">
+                                    <div class="flex items-center">
+                                        <div class="agent-avatar w-6 h-6 mr-2">
+                                            <i class='bx bx-code-block text-sm'></i>
+                                        </div>
+                                        <span class="text-xs">CodeMaster Pro</span>
+                                    </div>
+                                    <button class="outlined text-xs py-1 px-2">View</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-semibold mb-2 flex items-center">
+                            <i class='bx bx-check-circle text-green-400 mr-2'></i> Completed
+                            <span
+                                class="bg-green-400 text-green-900 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center ml-2">3</span>
+                        </h3>
+                        <div id="completedTasks" class="tasks-column">
+                            <div class="task-item">
+                                <div class="flex justify-between mb-2">
+                                    <h4 class="font-semibold">UI Redesign</h4>
+                                    <span class="badge badge-secondary">Completed</span>
+                                </div>
+                                <p class="text-sm text-gray-300 mb-3">Implement dark mode and responsive design for all
+                                    components.</p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <div class="agent-avatar w-6 h-6 mr-2"
+                                            style="background: linear-gradient(135deg, #38ef7d, #11998e);">
+                                            <i class='bx bx-paint text-sm'></i>
+                                        </div>
+                                        <span class="text-xs">UIDesigner</span>
+                                    </div>
+                                    <button class="outlined text-xs py-1 px-2">View</button>
+                                </div>
+                            </div>
+
+                            <div class="task-item">
+                                <div class="flex justify-between mb-2">
+                                    <h4 class="font-semibold">Fix API Endpoints</h4>
+                                    <span class="badge badge-secondary">Completed</span>
+                                </div>
+                                <p class="text-sm text-gray-300 mb-3">Updated REST API endpoints to follow consistent
+                                    naming conventions.</p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <div class="agent-avatar w-6 h-6 mr-2">
+                                            <i class='bx bx-code-block text-sm'></i>
+                                        </div>
+                                        <span class="text-xs">CodeMaster Pro</span>
+                                    </div>
+                                    <button class="outlined text-xs py-1 px-2">View</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content hidden" id="marketplace-tab">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold">Agent Marketplace</h2>
+                    <div class="flex gap-2">
+                        <input type="text" placeholder="Search agents..." id="agentSearch" class="w-64" />
+                        <select id="agentFilter" class="w-40">
+                            <option value="all">All Agents</option>
+                            <option value="legendary">Legendary</option>
+                            <option value="rare">Rare</option>
+                            <option value="common">Common</option>
+                            <option value="coding">Coding</option>
+                            <option value="security">Security</option>
+                            <option value="design">Design</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="welcome-banner mb-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h2 class="text-xl font-bold mb-2">Featured Agent: DevOps Master</h2>
+                            <p class="text-gray-300 mb-2">This legendary agent specializes in CI/CD pipelines, container
+                                orchestration, and cloud infrastructure.</p>
+                            <div class="flex gap-2 mt-4">
+                                <span class="badge badge-legendary">Legendary</span>
+                                <span class="badge badge-primary">DevOps</span>
+                                <span class="badge badge-primary">Cloud</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-lg font-bold text-yellow-400">0.15 ETH</div>
+                            <button class="mt-2 accent">
+                                <i class='bx bx-cart-add'></i> Purchase
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4" id="agentMarketplace">
+                    <!-- Marketplace agent cards -->
+                    <div class="agent-card legendary p-4">
+                        <div class="flex items-start mb-3">
+                            <div class="agent-avatar mr-3"
+                                style="background: linear-gradient(135deg, #ff9966, #ff5e62);">
+                                <i class='bx bx-data'></i>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-bold">DatabaseWizard</h3>
+                                <div class="text-xs text-gray-300">Legendary DB Expert</div>
+                                <div class="flex items-center mt-1">
+                                    <span class="badge badge-legendary">Legendary</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-xs text-gray-400 mb-1">SKILLS</div>
+                            <div>
+                                <span class="agent-skill"><i class='bx bx-server'></i>SQL</span>
+                                <span class="agent-skill"><i class='bx bx-cube'></i>NoSQL</span>
+                                <span class="agent-skill"><i class='bx bx-scatter-chart'></i>Optimization</span>
+                                <span class="agent-skill"><i class='bx bx-refresh'></i>Migration</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between mt-3">
+                            <div class="text-yellow-400 font-bold">0.12 ETH</div>
+                            <button class="secondary text-xs py-1 px-3">
+                                <i class='bx bx-cart-add'></i> Buy
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="agent-card rare p-4">
+                        <div class="flex items-start mb-3">
+                            <div class="agent-avatar mr-3"
+                                style="background: linear-gradient(135deg, #a17fe0, #5d26c1);">
+                                <i class='bx bx-test-tube'></i>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-bold">TestMaster</h3>
+                                <div class="text-xs text-gray-300">Rare QA Expert</div>
+                                <div class="flex items-center mt-1">
+                                    <span class="badge badge-accent">Rare</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-xs text-gray-400 mb-1">SKILLS</div>
+                            <div>
+                                <span class="agent-skill"><i class='bx bx-check-double'></i>Unit Tests</span>
+                                <span class="agent-skill"><i class='bx bx-devices'></i>E2E Tests</span>
+                                <span class="agent-skill"><i class='bx bx-task'></i>CI Integration</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between mt-3">
+                            <div class="text-purple-400 font-bold">0.05 ETH</div>
+                            <button class="secondary text-xs py-1 px-3">
+                                <i class='bx bx-cart-add'></i> Buy
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="agent-card p-4">
+                        <div class="flex items-start mb-3">
+                            <div class="agent-avatar mr-3"
+                                style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+                                <i class='bx bx-mobile-alt'></i>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-bold">MobileExpert</h3>
+                                <div class="text-xs text-gray-300">Mobile Dev Specialist</div>
+                                <div class="flex items-center mt-1">
+                                    <span class="badge badge-primary">Common</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-xs text-gray-400 mb-1">SKILLS</div>
+                            <div>
+                                <span class="agent-skill"><i class='bx bxl-react'></i>React Native</span>
+                                <span class="agent-skill"><i class='bx bxl-flutter'></i>Flutter</span>
+                                <span class="agent-skill"><i class='bx bx-devices'></i>Responsive</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between mt-3">
+                            <div class="text-blue-400 font-bold">0.025 ETH</div>
+                            <button class="secondary text-xs py-1 px-3">
+                                <i class='bx bx-cart-add'></i> Buy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terminal -->
+        <div class="terminal" id="terminal">
+            <div class="panel-title">
+                <i class='bx bx-terminal'></i> Terminal
+                <div class="flex-grow"></div>
+                <button class="text-xs">Clear</button>
+            </div>
+            <div id="terminal-output">
+                <div class="terminal-line">
+                    <span class="terminal-prompt">user@aiwarroom:~$</span>
+                    <span class="terminal-command">npm start</span>
+                </div>
+                <div class="terminal-line terminal-output">Starting development server...</div>
+                <div class="terminal-line terminal-output">Compiled successfully!</div>
+                <div class="terminal-line terminal-success">✓ Server running at http://localhost:3000</div>
+                <div class="terminal-line terminal-output">AI Agent 'CodeMaster Pro' initialized</div>
+                <div class="terminal-line terminal-output">AI Agent 'SecuritySentinel' initialized</div>
+                <div class="terminal-line terminal-output">AI Agent 'PerformanceTuner' initialized</div>
+                <div class="terminal-line terminal-output">AI Agent 'UIDesigner' initialized</div>
+                <div class="terminal-line terminal-output">Watching for file changes...</div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">user@aiwarroom:~$</span>
+                    <span class="terminal-command">_</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agents Panel -->
+        <div class="agents-panel">
+            <div class="panel-title">
+                <i class='bx bx-bot'></i> Active Agents
+                <div class="flex-grow"></div>
+                <button class="text-xs">Manage</button>
+            </div>
+
+            <div id="activeAgents">
+                <div class="agent-item active">
+                    <div class="flex items-center mb-2">
+                        <div class="agent-avatar w-8 h-8 mr-2">
+                            <i class='bx bx-code-block'></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold">CodeMaster Pro</div>
+                            <div class="text-xs text-gray-400">React/Node.js Expert</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center text-xs text-gray-400">
+                        <i class='bx bx-pulse mr-1'></i> Active · Lv.42
+                        <div class="ml-auto">
+                            <span class="badge badge-legendary">Legendary</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="agent-item">
+                    <div class="flex items-center mb-2">
+                        <div class="agent-avatar w-8 h-8 mr-2"
+                            style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                            <i class='bx bx-shield-quarter'></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold">SecuritySentinel</div>
+                            <div class="text-xs text-gray-400">Security Expert</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center text-xs text-gray-400">
+                        <i class='bx bx-time mr-1'></i> Standby · Lv.28
+                        <div class="ml-auto">
+                            <span class="badge badge-accent">Rare</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="agent-item">
+                    <div class="flex items-center mb-2">
+                        <div class="agent-avatar w-8 h-8 mr-2"
+                            style="background: linear-gradient(135deg, #38ef7d, #11998e);">
+                            <i class='bx bx-paint'></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold">UIDesigner</div>
+                            <div class="text-xs text-gray-400">UI/UX Specialist</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center text-xs text-gray-400">
+                        <i class='bx bx-time mr-1'></i> Standby · Lv.21
+                        <div class="ml-auto">
+                            <span class="badge badge-primary">Common</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <div class="panel-title">
+                    <i class='bx bx-chat'></i> AI War Room
+                </div>
+
+                <div id="chatMessages" class="overflow-y-auto py-2" style="height: 300px;">
+                    <div class="chat-message agent-message">
+                        <div class="flex items-center mb-1">
+                            <div class="agent-avatar w-6 h-6 mr-2">
+                                <i class='bx bx-code-block text-sm'></i>
+                            </div>
+                            <div class="font-semibold text-sm">CodeMaster Pro</div>
+                        </div>
+                        <div class="text-sm">I've analyzed your component structure and found some redundancy. Would you
+                            like me to refactor it for better reusability?</div>
+                    </div>
+
+                    <div class="chat-message user-message">
+                        <div class="text-sm">Yes, please refactor the components and make them more modular.</div>
+                    </div>
+
+                    <div class="chat-message agent-message">
+                        <div class="flex items-center mb-1">
+                            <div class="agent-avatar w-6 h-6 mr-2">
+                                <i class='bx bx-code-block text-sm'></i>
+                            </div>
+                            <div class="font-semibold text-sm">CodeMaster Pro</div>
+                        </div>
+                        <div class="text-sm">I'll create a component library with atomic design principles. This will
+                            improve reusability and maintainability.</div>
+                        <div class="code-suggestion mt-2 text-xs font-mono bg-gray-800 p-2 rounded">
+                            <div>// New component structure</div>
+                            <div>src/</div>
+                            <div>└── components/</div>
+                            <div> ├── atoms/ # Basic building blocks</div>
+                            <div> ├── molecules/ # Groups of atoms</div>
+                            <div> ├── organisms/ # Groups of molecules</div>
+                            <div> ├── templates/ # Page layouts</div>
+                            <div> └── pages/ # Final UIs</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-message agent-message">
+                        <div class="flex items-center mb-1">
+                            <div class="agent-avatar w-6 h-6 mr-2"
+                                style="background: linear-gradient(135deg, #38ef7d, #11998e);">
+                                <i class='bx bx-paint text-sm'></i>
+                            </div>
+                            <div class="font-semibold text-sm">UIDesigner</div>
+                        </div>
+                        <div class="text-sm">I've noticed inconsistent styling across the application. Should I
+                            implement a design system with standardized components?</div>
+                    </div>
+
+                    <div class="typing-indicator ml-8 mt-2">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="mt-2 chat-input-container">
+                    <textarea class="chat-input" id="chatInput" rows="2"
+                        placeholder="Message your AI squad..."></textarea>
+                    <button class="send-button">
+                        <i class='bx bx-send'></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="createTaskModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="glass-panel p-6 max-w-md w-full">
+            <h2 class="text-xl font-bold mb-4">Create New Task</h2>
+
+            <form id="taskForm">
+                <div class="mb-3">
+                    <label class="block mb-2">Title</label>
+                    <input type="text" id="taskTitle" class="w-full" placeholder="Task title" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="block mb-2">Description</label>
+                    <textarea id="taskDescription" class="w-full" rows="4" placeholder="Describe the task..."
+                        required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="block mb-2">Priority</label>
+                    <select id="taskPriority" class="w-full">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="block mb-2">Assign To</label>
+                    <select id="taskAgent" class="w-full">
+                        <option value="codemaster">CodeMaster Pro</option>
+                        <option value="security">SecuritySentinel</option>
+                        <option value="performance">PerformanceTuner</option>
+                        <option value="ui">UIDesigner</option>
+                    </select>
+                </div>
+
+                <div class="flex justify-end gap-2 mt-4">
+                    <button type="button" class="outlined" id="cancelTaskBtn">Cancel</button>
+                    <button type="submit" class="secondary">Create Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="agentConfigModal"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="glass-panel p-6 max-w-lg w-full">
+            <h2 class="text-xl font-bold mb-4">Configure Agent</h2>
+
+            <form id="agentConfigForm" class="agent-config-form">
+                <div class="full-width">
+                    <label class="block mb-2">Name</label>
+                    <input type="text" id="agentName" class="w-full" placeholder="Agent name" required />
+                </div>
+
+                <div>
+                    <label class="block mb-2">Role</label>
+                    <select id="agentRole" class="w-full">
+                        <option value="code-assistant">Code Assistant</option>
+                        <option value="debugger">Debugger</option>
+                        <option value="optimizer">Optimizer</option>
+                        <option value="security-expert">Security Expert</option>
+                        <option value="ui-designer">UI Designer</option>
+                        <option value="devops-engineer">DevOps Engineer</option>
+                        <option value="documentation-writer">Documentation Writer</option>
+                        <option value="data-scientist">Data Scientist</option>
+                        <option value="architect">System Architect</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block mb-2">Model</label>
+                    <select id="agentModel" class="w-full">
+                        <option value="openrouter/anthropic/claude-3-opus-20240229">Claude 3 Opus</option>
+                        <option value="openrouter/anthropic/claude-3-sonnet-20240229">Claude 3 Sonnet</option>
+                        <option value="openrouter/meta-llama/llama-3-70b-instruct">Llama 3 70B</option>
+                        <option value="openrouter/google/gemini-1.5-pro-latest">Gemini 1.5 Pro</option>
+                        <option value="openrouter/mistralai/mistral-large-latest">Mistral Large</option>
+                        <option value="openrouter/anthropic/claude-3-haiku-20240307">Claude 3 Haiku</option>
+                        <option value="openrouter/openai/gpt-4-turbo">GPT-4 Turbo</option>
+                        <option value="openrouter/openai/gpt-4-turbo">GPT-4 Turbo</option>
+                    </select>
+                </div>
+                <div class="full-width">
+                    <label class="block mb-2">Description</label>
+                    <textarea id="agentDescription" class="w-full" rows="2" placeholder="Agent description..."
+                        required></textarea>
+                </div>
+                <div class="full-width">
+                    <label class="block mb-2">System Prompt</label>
+                    <textarea id="agentSystemPrompt" class="w-full" rows="4"
+                        placeholder="System prompt to define agent behavior..." required></textarea>
+                </div>
+                <div>
+                    <label class="block mb-2">Temperature <span class="text-xs text-gray-400">(0.1-1.0)</span></label>
+                    <input type="range" id="agentTemperature" min="0.1" max="1.0" step="0.1" value="0.7"
+                        class="w-full" />
+                    <div class="text-xs text-right" id="temperatureValue">0.7</div>
+                </div>
+                <div>
+                    <label class="block mb-2">Max Tokens</label>
+                    <input type="number" id="agentMaxTokens" min="256" max="8192" value="2048" class="w-full" />
+                </div>
+                <div class="full-width">
+                    <label class="block mb-2">Capabilities</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="capabilities" value="code-completion" checked />
+                            Code Completion
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="capabilities" value="debugging" checked />
+                            Debugging
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="capabilities" value="code-explanation" checked />
+                            Code Explanation
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="capabilities" value="refactoring" />
+                            Refactoring
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="capabilities" value="documentation" />
+                            Documentation
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="capabilities" value="error-analysis" />
+                            Error Analysis
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="capabilities" value="performance-optimization" />
+                            Performance Optimization
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="capabilities" value="security-audit" />
+                            Security Audit
+                        </label>
+                    </div>
+                </div>
+                <div class="full-width flex justify-end gap-2 mt-4">
+                    <button type="button" class="outlined" id="cancelAgentBtn">Cancel</button>
+                    <button type="submit" class="secondary">Create Agent</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="walletModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="glass-panel p-6 max-w-md w-full">
+            <h2 class="text-xl font-bold mb-4">Connect Wallet</h2>
+            <p class="text-gray-300 mb-4">Connect your crypto wallet to access, purchase and upgrade AI agents in the
+                marketplace.</p>
+            <div class="space-y-3 my-6">
+                <button
+                    class="w-full flex items-center justify-between py-3 px-4 bg-gray-800 hover:bg-gray-700 rounded-lg transition duration-200">
+                    <div class="flex items-center">
+                        <img src="https://cdn.jsdelivr.net/gh/MetaMask/brand-resources@master/SVG/metamask-fox.svg"
+                            alt="MetaMask" class="w-6 h-6 mr-3" />
+                        <span>MetaMask</span>
+                    </div>
+                    <i class='bx bx-chevron-right'></i>
+                </button>
+                <button
+                    class="w-full flex items-center justify-between py-3 px-4 bg-gray-800 hover:bg-gray-700 rounded-lg transition duration-200">
+                    <div class="flex items-center">
+                        <img src="https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/info/logo.png"
+                            alt="Trust Wallet" class="w-6 h-6 mr-3" />
+                        <span>Trust Wallet</span>
+                    </div>
+                    <i class='bx bx-chevron-right'></i>
+                </button>
+                <button
+                    class="w-full flex items-center justify-between py-3 px-4 bg-gray-800 hover:bg-gray-700 rounded-lg transition duration-200">
+                    <div class="flex items-center">
+                        <img src="https://avatars.githubusercontent.com/u/18060234" alt="Coinbase Wallet"
+                            class="w-6 h-6 mr-3" />
+                        <span>Coinbase Wallet</span>
+                    </div>
+                    <i class='bx bx-chevron-right'></i>
+                </button>
+                <button
+                    class="w-full flex items-center justify-between py-3 px-4 bg-gray-800 hover:bg-gray-700 rounded-lg transition duration-200">
+                    <div class="flex items-center">
+                        <img src="https://raw.githubusercontent.com/WalletConnect/walletconnect-assets/master/Icon/Blue%20(Default)/Icon.svg"
+                            alt="WalletConnect" class="w-6 h-6 mr-3" />
+                        <span>WalletConnect</span>
+                    </div>
+                    <i class='bx bx-chevron-right'></i>
+                </button>
+            </div>
+            <div class="flex justify-end">
+                <button type="button" class="outlined" id="cancelWalletBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div id="levelUpModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="glass-panel p-6 max-w-md w-full text-center">
+            <div class="cyber-glow my-4 w-16 h-16 mx-auto rounded-full flex items-center justify-center">
+                <i class='bx bx-up-arrow-alt text-4xl text-blue-400'></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">Level Up!</h2>
+            <p class="text-gray-300 mb-6">Your AI agent <span class="text-blue-400 font-semibold">CodeMaster Pro</span>
+                has reached level 43!</p>
+            <div class="bg-gray-800 p-4 rounded-lg mb-6">
+                <h3 class="text-lg font-semibold mb-2">New Capabilities Unlocked</h3>
+                <div class="grid grid-cols-2 gap-2 text-sm">
+                    <div class="flex items-center text-green-400">
+                        <i class='bx bx-check mr-2'></i> Advanced Refactoring
+                    </div>
+                    <div class="flex items-center text-green-400">
+                        <i class='bx bx-check mr-2'></i> Memory Optimization
+                    </div>
+                    <div class="flex items-center text-green-400">
+                        <i class='bx bx-check mr-2'></i> +5% Code Efficiency
+                    </div>
+                    <div class="flex items-center text-green-400">
+                        <i class='bx bx-check mr-2'></i> +10% Response Speed
+                    </div>
+                </div>
+            </div>
+            <button class="secondary mx-auto px-8">
+                <i class='bx bx-rocket mr-2'></i> Continue
+            </button>
+        </div>
+    </div>
+    <div id="agentDetailsModal"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="glass-panel p-0 max-w-4xl w-full overflow-hidden">
+            <div class="grid grid-cols-3">
+                <div class="p-6 col-span-2">
+                    <div class="flex items-center mb-6">
+                        <div class="agent-avatar mr-4">
+                            <i class='bx bx-code-block'></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold">CodeMaster Pro</h2>
+                            <div class="flex items-center gap-2">
+                                <span class="badge badge-legendary">Legendary</span>
+                                <span class="text-gray-400 text-sm">Full-Stack Developer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold mb-2">Agent Stats</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <div class="text-xs text-gray-400">LEVEL</div>
+                                <div class="flex items-center">
+                                    <div class="level-badge">Lv. 42</div>
+                                    <div class="progress-bar ml-2 flex-grow">
+                                        <div class="progress-bar-fill" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-gray-400">EXPERIENCE</div>
+                                <div class="text-blue-400">24,850 XP</div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-gray-400">TASKS COMPLETED</div>
+                                <div>186</div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-gray-400">TOKEN ID</div>
+                                <div class="crypto-address">0x7a...42fb</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold mb-2">Skills & Specializations</h3>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div class="bg-opacity-20 bg-blue-900 p-3 rounded-lg">
+                                <div class="text-blue-400 flex items-center mb-1">
+                                    <i class='bx bxl-react mr-2'></i> React
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-bar-fill" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div class="bg-opacity-20 bg-green-900 p-3 rounded-lg">
+                                <div class="text-green-400 flex items-center mb-1">
+                                    <i class='bx bxl-nodejs mr-2'></i> Node.js
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-bar-fill" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div class="bg-opacity-20 bg-purple-900 p-3 rounded-lg">
+                                <div class="text-purple-400 flex items-center mb-1">
+                                    <i class='bx bx-data mr-2'></i> GraphQL
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-bar-fill" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="bg-opacity-20 bg-blue-900 p-3 rounded-lg">
+                                <div class="text-blue-400 flex items-center mb-1">
+                                    <i class='bx bxl-typescript mr-2'></i> TypeScript
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-bar-fill" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            <div class="bg-opacity-20 bg-yellow-900 p-3 rounded-lg">
+                                <div class="text-yellow-400 flex items-center mb-1">
+                                    <i class='bx bx-code mr-2'></i> JavaScript
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-bar-fill" style="width: 98%"></div>
+                                </div>
+                            </div>
+                            <div class="bg-opacity-20 bg-pink-900 p-3 rounded-lg">
+                                <div class="text-pink-400 flex items-center mb-1">
+                                    <i class='bx bx-git-branch mr-2'></i> Git
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-bar-fill" style="width: 88%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">System Prompt</h3>
+                        <div class="bg-gray-800 p-3 rounded-lg text-sm max-h-32 overflow-y-auto">
+                            <p>You are CodeMaster Pro, an expert full-stack developer specializing in React, Node.js,
+                                and modern web technologies. You excel at writing clean, efficient, and maintainable
+                                code. You're particularly skilled at refactoring, optimizing performance, and
+                                implementing best practices. Always provide explanations for your code and suggest
+                                improvements to the developer's existing codebase.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-b from-gray-800 to-gray-900 p-6 flex flex-col">
+                    <h3 class="text-lg font-semibold mb-4">Agent Actions</h3>
+                    <button class="secondary mb-3 justify-center">
+                        <i class='bx bx-bot mr-2'></i> Deploy Agent
+                    </button>
+                    <button class="mb-3 justify-center">
+                        <i class='bx bx-code-alt mr-2'></i> Code Review
+                    </button>
+                    <button class="outlined mb-3 justify-center">
+                        <i class='bx bx-cube mr-2'></i> Upgrade
+                    </button>
+                    <button class="outlined mb-3 justify-center">
+                        <i class='bx bx-transfer mr-2'></i> Transfer
+                    </button>
+                    <button class="outlined mb-3 justify-center text-yellow-400 border-yellow-400">
+                        <i class='bx bx-coin-stack mr-2'></i> List for Sale
+                    </button>
+                    <div class="mt-auto">
+                        <div class="text-xs text-gray-400 mb-2">AGENT OWNER</div>
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center mr-2">
+                                <i class='bx bx-user'></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-semibold">Your Wallet</div>
+                                <div class="crypto-address text-xs">0x1a...3bcd</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="notification" class="notification">
+        <i class='bx bx-check-circle text-2xl'></i>
+        <div>
+            <div class="font-semibold">Success!</div>
+            <div class="text-sm">Agent has been successfully created.</div>
+        </div>
+    </div>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@monaco-editor/loader@1.3.3/lib/umd/monaco-loader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uuid@9.0.1/dist/umd/uuidv4.min.js"></script>
+    <!-- Main script for the AI Agent Playground -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Monaco Editor
+            initMonacoEditor();
+            // Setup tab navigation
+            setupTabNavigation();
+            // Setup modals
+            setupModals();
+            // Initialize Agent System
+            initAgentSystem();
+            // Setup event listeners
+            setupEventListeners();
+        });
+        // Initialize Monaco Editor
+        function initMonacoEditor() {
+            const container = document.getElementById('monaco-editor-container');
+            window.MonacoEnvironment = {
+                getWorkerUrl: function (moduleId, label) {
+                    if (label === 'json') {
+                        return './json.worker.js';
+                    }
+                    if (label === 'css' || label === 'scss' || label === 'less') {
+                        return './css.worker.js';
+                    }
+                    if (label === 'html' || label === 'handlebars' || label === 'razor') {
+                        return './html.worker.js';
+                    }
+                    if (label === 'typescript' || label === 'javascript') {
+                        return './ts.worker.js';
+                    }
+                    return './editor.worker.js';
+                }
+            };
+            // Sample code for the editor
+            const sampleCode = `import React, { useState, useEffect } from 'react';
+                import { fetchData } from '../api/dataService';
+                import { Card, Button, Spinner } from '../components/ui';
+                
+                const Dashboard = () => {
+                    const [data, setData] = useState([]);
+                    const [loading, setLoading] = useState(true);
+                    const [error, setError] = useState(null);
+                
+                    useEffect(() => {
+                        const loadData = async () => {
+                            try {
+                                setLoading(true);
+                                const result = await fetchData();
+                                setData(result);
+                            } catch (err) {
+                                setError('Failed to fetch data');
+                                console.error(err);
+                            } finally {
+                                setLoading(false);
+                            }
+                        };
+                        loadData();
+                    }, []);
+                
+                    if (loading) return <Spinner size="large" />;
+                    if (error) return <div className="error-message">{error}</div>;
+                
+                    return (
+                        <div className="dashboard-container">
+                            <h1>Dashboard</h1>
+                            <div className="stats-grid">
+                                {data.map(item => (
+                                    <Card key={item.id} title={item.title}>
+                                        <p>{item.description}</p>
+                                        <Button variant="primary">View Details</Button>
+                                    </Card>
+                                ))}
+                            </div>
+                        </div>
+                    );
+                };
+                
+                export default Dashboard;`;
+            monaco.editor.create(container, {
+                value: sampleCode,
+                language: 'javascript',
+                theme: 'vs-dark',
+                automaticLayout: true,
+                minimap: {
+                    enabled: true
+                },
+                fontSize: 14,
+                lineHeight: 1.5,
+                fontFamily: "'JetBrains Mono', monospace",
+                scrollBeyondLastLine: false
+            });
+        }
+        // Setup tab navigation
+        function setupTabNavigation() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetTab = tab.getAttribute('data-tab');
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    // Show target content
+                    tabContents.forEach(content => {
+                        if (content.id === `${targetTab}-tab`) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+        }
+        // Setup modals
+        function setupModals() {
+            // Create Task Modal
+            const createTaskBtn = document.getElementById('createTaskBtn');
+            const createTaskModal = document.getElementById('createTaskModal');
+            const cancelTaskBtn = document.getElementById('cancelTaskBtn');
+            const taskForm = document.getElementById('taskForm');
+            if (createTaskBtn) {
+                createTaskBtn.addEventListener('click', () => {
+                    createTaskModal.classList.remove('hidden');
+                });
+            }
+            if (cancelTaskBtn) {
+                cancelTaskBtn.addEventListener('click', () => {
+                    createTaskModal.classList.add('hidden');
+                });
+            }
+            if (taskForm) {
+                taskForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    // Handle task submission
+                    createTaskModal.classList.add('hidden');
+                    showNotification('Task created successfully!');
+                });
+            }
+            // Create Agent Modal
+            const createAgentBtn = document.getElementById('createAgentBtn');
+            const agentConfigModal = document.getElementById('agentConfigModal');
+            const cancelAgentBtn = document.getElementById('cancelAgentBtn');
+            const agentConfigForm = document.getElementById('agentConfigForm');
+            if (createAgentBtn) {
+                createAgentBtn.addEventListener('click', () => {
+                    agentConfigModal.classList.remove('hidden');
+                });
+            }
+            if (cancelAgentBtn) {
+                cancelAgentBtn.addEventListener('click', () => {
+                    agentConfigModal.classList.add('hidden');
+                });
+            }
+            if (agentConfigForm) {
+                agentConfigForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    // Handle agent creation
+                    agentConfigModal.classList.add('hidden');
+                    showNotification('Agent created successfully!');
+                });
+            }
+            // Connect Wallet Modal
+            const connectWalletBtn = document.getElementById('connectWallet');
+            const walletModal = document.getElementById('walletModal');
+            const cancelWalletBtn = document.getElementById('cancelWalletBtn');
+            if (connectWalletBtn) {
+                connectWalletBtn.addEventListener('click', () => {
+                    walletModal.classList.remove('hidden');
+                });
+            }
+            if (cancelWalletBtn) {
+                cancelWalletBtn.addEventListener('click', () => {
+                    walletModal.classList.add('hidden');
+                });
+            }
+            // Handle temperature slider value
+            const temperatureSlider = document.getElementById('agentTemperature');
+            const temperatureValue = document.getElementById('temperatureValue');
+            if (temperatureSlider && temperatureValue) {
+                temperatureSlider.addEventListener('input', () => {
+                    temperatureValue.textContent = temperatureSlider.value;
+                });
+            }
+        }
+        // Initialize Agent System
+        function initAgentSystem() {
+            // This would connect to the backend agent system
+            console.log('Initializing AI Agent System...');
+            // Add example chat message handling
+            const chatInput = document.getElementById('chatInput');
+            const chatMessages = document.getElementById('chatMessages');
+            const sendButton = document.querySelector('.send-button');
+            if (chatInput && chatMessages && sendButton) {
+                sendButton.addEventListener('click', () => {
+                    sendChatMessage();
+                });
+                chatInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        sendChatMessage();
+                    }
+                });
+            }
+            function sendChatMessage() {
+                const message = chatInput.value.trim();
+                if (!message) return;
+                // Add user message
+                addMessageToChat('user', message);
+                // Clear input
+                chatInput.value = '';
+                // Show typing indicator
+                const typingIndicator = document.createElement('div');
+                typingIndicator.className = 'typing-indicator ml-8 mt-2';
+                typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+                chatMessages.appendChild(typingIndicator);
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                // Simulate AI response after delay
+                setTimeout(() => {
+                    // Remove typing indicator
+                    chatMessages.removeChild(typingIndicator);
+                    // Example AI response
+                    const response = generateAIResponse(message);
+                    addMessageToChat('agent', response.message, response.agent);
+                    // Scroll to bottom
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1500);
+            }
+            function addMessageToChat(type, message, agent = null) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = type === 'user' ? 'chat-message user-message' : 'chat-message agent-message';
+                let html = '';
+                if (type === 'agent' && agent) {
+                    html += `<div class="flex items-center mb-1">
+                        <div class="agent-avatar w-6 h-6 mr-2" ${agent.style ? `style="${agent.style}"` : ''}>
+                            <i class='bx ${agent.icon} text-sm'></i>
+                        </div>
+                        <div class="font-semibold text-sm">${agent.name}</div>
+                    </div>`;
+                }
+                html += `<div class="text-sm">${message}</div>`;
+                messageDiv.innerHTML = html;
+                chatMessages.appendChild(messageDiv);
+            }
+            function generateAIResponse(message) {
+                // Simple logic to determine which agent should respond
+                if (message.toLowerCase().includes('component') || message.toLowerCase().includes('refactor')) {
+                    return {
+                        message: "I've analyzed the component structure and can suggest some improvements. Let me refactor this to follow best practices and improve reusability.",
+                        agent: {
+                            name: 'CodeMaster Pro',
+                            icon: 'bx-code-block'
+                        }
+                    };
+                } else if (message.toLowerCase().includes('security') || message.toLowerCase().includes('auth')) {
+                    return {
+                        message: "I've identified some security concerns in the authentication flow. We should implement proper JWT token validation and CSRF protection.",
+                        agent: {
+                            name: 'SecuritySentinel',
+                            icon: 'bx-shield-quarter',
+                            style: 'background: linear-gradient(135deg, #667eea, #764ba2);'
+                        }
+                    };
+                } else if (message.toLowerCase().includes('performance') || message.toLowerCase().includes('optimize')) {
+                    return {
+                        message: "I can optimize this code to improve performance. The main bottleneck is in the data fetching logic which can be improved with caching and memoization.",
+                        agent: {
+                            name: 'PerformanceTuner',
+                            icon: 'bx-line-chart',
+                            style: 'background: linear-gradient(135deg, #6a85b6, #bac8e0);'
+                        }
+                    };
+                } else if (message.toLowerCase().includes('ui') || message.toLowerCase().includes('design')) {
+                    return {
+                        message: "I've analyzed your UI components and can suggest some improvements to enhance the user experience and maintain consistency across the application.",
+                        agent: {
+                            name: 'UIDesigner',
+                            icon: 'bx-paint',
+                            style: 'background: linear-gradient(135deg, #38ef7d, #11998e);'
+                        }
+                    };
+                } else {
+                    return {
+                        message: "I'm analyzing your code and can help you improve it. What specific aspect would you like me to focus on: components, performance, security, or UI design?",
+                        agent: {
+                            name: 'CodeMaster Pro',
+                            icon: 'bx-code-block'
+                        }
+                    };
+                }
+            }
+        }
+        // Setup event listeners
+        function setupEventListeners() {
+            // Active agent selection
+            const agentItems = document.querySelectorAll('.agent-item');
+            agentItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    agentItems.forEach(agent => agent.classList.remove('active'));
+                    item.classList.add('active');
+                });
+            });
+            // Agent cards in the squad view
+            const agentCards = document.querySelectorAll('.agent-card');
+            agentCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // Show agent details modal
+                    document.getElementById('agentDetailsModal').classList.remove('hidden');
+                });
+            });
+            // Close buttons for modals
+            const modals = document.querySelectorAll('.fixed.inset-0');
+            modals.forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.add('hidden');
+                    }
+                });
+            });
+        }
+        // Show notification
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            // Set message
+            const messageElement = notification.querySelector('div > div:last-child');
+            if (messageElement) {
+                messageElement.textContent = message;
+            }
+            // Show notification
+            notification.classList.add('show');
+            // Hide after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+
+    <!-- Add to existing script section -->
+    <script>
+    class AgentDNA {
+      constructor() {
+        this.traits = {
+          cognitiveArchitecture: 'hybrid',
+          learningAlgorithm: 'deepReinforcement',
+          specialization: 'fullStack',
+          creativityIndex: 9.2,
+          securityProtocols: ['zeroTrust', 'homomorphic'],
+          nftMetadata: {
+            standard: 'ERC-721',
+            contract: '0x...',
+            tokenId: null
+          },
+          governance: {
+            daoParticipation: true,
+            votingPower: 0
+          },
+          economicModel: {
+            token: 'AIRO',
+            staking: true,
+            rewardCurve: 'logarithmic'
+          },
+          hardwareRequirements: {
+            minVRAM: 16,
+            preferredAccelerator: 'TPUv4'
+          },
+          privacyFeatures: {
+            federatedLearning: true,
+            differentialPrivacy: 0.75
+          },
+          interoperability: {
+            crossChain: ['ETH', 'SOL', 'DOT'],
+            apiStandards: ['OpenAI', 'OAS3']
+          },
+          performanceMetrics: {
+            tokensPerSecond: 512,
+            accuracyThreshold: 99.4
+          },
+          evolutionaryPath: {
+            mutationRate: 0.15,
+            crossoverStrategy: 'multiPoint'
+          },
+          securityAudit: {
+            lastCertification: Date.now(),
+            pentestScore: 98.6
+          },
+          communityReputation: {
+            karma: 0,
+            badges: []
+          }
+        };
+      }
+
+      async mintAsNFT(agentConfig) {
+        const web3 = new Web3(window.ethereum);
+        const contract = new web3.eth.Contract(ERC721_ABI, NFT_CONTRACT_ADDRESS);
+        
+        return contract.methods.mintAgent(
+          agentConfig.owner,
+          JSON.stringify(agentConfig.traits)
+        ).send({ from: agentConfig.owner });
+      }
+
+      validateDNA(dna) {
+        return zod.object({
+          cognitiveArchitecture: z.enum(['monolithic','modular','hybrid']),
+          learningAlgorithm: z.enum(['deepReinforcement','transformer','neuroevolution']),
+          securityProtocols: z.array(z.enum(['zeroTrust','homomorphic','sgx'])),
+          nftMetadata: z.object({
+            standard: z.literal('ERC-721'),
+            tokenId: z.number().optional()
+          }),
+          privacyFeatures: z.object({
+            differentialPrivacy: z.number().min(0).max(1)
+          })
+        }).safeParse(dna);
+      }
+    }
+
+    class AgentMarketplace {
+      constructor() {
+        this.agentRegistry = new Map();
+        this.initMarketplace();
+      }
+
+      async initMarketplace() {
+        const response = await fetch('/api/agents/listings');
+        const listings = await response.json();
+        listings.forEach(agent => this.agentRegistry.set(agent.dnaHash, agent));
+      }
+
+      createListing(agentDNA, price) {
+        const dnaHash = crypto.subtle.digest('SHA-256', 
+          new TextEncoder().encode(JSON.stringify(agentDNA))
+        );
+        
+        this.agentRegistry.set(dnaHash, {
+          ...agentDNA,
+          price,
+          owner: window.ethereum.selectedAddress,
+          timestamp: Date.now(),
+          stats: {
+            downloads: 0,
+            upvotes: 0,
+            forks: 0
+          }
+        });
+
+        return this.pushToBlockchain(dnaHash);
+      }
+
+      async purchaseAgent(dnaHash, buyer) {
+        const agent = this.agentRegistry.get(dnaHash);
+        const tx = await this.makePurchaseTransaction(buyer, agent.price);
+        
+        if (tx.status === 'confirmed') {
+          await this.transferOwnership(dnaHash, buyer);
+          return this.generateLicenseKey(agent);
+        }
+      }
+    }
+
+    class AgentTrainingGround {
+      constructor() {
+        this.trainingModules = new Map([
+          ['security', new SecurityDojo()],
+          ['creativity', new InnovationLab()],
+          ['efficiency', new OptimizationGym()]
+        ]);
+      }
+
+      async runTrainingSession(agent, module, duration) {
+        const results = await this.trainingModules.get(module)
+          .train(agent, duration);
+        
+        return this.updateAgentDNA(agent, results);
+      }
+    }
+    </script>
+
+    <!-- Add to existing HTML structure -->
+    <div class="cyber-panel" id="agentForge">
+      <div class="panel-header">
+        <h2><i class='bx bx-dna'></i> Agent Genome Forge</h2>
+        <div class="toolbar">
+          <button class="neon-btn" id="mintAgent"><i class='bx bx-coin'></i> Mint as NFT</button>
+          <button class="neon-btn" id="deployAgent"><i class='bx bx-cloud-upload'></i> Deploy</button>
+        </div>
+      </div>
+      
+      <div class="dna-sections">
+        <!-- Cognitive Architecture -->
+        <div class="dna-category" data-category="cognitive">
+          <h3><i class='bx bx-brain'></i> Cognitive Blueprint</h3>
+          <div class="gene-option">
+            <label>Architecture Type</label>
+            <select class="cyber-select" id="archType">
+              <option value="hybrid">Hybrid Neuro-Symbolic</option>
+              <option value="transformer">Transformer-Based</option>
+              <option value="diffusion">Diffusion Network</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Security Matrix -->
+        <div class="dna-category" data-category="security">
+          <h3><i class='bx bx-shield-quarter'></i> Security Protocols</h3>
+          <div class="gene-grid">
+            <div class="protocol-option">
+              <input type="checkbox" id="zeroTrust" checked>
+              <label for="zeroTrust">Zero Trust Architecture</label>
+            </div>
+            <div class="protocol-option">
+              <input type="checkbox" id="homomorphic">
+              <label for="homomorphic">Homomorphic Encryption</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Economic Model -->
+        <div class="dna-category" data-category="economics">
+          <h3><i class='bx bx-line-chart'></i> Economic Engine</h3>
+          <div class="gene-slider">
+            <label>Staking Ratio</label>
+            <input type="range" id="stakingRatio" min="0" max="100" step="5">
+          </div>
+        </div>
+
+        <!-- DAO Integration -->
+        <div class="dna-category" data-category="governance">
+          <h3><i class='bx bx-network-chart'></i> Governance Modules</h3>
+          <div class="dao-settings">
+            <div class="voting-mechanism">
+              <label>Voting System</label>
+              <select class="cyber-select" id="votingSystem">
+                <option value="quadratic">Quadratic Voting</option>
+                <option value="liquid">Liquid Democracy</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real-time DNA Visualization -->
+      <div class="dna-preview">
+        <div class="helix-container">
+          <div class="strand" v-for="gene in activeGenes" :key="gene.id">
+            <div class="node" :style="nodeStyle(gene)"></div>
+            <div class="connection"></div>
+          </div>
+        </div>
+        <div class="gene-legend">
+          <div class="legend-item" v-for="(category, index) in geneCategories" 
+               :key="index" :style="{color: category.color}">
+            <i :class="category.icon"></i> {{ category.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add to CSS -->
+    <style>
+    .cyber-panel {
+      background: rgba(17, 24, 39, 0.95);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+    }
+
+    .dna-sections {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .gene-option {
+      background: rgba(31, 41, 55, 0.7);
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+
+    .cyber-select {
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      color: var(--primary-light);
+      padding: 0.5rem;
+      width: 100%;
+      border-radius: 4px;
+    }
+
+    .neon-btn {
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .neon-btn:hover {
+      box-shadow: 0 0 15px var(--primary);
+    }
+
+    .dna-preview {
+      margin-top: 2rem;
+      height: 400px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    </style>
+
+    <!-- Add to Blockchain Integration Section -->
+    <script type="module">
+    import { ethers } from 'https://cdn.ethers.io/lib/ethers-5.7.umd.min.js';
+    import { create } from 'https://unpkg.com/ipfs-http-client@56.0.1/dist/index.min.js';
+    import { DAOFactory, AgentNFT, TrainingCertificates } from '/smart-contracts/abis.js';
+
+    const IPFS = create({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    let userAddress;
+
+    // Initialize Core Contracts
+    const daoFactory = new ethers.Contract(
+      DAO_FACTORY_ADDRESS,
+      DAOFactory.abi,
+      signer
+    );
+
+    const agentNFT = new ethers.Contract(
+      AGENT_NFT_ADDRESS,
+      AgentNFT.abi,
+      signer
+    );
+
+    const trainingCerts = new ethers.Contract(
+      TRAINING_CERTS_ADDRESS,
+      TrainingCertificates.abi,
+      signer
+    );
+
+    class AgentGenomeEngine {
+      constructor() {
+        this.dnaTraits = new Map([
+          ['cognitiveArchitecture', {
+            type: 'select',
+            options: ['neuroSymbolic', 'transformerX', 'diffusionNet'],
+            weights: [0.3, 0.5, 0.2]
+          }],
+          ['securityProtocols', {
+            type: 'multiSelect',
+            options: ['zeroTrust', 'homomorphic', 'sgxEnclave'],
+            max: 3
+          }],
+          ['economicModel', {
+            type: 'struct',
+            fields: {
+              token: { type: 'address', default: TOKEN_ADDRESS },
+              stakingRatio: { type: 'uint8', range: [0, 100] },
+              rewardCurve: { type: 'curveType', options: ['logarithmic', 'exponential'] }
+            }
+          }],
+          // 12 additional traits with complex types
+          ['evolutionaryParams', {
+            type: 'nestedStruct',
+            fields: {
+              mutationRate: { type: 'uint8', range: [1, 100] },
+              crossoverStrategy: { type: 'algorithm', version: 'v2.1.5' }
+            }
+          }]
+        ]);
+      }
+
+      async generateAgentDNA(config) {
+        const dna = {};
+        for (const [trait, settings] of this.dnaTraits) {
+          dna[trait] = await this.processTrait(config[trait], settings);
+        }
+        return this.hashDNA(dna);
+      }
+
+      async processTrait(value, settings) {
+        switch(settings.type) {
+          case 'select':
+            return this.weightedSelect(value, settings.options, settings.weights);
+          case 'multiSelect':
+            return this.secureMultiSelect(value, settings.options, settings.max);
+          case 'struct':
+            return this.validateStruct(value, settings.fields);
+          case 'nestedStruct':
+            return this.processNestedStruct(value, settings.fields);
+          default:
+            throw new Error(`Unsupported trait type: ${settings.type}`);
+        }
+      }
+    }
+
+    class AgentMarketplace {
+      constructor() {
+        this.listings = new Map();
+        this.initMarketplace();
+      }
+
+      async initMarketplace() {
+        const listingCount = await agentNFT.totalListings();
+        for (let i = 0; i < listingCount; i++) {
+          const listing = await agentNFT.listings(i);
+          this.listings.set(listing.dnaHash, {
+            price: listing.price,
+            owner: listing.owner,
+            stats: await agentNFT.getAgentStats(listing.dnaHash)
+          });
+        }
+      }
+
+      async createListing(dnaHash, price) {
+        const tx = await agentNFT.createListing(dnaHash, ethers.utils.parseEther(price));
+        await tx.wait();
+        this.listings.set(dnaHash, {
+          price,
+          owner: userAddress,
+          stats: { purchases: 0, revenue: 0 }
+        });
+      }
+
+      async purchaseAgent(dnaHash, buyer) {
+        const listing = this.listings.get(dnaHash);
+        const tx = await agentNFT.connect(buyer).purchaseAgent(dnaHash, {
+          value: ethers.utils.parseEther(listing.price)
+        });
+        await tx.wait();
+        await this.distributeFunds(dnaHash, listing.price);
+      }
+    }
+
+    class AgentTrainingSystem {
+      constructor() {
+        this.modules = new Map([
+          ['security', new SecurityDojo()],
+          ['efficiency', new OptimizationGym()],
+          ['creativity', new InnovationLab()]
+        ]);
+        this.certificationQueue = new Map();
+      }
+
+      async runTrainingSession(agentId, module, duration) {
+        const results = await this.modules.get(module).train(agentId, duration);
+        await this.issueCertificate(agentId, module, results.score);
+        return this.updateAgentDNA(agentId, results.dnaModifications);
+      }
+
+      async issueCertificate(agentId, module, score) {
+        const certMetadata = {
+          agentId,
+          module,
+          score,
+          date: Date.now(),
+          issuer: userAddress
+        };
+        
+        const { path } = await IPFS.add(JSON.stringify(certMetadata));
+        const tx = await trainingCerts.mintCertificate(userAddress, path);
+        await tx.wait();
+      }
+    }
+
+    class DAOGovernance {
+      constructor() {
+        this.proposals = new Map();
+        this.votingPower = new Map();
+      }
+
+      async createProposal(type, details) {
+        const proposalId = ethers.utils.id(`${Date.now()}-${type}`);
+        const tx = await daoFactory.createProposal(proposalId, type, details);
+        await tx.wait();
+        
+        this.proposals.set(proposalId, {
+          type,
+          details,
+          votesFor: 0,
+          votesAgainst: 0,
+          executed: false
+        });
+        
+        return proposalId;
+      }
+
+      async executeProposal(proposalId) {
+        const proposal = this.proposals.get(proposalId);
+        if (proposal.executed) throw new Error("Proposal already executed");
+        
+        const tx = await daoFactory.executeProposal(proposalId);
+        await tx.wait();
+        
+        proposal.executed = true;
+        await this.handleProposalOutcome(proposal);
+      }
+
+      async calculateVotingPower(address) {
+        const [agentCount, reputation] = await Promise.all([
+          agentNFT.balanceOf(address),
+          daoFactory.getReputation(address)
+        ]);
+        
+        return agentCount * 100 + reputation;
+      }
+    }
+
+    // Initialize Core Systems
+    document.addEventListener('DOMContentLoaded', async () => {
+      userAddress = await provider.send("eth_requestAccounts", [])[0];
+      
+      window.agentEngine = new AgentGenomeEngine();
+      window.marketplace = new AgentMarketplace();
+      window.trainingSystem = new AgentTrainingSystem();
+      window.daoGovernance = new DAOGovernance();
+
+      // Load initial state
+      await marketplace.initMarketplace();
+      await daoGovernance.calculateVotingPower(userAddress);
+    });
+    </script>
+
+    <!-- Add to HTML Structure -->
+    <div class="cyber-panel" id="agentCommandCenter">
+      <div class="panel-header">
+        <h2><i class='bx bx-command'></i> Agent Command Nexus</h2>
+        <div class="toolbar">
+          <div class="voting-power">
+            <i class='bx bx-line-chart'></i>
+            <span id="votingPower">0</span> VP
+          </div>
+          <div class="token-balance">
+            <i class='bx bx-coin'></i>
+            <span id="tokenBalance">0</span> AIRO
+          </div>
+        </div>
+      </div>
+
+      <div class="dna-sections">
+        <!-- Deployment Matrix -->
+        <div class="dna-category" data-category="deployment">
+          <h3><i class='bx bx-cloud-upload'></i> Deployment Protocols</h3>
+          <div class="deployment-options">
+            <div class="deploy-option" data-protocol="cloud">
+              <i class='bx bx-server'></i>
+              <span>Cloud Cluster</span>
+              <div class="requirements">
+                <span>Min VRAM: 16GB</span>
+                <span>TPU v4+</span>
+              </div>
+            </div>
+            <div class="deploy-option" data-protocol="edge">
+              <i class='bx bx-chip'></i>
+              <span>Edge Network</span>
+              <div class="requirements">
+                <span>5G+</span>
+                <span>Low Latency</span>
+              </div>
+            </div>
+            <div class="deploy-option" data-protocol="blockchain">
+              <i class='bx bx-cube'></i>
+              <span>Decentralized Net</span>
+              <div class="requirements">
+                <span>0.1+ ETH</span>
+                <span>IPFS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Training Monitor -->
+        <div class="dna-category" data-category="training">
+          <h3><i class='bx bx-trending-up'></i> Live Training Matrix</h3>
+          <div class="training-metrics">
+            <div class="metric">
+              <span class="label">Security Score</span>
+              <div class="gauge security"></div>
+            </div>
+            <div class="metric">
+              <span class="label">Efficiency</span>
+              <div class="gauge efficiency"></div>
+            </div>
+            <div class="metric">
+              <span class="label">Creativity Index</span>
+              <div class="gauge creativity"></div>
+            </div>
+          </div>
+          <div class="training-controls">
+            <button class="neon-btn" id="startTraining">
+              <i class='bx bx-play'></i> Initiate Training
+            </button>
+            <button class="neon-btn" id="emergencyHalt">
+              <i class='bx bx-error'></i> Emergency Stop
+            </button>
+          </div>
+        </div>
+
+        <!-- DAO Governance Interface -->
+        <div class="dna-category" data-category="governance">
+          <h3><i class='bx bx-network-chart'></i> DAO Governance Hub</h3>
+          <div class="proposal-queue">
+            <div class="proposal" v-for="proposal in activeProposals" :key="proposal.id">
+              <div class="proposal-header">
+                <h4>{{ proposal.title }}</h4>
+                <span class="deadline">{{ proposal.deadline }}</span>
+              </div>
+              <div class="proposal-body">
+                <p>{{ proposal.description }}</p>
+                <div class="vote-buttons">
+                  <button class="vote-for" @click="vote(proposal.id, true)">
+                    <i class='bx bx-upvote'></i> {{ proposal.votesFor }}
+                  </button>
+                  <button class="vote-against" @click="vote(proposal.id, false)">
+                    <i class='bx bx-downvote'></i> {{ proposal.votesAgainst }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="proposal-creation">
+            <button class="neon-btn" id="createProposal">
+              <i class='bx bx-edit'></i> New Proposal
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real-time Agent Network Visualization -->
+      <div class="network-canvas">
+        <canvas id="agentNetwork"></canvas>
+        <div class="network-legend">
+          <div class="legend-item" v-for="node in nodeTypes" :key="node.type">
+            <div class="node-preview" :style="node.style"></div>
+            <span>{{ node.label }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add to CSS -->
+    <style>
+    .cyber-panel {
+      position: relative;
+      background: linear-gradient(152deg, 
+        rgba(17, 24, 39, 0.97) 0%, 
+        rgba(31, 41, 55, 0.95) 100%
+      );
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      box-shadow: 0 0 25px rgba(59, 130, 246, 0.3);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .voting-power, .token-balance {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(31, 41, 55, 0.7);
+      border-radius: 6px;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .deployment-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .deploy-option {
+      padding: 1.5rem;
+      background: rgba(17, 24, 39, 0.8);
+      border-radius: 8px;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .deploy-option:hover {
+      background: rgba(59, 130, 246, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .requirements {
+      margin-top: 1rem;
+      font-size: 0.9em;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .training-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .gauge {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gauge::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: var(--progress);
+      background: linear-gradient(90deg, 
+        var(--primary) 0%, 
+        var(--accent) 100%
+      );
+      transition: width 0.5s ease;
+    }
+
+    .network-canvas {
+      height: 500px;
+      margin-top: 2rem;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .network-legend {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      background: rgba(17, 24, 39, 0.9);
+      padding: 1rem;
+      border-radius: 6px;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0.5rem 0;
+    }
+
+    .node-preview {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--node-color);
+      border: 2px solid var(--node-border);
+    }
+    </style>
+</body>
+
+</html>

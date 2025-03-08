@@ -1,0 +1,1064 @@
+2025-03-07 23:08:12: [2025-03-07T23:08:12.830Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-07 23:08:12: [2025-03-07T23:08:12.833Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-07 23:08:12: Starting AI War Room Extension initialization...
+2025-03-07 23:08:12: Agent config directory: ./agent-config
+2025-03-07 23:08:12: [2025-03-07T23:08:12.834Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-07 23:08:12: [2025-03-07T23:08:12.834Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-07 23:08:12: Agent service initialized successfully
+2025-03-07 23:08:12: API router mounted at /api/ai
+2025-03-07 23:08:12: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-07 23:08:12: AI War Room extension initialized successfully
+2025-03-07 23:08:12: [2025-03-07T23:08:12.836Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-07 23:08:12: [2025-03-07T23:08:12.837Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-07 23:08:12: [2025-03-07T23:08:12.838Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-07 23:08:12: [2025-03-07T23:08:12.838Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-07 23:15:48: [2025-03-07T23:15:48.219Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-07 23:15:48: [2025-03-07T23:15:48.222Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-07 23:15:48: Starting AI War Room Extension initialization...
+2025-03-07 23:15:48: Agent config directory: ./agent-config
+2025-03-07 23:15:48: [2025-03-07T23:15:48.226Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-07 23:15:48: [2025-03-07T23:15:48.227Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-07 23:15:48: Agent service initialized successfully
+2025-03-07 23:15:48: API router mounted at /api/ai
+2025-03-07 23:15:48: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-07 23:15:48: AI War Room extension initialized successfully
+2025-03-07 23:15:48: [2025-03-07T23:15:48.238Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-07 23:15:48: [2025-03-07T23:15:48.242Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-07 23:15:48: [2025-03-07T23:15:48.243Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-07 23:15:48: [2025-03-07T23:15:48.244Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-07 23:15:52: [2025-03-07T23:15:52.554Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-07 23:15:52: [2025-03-07T23:15:52.557Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-07 23:15:52: Starting AI War Room Extension initialization...
+2025-03-07 23:15:52: Agent config directory: ./agent-config
+2025-03-07 23:15:52: [2025-03-07T23:15:52.561Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-07 23:15:52: [2025-03-07T23:15:52.561Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-07 23:15:52: Agent service initialized successfully
+2025-03-07 23:15:52: API router mounted at /api/ai
+2025-03-07 23:15:52: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-07 23:15:52: AI War Room extension initialized successfully
+2025-03-07 23:15:52: [2025-03-07T23:15:52.566Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-07 23:15:52: [2025-03-07T23:15:52.569Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-07 23:15:52: [2025-03-07T23:15:52.569Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-07 23:15:52: [2025-03-07T23:15:52.570Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-07 23:15:54: [2025-03-07T23:15:54.442Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-07 23:15:54: [2025-03-07T23:15:54.448Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-07 23:15:54: Starting AI War Room Extension initialization...
+2025-03-07 23:15:54: Agent config directory: ./agent-config
+2025-03-07 23:15:54: [2025-03-07T23:15:54.452Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-07 23:15:54: [2025-03-07T23:15:54.459Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-07 23:15:54: Agent service initialized successfully
+2025-03-07 23:15:54: API router mounted at /api/ai
+2025-03-07 23:15:54: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-07 23:15:54: AI War Room extension initialized successfully
+2025-03-07 23:15:54: [2025-03-07T23:15:54.461Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-07 23:15:54: [2025-03-07T23:15:54.463Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-07 23:15:54: [2025-03-07T23:15:54.463Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-07 23:15:54: [2025-03-07T23:15:54.464Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-07 23:27:09: [2025-03-07T23:27:09.823Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-07 23:27:09: [2025-03-07T23:27:09.828Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-07 23:27:09: Starting AI War Room Extension initialization...
+2025-03-07 23:27:09: Agent config directory: ./agent-config
+2025-03-07 23:27:09: [2025-03-07T23:27:09.831Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-07 23:27:09: [2025-03-07T23:27:09.832Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-07 23:27:09: Agent service initialized successfully
+2025-03-07 23:27:09: API router mounted at /api/ai
+2025-03-07 23:27:09: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-07 23:27:09: AI War Room extension initialized successfully
+2025-03-07 23:27:09: [2025-03-07T23:27:09.833Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-07 23:27:09: [2025-03-07T23:27:09.836Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-07 23:27:09: [2025-03-07T23:27:09.836Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-07 23:27:09: [2025-03-07T23:27:09.836Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-07 23:27:12: [2025-03-07T23:27:12.708Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-07 23:27:12: [2025-03-07T23:27:12.711Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-07 23:27:12: Starting AI War Room Extension initialization...
+2025-03-07 23:27:12: Agent config directory: ./agent-config
+2025-03-07 23:27:12: [2025-03-07T23:27:12.714Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-07 23:27:12: [2025-03-07T23:27:12.714Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-07 23:27:12: Agent service initialized successfully
+2025-03-07 23:27:12: API router mounted at /api/ai
+2025-03-07 23:27:12: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-07 23:27:12: AI War Room extension initialized successfully
+2025-03-07 23:27:12: [2025-03-07T23:27:12.716Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-07 23:27:12: [2025-03-07T23:27:12.718Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-07 23:27:12: [2025-03-07T23:27:12.718Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-07 23:27:12: [2025-03-07T23:27:12.718Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-07 23:27:17: [2025-03-07T23:27:17.232Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-07 23:27:17: [2025-03-07T23:27:17.237Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-07 23:27:17: Starting AI War Room Extension initialization...
+2025-03-07 23:27:17: Agent config directory: ./agent-config
+2025-03-07 23:27:17: [2025-03-07T23:27:17.243Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-07 23:27:17: [2025-03-07T23:27:17.244Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-07 23:27:17: Agent service initialized successfully
+2025-03-07 23:27:17: API router mounted at /api/ai
+2025-03-07 23:27:17: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-07 23:27:17: AI War Room extension initialized successfully
+2025-03-07 23:27:17: [2025-03-07T23:27:17.246Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-07 23:27:17: [2025-03-07T23:27:17.250Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-07 23:27:17: [2025-03-07T23:27:17.251Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-07 23:27:17: [2025-03-07T23:27:17.252Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-07 23:29:03: [2025-03-07T23:29:03.791Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-07 23:29:03: [2025-03-07T23:29:03.794Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-07 23:29:03: Starting AI War Room Extension initialization...
+2025-03-07 23:29:03: Agent config directory: ./agent-config
+2025-03-07 23:29:03: [2025-03-07T23:29:03.797Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-07 23:29:03: [2025-03-07T23:29:03.797Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-07 23:29:03: Agent service initialized successfully
+2025-03-07 23:29:03: API router mounted at /api/ai
+2025-03-07 23:29:03: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-07 23:29:03: AI War Room extension initialized successfully
+2025-03-07 23:29:03: [2025-03-07T23:29:03.799Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-07 23:29:03: [2025-03-07T23:29:03.801Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-07 23:29:03: [2025-03-07T23:29:03.801Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-07 23:29:03: [2025-03-07T23:29:03.801Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:01:31: [2025-03-08T00:01:31.428Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:01:31: [2025-03-08T00:01:31.434Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:01:31: Starting AI War Room Extension initialization...
+2025-03-08 00:01:31: Agent config directory: ./agent-config
+2025-03-08 00:01:31: [2025-03-08T00:01:31.438Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:01:31: [2025-03-08T00:01:31.438Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:01:31: Agent service initialized successfully
+2025-03-08 00:01:31: API router mounted at /api/ai
+2025-03-08 00:01:31: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:01:31: AI War Room extension initialized successfully
+2025-03-08 00:01:31: [2025-03-08T00:01:31.441Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:01:31: [2025-03-08T00:01:31.445Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:01:31: [2025-03-08T00:01:31.445Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:01:31: [2025-03-08T00:01:31.446Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:02:18: [2025-03-08T00:02:18.861Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:02:18: [2025-03-08T00:02:18.864Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:02:18: Starting AI War Room Extension initialization...
+2025-03-08 00:02:18: Agent config directory: ./agent-config
+2025-03-08 00:02:18: [2025-03-08T00:02:18.866Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:02:18: [2025-03-08T00:02:18.867Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:02:18: Agent service initialized successfully
+2025-03-08 00:02:18: API router mounted at /api/ai
+2025-03-08 00:02:18: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:02:18: AI War Room extension initialized successfully
+2025-03-08 00:02:18: [2025-03-08T00:02:18.868Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:02:18: [2025-03-08T00:02:18.872Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:02:18: [2025-03-08T00:02:18.872Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:02:18: [2025-03-08T00:02:18.872Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:05:22: [2025-03-08T00:05:22.146Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:05:22: [2025-03-08T00:05:22.151Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:05:22: Starting AI War Room Extension initialization...
+2025-03-08 00:05:22: Agent config directory: ./agent-config
+2025-03-08 00:05:22: [2025-03-08T00:05:22.164Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:05:22: [2025-03-08T00:05:22.164Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:05:22: Agent service initialized successfully
+2025-03-08 00:05:22: API router mounted at /api/ai
+2025-03-08 00:05:22: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:05:22: AI War Room extension initialized successfully
+2025-03-08 00:05:22: [2025-03-08T00:05:22.166Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:05:22: [2025-03-08T00:05:22.168Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:05:22: [2025-03-08T00:05:22.169Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:05:22: [2025-03-08T00:05:22.171Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:05:24: [2025-03-08T00:05:24.521Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:05:24: [2025-03-08T00:05:24.525Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:05:24: Starting AI War Room Extension initialization...
+2025-03-08 00:05:24: Agent config directory: ./agent-config
+2025-03-08 00:05:24: [2025-03-08T00:05:24.530Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:05:24: [2025-03-08T00:05:24.530Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:05:24: Agent service initialized successfully
+2025-03-08 00:05:24: API router mounted at /api/ai
+2025-03-08 00:05:24: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:05:24: AI War Room extension initialized successfully
+2025-03-08 00:05:24: [2025-03-08T00:05:24.534Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:05:24: [2025-03-08T00:05:24.543Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:05:24: [2025-03-08T00:05:24.543Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:05:24: [2025-03-08T00:05:24.545Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:05:30: [2025-03-08T00:05:30.035Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:05:30: [2025-03-08T00:05:30.041Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:05:30: Starting AI War Room Extension initialization...
+2025-03-08 00:05:30: Agent config directory: ./agent-config
+2025-03-08 00:05:30: [2025-03-08T00:05:30.049Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:05:30: [2025-03-08T00:05:30.049Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:05:30: Agent service initialized successfully
+2025-03-08 00:05:30: API router mounted at /api/ai
+2025-03-08 00:05:30: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:05:30: AI War Room extension initialized successfully
+2025-03-08 00:05:30: [2025-03-08T00:05:30.051Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:05:30: [2025-03-08T00:05:30.057Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:05:30: [2025-03-08T00:05:30.057Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:05:30: [2025-03-08T00:05:30.058Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:05:39: [2025-03-08T00:05:39.313Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:05:39: [2025-03-08T00:05:39.318Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:05:39: Starting AI War Room Extension initialization...
+2025-03-08 00:05:39: Agent config directory: ./agent-config
+2025-03-08 00:05:39: [2025-03-08T00:05:39.323Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:05:39: [2025-03-08T00:05:39.323Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:05:39: Agent service initialized successfully
+2025-03-08 00:05:39: API router mounted at /api/ai
+2025-03-08 00:05:39: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:05:39: AI War Room extension initialized successfully
+2025-03-08 00:05:39: [2025-03-08T00:05:39.325Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:05:39: [2025-03-08T00:05:39.337Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:05:39: [2025-03-08T00:05:39.337Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:05:39: [2025-03-08T00:05:39.337Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:06:39: [2025-03-08T00:06:39.796Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:06:39: [2025-03-08T00:06:39.807Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:06:39: Starting AI War Room Extension initialization...
+2025-03-08 00:06:39: Agent config directory: ./agent-config
+2025-03-08 00:06:39: [2025-03-08T00:06:39.810Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:06:39: [2025-03-08T00:06:39.810Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:06:39: Agent service initialized successfully
+2025-03-08 00:06:39: API router mounted at /api/ai
+2025-03-08 00:06:39: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:06:39: AI War Room extension initialized successfully
+2025-03-08 00:06:39: [2025-03-08T00:06:39.812Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:06:39: [2025-03-08T00:06:39.814Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:06:39: [2025-03-08T00:06:39.814Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:06:39: [2025-03-08T00:06:39.814Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:06:45: [2025-03-08T00:06:45.513Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:06:45: [2025-03-08T00:06:45.516Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:06:45: Starting AI War Room Extension initialization...
+2025-03-08 00:06:45: Agent config directory: ./agent-config
+2025-03-08 00:06:45: [2025-03-08T00:06:45.518Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:06:45: [2025-03-08T00:06:45.519Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:06:45: Agent service initialized successfully
+2025-03-08 00:06:45: API router mounted at /api/ai
+2025-03-08 00:06:45: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:06:45: AI War Room extension initialized successfully
+2025-03-08 00:06:45: [2025-03-08T00:06:45.521Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:06:45: [2025-03-08T00:06:45.523Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:06:45: [2025-03-08T00:06:45.523Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:06:45: [2025-03-08T00:06:45.524Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:06:52: [2025-03-08T00:06:52.147Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:06:52: [2025-03-08T00:06:52.150Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:06:52: Starting AI War Room Extension initialization...
+2025-03-08 00:06:52: Agent config directory: ./agent-config
+2025-03-08 00:06:52: [2025-03-08T00:06:52.156Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:06:52: [2025-03-08T00:06:52.157Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:06:52: Agent service initialized successfully
+2025-03-08 00:06:52: API router mounted at /api/ai
+2025-03-08 00:06:52: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:06:52: AI War Room extension initialized successfully
+2025-03-08 00:06:52: [2025-03-08T00:06:52.160Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:06:52: [2025-03-08T00:06:52.162Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:06:52: [2025-03-08T00:06:52.162Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:06:52: [2025-03-08T00:06:52.163Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:06:56: [2025-03-08T00:06:56.165Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:06:56: [2025-03-08T00:06:56.170Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:06:56: Starting AI War Room Extension initialization...
+2025-03-08 00:06:56: Agent config directory: ./agent-config
+2025-03-08 00:06:56: [2025-03-08T00:06:56.173Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:06:56: [2025-03-08T00:06:56.173Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:06:56: Agent service initialized successfully
+2025-03-08 00:06:56: API router mounted at /api/ai
+2025-03-08 00:06:56: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:06:56: AI War Room extension initialized successfully
+2025-03-08 00:06:56: [2025-03-08T00:06:56.179Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:06:56: [2025-03-08T00:06:56.184Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:06:56: [2025-03-08T00:06:56.184Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:06:56: [2025-03-08T00:06:56.184Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:08:07: [2025-03-08T00:08:07.270Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:08:07: [2025-03-08T00:08:07.273Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:08:07: Starting AI War Room Extension initialization...
+2025-03-08 00:08:07: Agent config directory: ./agent-config
+2025-03-08 00:08:07: [2025-03-08T00:08:07.276Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:08:07: [2025-03-08T00:08:07.276Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:08:07: Agent service initialized successfully
+2025-03-08 00:08:07: API router mounted at /api/ai
+2025-03-08 00:08:07: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:08:07: AI War Room extension initialized successfully
+2025-03-08 00:08:07: [2025-03-08T00:08:07.277Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:08:07: [2025-03-08T00:08:07.280Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:08:07: [2025-03-08T00:08:07.280Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:08:07: [2025-03-08T00:08:07.280Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:08:54: [2025-03-08T00:08:54.899Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:08:54: [2025-03-08T00:08:54.902Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:08:54: Starting AI War Room Extension initialization...
+2025-03-08 00:08:54: Agent config directory: ./agent-config
+2025-03-08 00:08:54: [2025-03-08T00:08:54.907Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:08:54: [2025-03-08T00:08:54.907Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:08:54: Agent service initialized successfully
+2025-03-08 00:08:54: API router mounted at /api/ai
+2025-03-08 00:08:54: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:08:54: AI War Room extension initialized successfully
+2025-03-08 00:08:54: [2025-03-08T00:08:54.909Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:08:54: [2025-03-08T00:08:54.912Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:08:54: [2025-03-08T00:08:54.912Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:08:54: [2025-03-08T00:08:54.912Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:08:59: [2025-03-08T00:08:59.665Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:08:59: [2025-03-08T00:08:59.669Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:08:59: Starting AI War Room Extension initialization...
+2025-03-08 00:08:59: Agent config directory: ./agent-config
+2025-03-08 00:08:59: [2025-03-08T00:08:59.670Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:08:59: [2025-03-08T00:08:59.671Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:08:59: Agent service initialized successfully
+2025-03-08 00:08:59: API router mounted at /api/ai
+2025-03-08 00:08:59: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:08:59: AI War Room extension initialized successfully
+2025-03-08 00:08:59: [2025-03-08T00:08:59.678Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:08:59: [2025-03-08T00:08:59.680Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:08:59: [2025-03-08T00:08:59.681Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:08:59: [2025-03-08T00:08:59.681Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:11:47: [2025-03-08T00:11:47.309Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:11:47: [2025-03-08T00:11:47.313Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:11:47: Starting AI War Room Extension initialization...
+2025-03-08 00:11:47: Agent config directory: ./agent-config
+2025-03-08 00:11:47: [2025-03-08T00:11:47.317Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:11:47: [2025-03-08T00:11:47.318Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:11:47: Agent service initialized successfully
+2025-03-08 00:11:47: API router mounted at /api/ai
+2025-03-08 00:11:47: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:11:47: AI War Room extension initialized successfully
+2025-03-08 00:11:47: [2025-03-08T00:11:47.322Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:11:47: [2025-03-08T00:11:47.325Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:11:47: [2025-03-08T00:11:47.326Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:11:47: [2025-03-08T00:11:47.326Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:22:27: [2025-03-08T00:22:27.350Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:22:27: [2025-03-08T00:22:27.357Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:22:27: Starting AI War Room Extension initialization...
+2025-03-08 00:22:27: Agent config directory: ./agent-config
+2025-03-08 00:22:27: [2025-03-08T00:22:27.359Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:22:27: [2025-03-08T00:22:27.359Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:22:27: Agent service initialized successfully
+2025-03-08 00:22:27: API router mounted at /api/ai
+2025-03-08 00:22:27: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:22:27: AI War Room extension initialized successfully
+2025-03-08 00:22:27: [2025-03-08T00:22:27.366Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:22:27: [2025-03-08T00:22:27.371Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:22:27: [2025-03-08T00:22:27.371Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:22:27: [2025-03-08T00:22:27.375Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:23:37: [2025-03-08T00:23:37.800Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:23:37: [2025-03-08T00:23:37.814Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:23:37: Starting AI War Room Extension initialization...
+2025-03-08 00:23:37: Agent config directory: ./agent-config
+2025-03-08 00:23:37: [2025-03-08T00:23:37.817Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:23:37: [2025-03-08T00:23:37.817Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:23:37: Agent service initialized successfully
+2025-03-08 00:23:37: API router mounted at /api/ai
+2025-03-08 00:23:37: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:23:37: AI War Room extension initialized successfully
+2025-03-08 00:23:37: [2025-03-08T00:23:37.819Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:23:37: [2025-03-08T00:23:37.822Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:23:37: [2025-03-08T00:23:37.822Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:23:37: [2025-03-08T00:23:37.822Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:24:10: [2025-03-08T00:24:10.952Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:24:10: [2025-03-08T00:24:10.961Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:24:10: Starting AI War Room Extension initialization...
+2025-03-08 00:24:10: Agent config directory: ./agent-config
+2025-03-08 00:24:10: [2025-03-08T00:24:10.964Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:24:10: [2025-03-08T00:24:10.964Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:24:10: Agent service initialized successfully
+2025-03-08 00:24:10: API router mounted at /api/ai
+2025-03-08 00:24:10: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:24:10: AI War Room extension initialized successfully
+2025-03-08 00:24:10: [2025-03-08T00:24:10.965Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:24:10: [2025-03-08T00:24:10.967Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:24:10: [2025-03-08T00:24:10.967Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:24:10: [2025-03-08T00:24:10.968Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:26:34: [2025-03-08T00:26:34.450Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:26:34: [2025-03-08T00:26:34.459Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:26:34: Starting AI War Room Extension initialization...
+2025-03-08 00:26:34: Agent config directory: ./agent-config
+2025-03-08 00:26:34: [2025-03-08T00:26:34.462Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:26:34: [2025-03-08T00:26:34.462Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:26:34: Agent service initialized successfully
+2025-03-08 00:26:34: API router mounted at /api/ai
+2025-03-08 00:26:34: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:26:34: AI War Room extension initialized successfully
+2025-03-08 00:26:34: [2025-03-08T00:26:34.471Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:26:34: [2025-03-08T00:26:34.474Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:26:34: [2025-03-08T00:26:34.474Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:26:34: [2025-03-08T00:26:34.474Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:27:11: [2025-03-08T00:27:11.438Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:27:11: [2025-03-08T00:27:11.458Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:27:11: Starting AI War Room Extension initialization...
+2025-03-08 00:27:11: Agent config directory: ./agent-config
+2025-03-08 00:27:11: [2025-03-08T00:27:11.462Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:27:11: [2025-03-08T00:27:11.462Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:27:11: Agent service initialized successfully
+2025-03-08 00:27:11: API router mounted at /api/ai
+2025-03-08 00:27:11: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:27:11: AI War Room extension initialized successfully
+2025-03-08 00:27:11: [2025-03-08T00:27:11.465Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:27:11: [2025-03-08T00:27:11.467Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:27:11: [2025-03-08T00:27:11.467Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:27:11: [2025-03-08T00:27:11.468Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:28:12: [2025-03-08T00:28:12.206Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:28:12: [2025-03-08T00:28:12.210Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:28:12: Starting AI War Room Extension initialization...
+2025-03-08 00:28:12: Agent config directory: ./agent-config
+2025-03-08 00:28:12: [2025-03-08T00:28:12.213Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:28:12: [2025-03-08T00:28:12.213Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:28:12: Agent service initialized successfully
+2025-03-08 00:28:12: API router mounted at /api/ai
+2025-03-08 00:28:12: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:28:12: AI War Room extension initialized successfully
+2025-03-08 00:28:12: [2025-03-08T00:28:12.219Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:28:12: [2025-03-08T00:28:12.223Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:28:12: [2025-03-08T00:28:12.224Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:28:12: [2025-03-08T00:28:12.224Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 00:30:35: [2025-03-08T00:30:35.721Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 00:30:35: [2025-03-08T00:30:35.725Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:30:35: Starting AI War Room Extension initialization...
+2025-03-08 00:30:35: Agent config directory: ./agent-config
+2025-03-08 00:30:35: [2025-03-08T00:30:35.729Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 00:30:35: [2025-03-08T00:30:35.730Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 00:30:35: Agent service initialized successfully
+2025-03-08 00:30:35: API router mounted at /api/ai
+2025-03-08 00:30:35: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 00:30:35: AI War Room extension initialized successfully
+2025-03-08 00:30:35: [2025-03-08T00:30:35.738Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 00:30:35: [2025-03-08T00:30:35.741Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 00:30:35: [2025-03-08T00:30:35.741Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 00:30:35: [2025-03-08T00:30:35.742Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:17:52: [2025-03-08T02:17:52.960Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:17:52: [2025-03-08T02:17:52.963Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:17:52: Starting AI War Room Extension initialization...
+2025-03-08 02:17:52: Agent config directory: ./agent-config
+2025-03-08 02:17:52: [2025-03-08T02:17:52.966Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:17:52: [2025-03-08T02:17:52.966Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:17:52: Agent service initialized successfully
+2025-03-08 02:17:52: API router mounted at /api/ai
+2025-03-08 02:17:52: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:17:52: AI War Room extension initialized successfully
+2025-03-08 02:17:52: [2025-03-08T02:17:52.968Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:17:52: [2025-03-08T02:17:52.970Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:17:52: [2025-03-08T02:17:52.970Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:17:52: [2025-03-08T02:17:52.970Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:17:55: [2025-03-08T02:17:55.742Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:17:55: [2025-03-08T02:17:55.746Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:17:55: Starting AI War Room Extension initialization...
+2025-03-08 02:17:55: Agent config directory: ./agent-config
+2025-03-08 02:17:55: [2025-03-08T02:17:55.749Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:17:55: [2025-03-08T02:17:55.750Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:17:55: Agent service initialized successfully
+2025-03-08 02:17:55: API router mounted at /api/ai
+2025-03-08 02:17:55: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:17:55: AI War Room extension initialized successfully
+2025-03-08 02:17:55: [2025-03-08T02:17:55.753Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:17:55: [2025-03-08T02:17:55.756Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:17:55: [2025-03-08T02:17:55.756Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:17:55: [2025-03-08T02:17:55.757Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:18:07: [2025-03-08T02:18:07.448Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:18:07: [2025-03-08T02:18:07.452Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:18:07: Starting AI War Room Extension initialization...
+2025-03-08 02:18:07: Agent config directory: ./agent-config
+2025-03-08 02:18:07: [2025-03-08T02:18:07.459Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:18:07: [2025-03-08T02:18:07.459Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:18:07: Agent service initialized successfully
+2025-03-08 02:18:07: API router mounted at /api/ai
+2025-03-08 02:18:07: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:18:07: AI War Room extension initialized successfully
+2025-03-08 02:18:07: [2025-03-08T02:18:07.469Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:18:07: [2025-03-08T02:18:07.472Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:18:07: [2025-03-08T02:18:07.472Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:18:07: [2025-03-08T02:18:07.472Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:18:10: [2025-03-08T02:18:10.304Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:18:10: [2025-03-08T02:18:10.310Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:18:10: Starting AI War Room Extension initialization...
+2025-03-08 02:18:10: Agent config directory: ./agent-config
+2025-03-08 02:18:10: [2025-03-08T02:18:10.315Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:18:10: [2025-03-08T02:18:10.315Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:18:10: Agent service initialized successfully
+2025-03-08 02:18:10: API router mounted at /api/ai
+2025-03-08 02:18:10: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:18:10: AI War Room extension initialized successfully
+2025-03-08 02:18:10: [2025-03-08T02:18:10.321Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:18:10: [2025-03-08T02:18:10.324Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:18:10: [2025-03-08T02:18:10.326Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:18:10: [2025-03-08T02:18:10.327Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:18:13: [2025-03-08T02:18:13.313Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:18:13: [2025-03-08T02:18:13.317Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:18:13: Starting AI War Room Extension initialization...
+2025-03-08 02:18:13: Agent config directory: ./agent-config
+2025-03-08 02:18:13: [2025-03-08T02:18:13.321Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:18:13: [2025-03-08T02:18:13.321Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:18:13: Agent service initialized successfully
+2025-03-08 02:18:13: API router mounted at /api/ai
+2025-03-08 02:18:13: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:18:13: AI War Room extension initialized successfully
+2025-03-08 02:18:13: [2025-03-08T02:18:13.325Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:18:13: [2025-03-08T02:18:13.330Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:18:13: [2025-03-08T02:18:13.330Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:18:13: [2025-03-08T02:18:13.330Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:18:15: [2025-03-08T02:18:15.688Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:18:15: [2025-03-08T02:18:15.692Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:18:15: Starting AI War Room Extension initialization...
+2025-03-08 02:18:15: Agent config directory: ./agent-config
+2025-03-08 02:18:15: [2025-03-08T02:18:15.698Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:18:15: [2025-03-08T02:18:15.698Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:18:15: Agent service initialized successfully
+2025-03-08 02:18:15: API router mounted at /api/ai
+2025-03-08 02:18:15: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:18:15: AI War Room extension initialized successfully
+2025-03-08 02:18:15: [2025-03-08T02:18:15.700Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:18:15: [2025-03-08T02:18:15.704Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:18:15: [2025-03-08T02:18:15.705Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:18:15: [2025-03-08T02:18:15.705Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:19:05: [2025-03-08T02:19:05.336Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:19:05: [2025-03-08T02:19:05.339Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:05: Starting AI War Room Extension initialization...
+2025-03-08 02:19:05: Agent config directory: ./agent-config
+2025-03-08 02:19:05: [2025-03-08T02:19:05.347Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:19:05: [2025-03-08T02:19:05.348Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:19:05: Agent service initialized successfully
+2025-03-08 02:19:05: API router mounted at /api/ai
+2025-03-08 02:19:05: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:19:05: AI War Room extension initialized successfully
+2025-03-08 02:19:05: [2025-03-08T02:19:05.352Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:19:05: [2025-03-08T02:19:05.356Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:19:05: [2025-03-08T02:19:05.356Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:05: [2025-03-08T02:19:05.356Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:19:07: [2025-03-08T02:19:07.786Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:19:07: [2025-03-08T02:19:07.790Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:07: Starting AI War Room Extension initialization...
+2025-03-08 02:19:07: Agent config directory: ./agent-config
+2025-03-08 02:19:07: [2025-03-08T02:19:07.795Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:19:07: [2025-03-08T02:19:07.798Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:19:07: Agent service initialized successfully
+2025-03-08 02:19:07: API router mounted at /api/ai
+2025-03-08 02:19:07: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:19:07: AI War Room extension initialized successfully
+2025-03-08 02:19:07: [2025-03-08T02:19:07.801Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:19:07: [2025-03-08T02:19:07.807Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:19:07: [2025-03-08T02:19:07.807Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:07: [2025-03-08T02:19:07.808Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:19:13: [2025-03-08T02:19:13.645Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:19:13: [2025-03-08T02:19:13.650Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:13: Starting AI War Room Extension initialization...
+2025-03-08 02:19:13: Agent config directory: ./agent-config
+2025-03-08 02:19:13: [2025-03-08T02:19:13.658Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:19:13: [2025-03-08T02:19:13.659Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:19:13: Agent service initialized successfully
+2025-03-08 02:19:13: API router mounted at /api/ai
+2025-03-08 02:19:13: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:19:13: AI War Room extension initialized successfully
+2025-03-08 02:19:13: [2025-03-08T02:19:13.661Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:19:13: [2025-03-08T02:19:13.664Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:19:13: [2025-03-08T02:19:13.664Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:13: [2025-03-08T02:19:13.664Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:19:16: [2025-03-08T02:19:16.166Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:19:16: [2025-03-08T02:19:16.171Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:16: Starting AI War Room Extension initialization...
+2025-03-08 02:19:16: Agent config directory: ./agent-config
+2025-03-08 02:19:16: [2025-03-08T02:19:16.175Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:19:16: [2025-03-08T02:19:16.175Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:19:16: Agent service initialized successfully
+2025-03-08 02:19:16: API router mounted at /api/ai
+2025-03-08 02:19:16: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:19:16: AI War Room extension initialized successfully
+2025-03-08 02:19:16: [2025-03-08T02:19:16.177Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:19:16: [2025-03-08T02:19:16.181Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:19:16: [2025-03-08T02:19:16.181Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:16: [2025-03-08T02:19:16.181Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:19:19: [2025-03-08T02:19:19.909Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:19:19: [2025-03-08T02:19:19.912Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:19: Starting AI War Room Extension initialization...
+2025-03-08 02:19:19: Agent config directory: ./agent-config
+2025-03-08 02:19:19: [2025-03-08T02:19:19.914Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:19:19: [2025-03-08T02:19:19.914Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:19:19: Agent service initialized successfully
+2025-03-08 02:19:19: API router mounted at /api/ai
+2025-03-08 02:19:19: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:19:19: AI War Room extension initialized successfully
+2025-03-08 02:19:19: [2025-03-08T02:19:19.916Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:19:19: [2025-03-08T02:19:19.918Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:19:19: [2025-03-08T02:19:19.918Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:19: [2025-03-08T02:19:19.918Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:19:22: [2025-03-08T02:19:22.336Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:19:22: [2025-03-08T02:19:22.340Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:22: Starting AI War Room Extension initialization...
+2025-03-08 02:19:22: Agent config directory: ./agent-config
+2025-03-08 02:19:22: [2025-03-08T02:19:22.345Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:19:22: [2025-03-08T02:19:22.345Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:19:22: Agent service initialized successfully
+2025-03-08 02:19:22: API router mounted at /api/ai
+2025-03-08 02:19:22: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:19:22: AI War Room extension initialized successfully
+2025-03-08 02:19:22: [2025-03-08T02:19:22.357Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:19:22: [2025-03-08T02:19:22.365Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:19:22: [2025-03-08T02:19:22.368Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:22: [2025-03-08T02:19:22.369Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:19:23: [2025-03-08T02:19:23.374Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:19:23: [2025-03-08T02:19:23.379Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:23: Starting AI War Room Extension initialization...
+2025-03-08 02:19:23: Agent config directory: ./agent-config
+2025-03-08 02:19:23: [2025-03-08T02:19:23.381Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:19:23: [2025-03-08T02:19:23.382Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:19:23: Agent service initialized successfully
+2025-03-08 02:19:23: API router mounted at /api/ai
+2025-03-08 02:19:23: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:19:23: AI War Room extension initialized successfully
+2025-03-08 02:19:23: [2025-03-08T02:19:23.383Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:19:23: [2025-03-08T02:19:23.387Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:19:23: [2025-03-08T02:19:23.387Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:23: [2025-03-08T02:19:23.387Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:19:25: [2025-03-08T02:19:25.723Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:19:25: [2025-03-08T02:19:25.727Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:25: Starting AI War Room Extension initialization...
+2025-03-08 02:19:25: Agent config directory: ./agent-config
+2025-03-08 02:19:25: [2025-03-08T02:19:25.730Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:19:25: [2025-03-08T02:19:25.730Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:19:25: Agent service initialized successfully
+2025-03-08 02:19:25: API router mounted at /api/ai
+2025-03-08 02:19:25: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:19:25: AI War Room extension initialized successfully
+2025-03-08 02:19:25: [2025-03-08T02:19:25.732Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:19:25: [2025-03-08T02:19:25.735Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:19:25: [2025-03-08T02:19:25.735Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:25: [2025-03-08T02:19:25.735Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:19:26: [2025-03-08T02:19:26.537Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:19:26: [2025-03-08T02:19:26.541Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:26: Starting AI War Room Extension initialization...
+2025-03-08 02:19:26: Agent config directory: ./agent-config
+2025-03-08 02:19:26: [2025-03-08T02:19:26.545Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:19:26: [2025-03-08T02:19:26.547Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:19:26: Agent service initialized successfully
+2025-03-08 02:19:26: API router mounted at /api/ai
+2025-03-08 02:19:26: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:19:26: AI War Room extension initialized successfully
+2025-03-08 02:19:26: [2025-03-08T02:19:26.549Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:19:26: [2025-03-08T02:19:26.554Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:19:26: [2025-03-08T02:19:26.555Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:26: [2025-03-08T02:19:26.555Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:19:28: [2025-03-08T02:19:28.653Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:19:28: [2025-03-08T02:19:28.656Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:28: Starting AI War Room Extension initialization...
+2025-03-08 02:19:28: Agent config directory: ./agent-config
+2025-03-08 02:19:28: [2025-03-08T02:19:28.658Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:19:28: [2025-03-08T02:19:28.658Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:19:28: Agent service initialized successfully
+2025-03-08 02:19:28: API router mounted at /api/ai
+2025-03-08 02:19:28: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:19:28: AI War Room extension initialized successfully
+2025-03-08 02:19:28: [2025-03-08T02:19:28.660Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:19:28: [2025-03-08T02:19:28.662Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:19:28: [2025-03-08T02:19:28.662Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:19:28: [2025-03-08T02:19:28.663Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:20:55: [2025-03-08T02:20:55.871Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:20:55: [2025-03-08T02:20:55.875Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:20:55: Starting AI War Room Extension initialization...
+2025-03-08 02:20:55: Agent config directory: ./agent-config
+2025-03-08 02:20:55: [2025-03-08T02:20:55.877Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:20:55: [2025-03-08T02:20:55.877Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:20:55: Agent service initialized successfully
+2025-03-08 02:20:55: API router mounted at /api/ai
+2025-03-08 02:20:55: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:20:55: AI War Room extension initialized successfully
+2025-03-08 02:20:55: [2025-03-08T02:20:55.881Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:20:55: [2025-03-08T02:20:55.883Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:20:55: [2025-03-08T02:20:55.883Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:20:55: [2025-03-08T02:20:55.883Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:20:59: [2025-03-08T02:20:59.455Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:20:59: [2025-03-08T02:20:59.458Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:20:59: Starting AI War Room Extension initialization...
+2025-03-08 02:20:59: Agent config directory: ./agent-config
+2025-03-08 02:20:59: [2025-03-08T02:20:59.460Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:20:59: [2025-03-08T02:20:59.460Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:20:59: Agent service initialized successfully
+2025-03-08 02:20:59: API router mounted at /api/ai
+2025-03-08 02:20:59: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:20:59: AI War Room extension initialized successfully
+2025-03-08 02:20:59: [2025-03-08T02:20:59.462Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:20:59: [2025-03-08T02:20:59.466Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:20:59: [2025-03-08T02:20:59.466Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:20:59: [2025-03-08T02:20:59.466Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:21:07: [2025-03-08T02:21:07.733Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:21:07: [2025-03-08T02:21:07.743Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:21:07: Starting AI War Room Extension initialization...
+2025-03-08 02:21:07: Agent config directory: ./agent-config
+2025-03-08 02:21:07: [2025-03-08T02:21:07.757Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:21:07: [2025-03-08T02:21:07.757Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:21:07: Agent service initialized successfully
+2025-03-08 02:21:07: API router mounted at /api/ai
+2025-03-08 02:21:07: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:21:07: AI War Room extension initialized successfully
+2025-03-08 02:21:07: [2025-03-08T02:21:07.759Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:21:07: [2025-03-08T02:21:07.761Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:21:07: [2025-03-08T02:21:07.761Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:21:07: [2025-03-08T02:21:07.762Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:21:10: [2025-03-08T02:21:10.080Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:21:10: [2025-03-08T02:21:10.084Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:21:10: Starting AI War Room Extension initialization...
+2025-03-08 02:21:10: Agent config directory: ./agent-config
+2025-03-08 02:21:10: [2025-03-08T02:21:10.085Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:21:10: [2025-03-08T02:21:10.086Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:21:10: Agent service initialized successfully
+2025-03-08 02:21:10: API router mounted at /api/ai
+2025-03-08 02:21:10: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:21:10: AI War Room extension initialized successfully
+2025-03-08 02:21:10: [2025-03-08T02:21:10.087Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:21:10: [2025-03-08T02:21:10.089Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:21:10: [2025-03-08T02:21:10.090Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:21:10: [2025-03-08T02:21:10.090Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:21:12: [2025-03-08T02:21:12.263Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:21:12: [2025-03-08T02:21:12.267Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:21:12: Starting AI War Room Extension initialization...
+2025-03-08 02:21:12: Agent config directory: ./agent-config
+2025-03-08 02:21:12: [2025-03-08T02:21:12.270Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:21:12: [2025-03-08T02:21:12.270Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:21:12: Agent service initialized successfully
+2025-03-08 02:21:12: API router mounted at /api/ai
+2025-03-08 02:21:12: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:21:12: AI War Room extension initialized successfully
+2025-03-08 02:21:12: [2025-03-08T02:21:12.273Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:21:12: [2025-03-08T02:21:12.276Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:21:12: [2025-03-08T02:21:12.276Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:21:12: [2025-03-08T02:21:12.277Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:21:15: [2025-03-08T02:21:15.175Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:21:15: [2025-03-08T02:21:15.182Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:21:15: Starting AI War Room Extension initialization...
+2025-03-08 02:21:15: Agent config directory: ./agent-config
+2025-03-08 02:21:15: [2025-03-08T02:21:15.198Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:21:15: [2025-03-08T02:21:15.198Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:21:15: Agent service initialized successfully
+2025-03-08 02:21:15: API router mounted at /api/ai
+2025-03-08 02:21:15: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:21:15: AI War Room extension initialized successfully
+2025-03-08 02:21:15: [2025-03-08T02:21:15.204Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:21:15: [2025-03-08T02:21:15.207Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:21:15: [2025-03-08T02:21:15.208Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:21:15: [2025-03-08T02:21:15.208Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:21:16: [2025-03-08T02:21:16.460Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:21:16: [2025-03-08T02:21:16.464Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:21:16: Starting AI War Room Extension initialization...
+2025-03-08 02:21:16: Agent config directory: ./agent-config
+2025-03-08 02:21:16: [2025-03-08T02:21:16.467Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:21:16: [2025-03-08T02:21:16.469Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:21:16: Agent service initialized successfully
+2025-03-08 02:21:16: API router mounted at /api/ai
+2025-03-08 02:21:16: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:21:16: AI War Room extension initialized successfully
+2025-03-08 02:21:16: [2025-03-08T02:21:16.481Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:21:16: [2025-03-08T02:21:16.483Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:21:16: [2025-03-08T02:21:16.484Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:21:16: [2025-03-08T02:21:16.485Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:21:18: [2025-03-08T02:21:18.805Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:21:18: [2025-03-08T02:21:18.809Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:21:18: Starting AI War Room Extension initialization...
+2025-03-08 02:21:18: Agent config directory: ./agent-config
+2025-03-08 02:21:18: [2025-03-08T02:21:18.812Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:21:18: [2025-03-08T02:21:18.813Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:21:18: Agent service initialized successfully
+2025-03-08 02:21:18: API router mounted at /api/ai
+2025-03-08 02:21:18: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:21:18: AI War Room extension initialized successfully
+2025-03-08 02:21:18: [2025-03-08T02:21:18.814Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:21:18: [2025-03-08T02:21:18.818Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:21:18: [2025-03-08T02:21:18.818Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:21:18: [2025-03-08T02:21:18.818Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:21:24: [2025-03-08T02:21:24.000Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:21:24: [2025-03-08T02:21:24.003Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:21:24: Starting AI War Room Extension initialization...
+2025-03-08 02:21:24: Agent config directory: ./agent-config
+2025-03-08 02:21:24: [2025-03-08T02:21:24.005Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:21:24: [2025-03-08T02:21:24.006Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:21:24: Agent service initialized successfully
+2025-03-08 02:21:24: API router mounted at /api/ai
+2025-03-08 02:21:24: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:21:24: AI War Room extension initialized successfully
+2025-03-08 02:21:24: [2025-03-08T02:21:24.007Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:21:24: [2025-03-08T02:21:24.010Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:21:24: [2025-03-08T02:21:24.011Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:21:24: [2025-03-08T02:21:24.011Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:21:25: [2025-03-08T02:21:25.771Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:21:25: [2025-03-08T02:21:25.776Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:21:25: Starting AI War Room Extension initialization...
+2025-03-08 02:21:25: Agent config directory: ./agent-config
+2025-03-08 02:21:25: [2025-03-08T02:21:25.784Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:21:25: [2025-03-08T02:21:25.786Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:21:25: Agent service initialized successfully
+2025-03-08 02:21:25: API router mounted at /api/ai
+2025-03-08 02:21:25: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:21:25: AI War Room extension initialized successfully
+2025-03-08 02:21:25: [2025-03-08T02:21:25.796Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:21:25: [2025-03-08T02:21:25.800Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:21:25: [2025-03-08T02:21:25.800Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:21:25: [2025-03-08T02:21:25.800Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:22:20: [2025-03-08T02:22:20.709Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:22:20: [2025-03-08T02:22:20.726Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:20: Starting AI War Room Extension initialization...
+2025-03-08 02:22:20: Agent config directory: ./agent-config
+2025-03-08 02:22:20: [2025-03-08T02:22:20.731Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:22:20: [2025-03-08T02:22:20.732Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:22:20: Agent service initialized successfully
+2025-03-08 02:22:20: API router mounted at /api/ai
+2025-03-08 02:22:20: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:22:20: AI War Room extension initialized successfully
+2025-03-08 02:22:20: [2025-03-08T02:22:20.733Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:22:20: [2025-03-08T02:22:20.737Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:22:20: [2025-03-08T02:22:20.737Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:20: [2025-03-08T02:22:20.737Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:22:22: [2025-03-08T02:22:22.870Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:22:22: [2025-03-08T02:22:22.874Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:22: Starting AI War Room Extension initialization...
+2025-03-08 02:22:22: Agent config directory: ./agent-config
+2025-03-08 02:22:22: [2025-03-08T02:22:22.875Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:22:22: [2025-03-08T02:22:22.876Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:22:22: Agent service initialized successfully
+2025-03-08 02:22:22: API router mounted at /api/ai
+2025-03-08 02:22:22: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:22:22: AI War Room extension initialized successfully
+2025-03-08 02:22:22: [2025-03-08T02:22:22.881Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:22:22: [2025-03-08T02:22:22.883Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:22:22: [2025-03-08T02:22:22.883Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:22: [2025-03-08T02:22:22.883Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:22:25: [2025-03-08T02:22:25.358Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:22:25: [2025-03-08T02:22:25.361Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:25: Starting AI War Room Extension initialization...
+2025-03-08 02:22:25: Agent config directory: ./agent-config
+2025-03-08 02:22:25: [2025-03-08T02:22:25.362Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:22:25: [2025-03-08T02:22:25.363Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:22:25: Agent service initialized successfully
+2025-03-08 02:22:25: API router mounted at /api/ai
+2025-03-08 02:22:25: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:22:25: AI War Room extension initialized successfully
+2025-03-08 02:22:25: [2025-03-08T02:22:25.364Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:22:25: [2025-03-08T02:22:25.366Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:22:25: [2025-03-08T02:22:25.366Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:25: [2025-03-08T02:22:25.366Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:22:27: [2025-03-08T02:22:27.682Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:22:27: [2025-03-08T02:22:27.686Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:27: Starting AI War Room Extension initialization...
+2025-03-08 02:22:27: Agent config directory: ./agent-config
+2025-03-08 02:22:27: [2025-03-08T02:22:27.689Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:22:27: [2025-03-08T02:22:27.690Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:22:27: Agent service initialized successfully
+2025-03-08 02:22:27: API router mounted at /api/ai
+2025-03-08 02:22:27: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:22:27: AI War Room extension initialized successfully
+2025-03-08 02:22:27: [2025-03-08T02:22:27.694Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:22:27: [2025-03-08T02:22:27.700Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:22:27: [2025-03-08T02:22:27.700Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:27: [2025-03-08T02:22:27.700Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:22:28: [2025-03-08T02:22:28.981Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:22:28: [2025-03-08T02:22:28.985Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:28: Starting AI War Room Extension initialization...
+2025-03-08 02:22:28: Agent config directory: ./agent-config
+2025-03-08 02:22:28: [2025-03-08T02:22:28.990Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:22:28: [2025-03-08T02:22:28.990Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:22:28: Agent service initialized successfully
+2025-03-08 02:22:28: API router mounted at /api/ai
+2025-03-08 02:22:28: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:22:28: AI War Room extension initialized successfully
+2025-03-08 02:22:28: [2025-03-08T02:22:28.996Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:22:28: [2025-03-08T02:22:28.998Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:22:28: [2025-03-08T02:22:28.999Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:29: [2025-03-08T02:22:28.999Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:22:31: [2025-03-08T02:22:31.235Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:22:31: [2025-03-08T02:22:31.239Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:31: Starting AI War Room Extension initialization...
+2025-03-08 02:22:31: Agent config directory: ./agent-config
+2025-03-08 02:22:31: [2025-03-08T02:22:31.242Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:22:31: [2025-03-08T02:22:31.242Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:22:31: Agent service initialized successfully
+2025-03-08 02:22:31: API router mounted at /api/ai
+2025-03-08 02:22:31: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:22:31: AI War Room extension initialized successfully
+2025-03-08 02:22:31: [2025-03-08T02:22:31.246Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:22:31: [2025-03-08T02:22:31.248Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:22:31: [2025-03-08T02:22:31.249Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:31: [2025-03-08T02:22:31.249Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:22:32: [2025-03-08T02:22:32.817Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:22:32: [2025-03-08T02:22:32.821Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:32: Starting AI War Room Extension initialization...
+2025-03-08 02:22:32: Agent config directory: ./agent-config
+2025-03-08 02:22:32: [2025-03-08T02:22:32.831Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:22:32: [2025-03-08T02:22:32.832Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:22:32: Agent service initialized successfully
+2025-03-08 02:22:32: API router mounted at /api/ai
+2025-03-08 02:22:32: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:22:32: AI War Room extension initialized successfully
+2025-03-08 02:22:32: [2025-03-08T02:22:32.835Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:22:32: [2025-03-08T02:22:32.837Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:22:32: [2025-03-08T02:22:32.837Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:32: [2025-03-08T02:22:32.838Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:22:35: [2025-03-08T02:22:35.657Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:22:35: [2025-03-08T02:22:35.662Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:35: Starting AI War Room Extension initialization...
+2025-03-08 02:22:35: Agent config directory: ./agent-config
+2025-03-08 02:22:35: [2025-03-08T02:22:35.664Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:22:35: [2025-03-08T02:22:35.665Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:22:35: Agent service initialized successfully
+2025-03-08 02:22:35: API router mounted at /api/ai
+2025-03-08 02:22:35: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:22:35: AI War Room extension initialized successfully
+2025-03-08 02:22:35: [2025-03-08T02:22:35.666Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:22:35: [2025-03-08T02:22:35.668Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:22:35: [2025-03-08T02:22:35.669Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:35: [2025-03-08T02:22:35.669Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:22:38: [2025-03-08T02:22:38.186Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:22:38: [2025-03-08T02:22:38.191Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:38: Starting AI War Room Extension initialization...
+2025-03-08 02:22:38: Agent config directory: ./agent-config
+2025-03-08 02:22:38: [2025-03-08T02:22:38.194Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:22:38: [2025-03-08T02:22:38.194Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:22:38: Agent service initialized successfully
+2025-03-08 02:22:38: API router mounted at /api/ai
+2025-03-08 02:22:38: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:22:38: AI War Room extension initialized successfully
+2025-03-08 02:22:38: [2025-03-08T02:22:38.197Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:22:38: [2025-03-08T02:22:38.199Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:22:38: [2025-03-08T02:22:38.199Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:38: [2025-03-08T02:22:38.199Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:22:39: [2025-03-08T02:22:39.037Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:22:39: [2025-03-08T02:22:39.046Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:39: Starting AI War Room Extension initialization...
+2025-03-08 02:22:39: Agent config directory: ./agent-config
+2025-03-08 02:22:39: [2025-03-08T02:22:39.049Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:22:39: [2025-03-08T02:22:39.051Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:22:39: Agent service initialized successfully
+2025-03-08 02:22:39: API router mounted at /api/ai
+2025-03-08 02:22:39: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:22:39: AI War Room extension initialized successfully
+2025-03-08 02:22:39: [2025-03-08T02:22:39.060Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:22:39: [2025-03-08T02:22:39.062Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:22:39: [2025-03-08T02:22:39.064Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:39: [2025-03-08T02:22:39.065Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:22:41: [2025-03-08T02:22:41.899Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:22:41: [2025-03-08T02:22:41.906Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:41: Starting AI War Room Extension initialization...
+2025-03-08 02:22:41: Agent config directory: ./agent-config
+2025-03-08 02:22:41: [2025-03-08T02:22:41.910Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:22:41: [2025-03-08T02:22:41.910Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:22:41: Agent service initialized successfully
+2025-03-08 02:22:41: API router mounted at /api/ai
+2025-03-08 02:22:41: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:22:41: AI War Room extension initialized successfully
+2025-03-08 02:22:41: [2025-03-08T02:22:41.913Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:22:41: [2025-03-08T02:22:41.915Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:22:41: [2025-03-08T02:22:41.916Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:41: [2025-03-08T02:22:41.916Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:22:43: [2025-03-08T02:22:43.222Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:22:43: [2025-03-08T02:22:43.226Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:43: Starting AI War Room Extension initialization...
+2025-03-08 02:22:43: Agent config directory: ./agent-config
+2025-03-08 02:22:43: [2025-03-08T02:22:43.230Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:22:43: [2025-03-08T02:22:43.238Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:22:43: Agent service initialized successfully
+2025-03-08 02:22:43: API router mounted at /api/ai
+2025-03-08 02:22:43: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:22:43: AI War Room extension initialized successfully
+2025-03-08 02:22:43: [2025-03-08T02:22:43.240Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:22:43: [2025-03-08T02:22:43.242Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:22:43: [2025-03-08T02:22:43.242Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:43: [2025-03-08T02:22:43.243Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:22:45: [2025-03-08T02:22:45.264Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:22:45: [2025-03-08T02:22:45.270Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:45: Starting AI War Room Extension initialization...
+2025-03-08 02:22:45: Agent config directory: ./agent-config
+2025-03-08 02:22:45: [2025-03-08T02:22:45.274Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:22:45: [2025-03-08T02:22:45.280Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:22:45: Agent service initialized successfully
+2025-03-08 02:22:45: API router mounted at /api/ai
+2025-03-08 02:22:45: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:22:45: AI War Room extension initialized successfully
+2025-03-08 02:22:45: [2025-03-08T02:22:45.282Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:22:45: [2025-03-08T02:22:45.285Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:22:45: [2025-03-08T02:22:45.285Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:22:45: [2025-03-08T02:22:45.286Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:24:18: [2025-03-08T02:24:18.137Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:24:18: [2025-03-08T02:24:18.145Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:24:18: Starting AI War Room Extension initialization...
+2025-03-08 02:24:18: Agent config directory: ./agent-config
+2025-03-08 02:24:18: [2025-03-08T02:24:18.150Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:24:18: [2025-03-08T02:24:18.150Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:24:18: Agent service initialized successfully
+2025-03-08 02:24:18: API router mounted at /api/ai
+2025-03-08 02:24:18: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:24:18: AI War Room extension initialized successfully
+2025-03-08 02:24:18: [2025-03-08T02:24:18.159Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:24:18: [2025-03-08T02:24:18.163Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:24:18: [2025-03-08T02:24:18.164Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:24:18: [2025-03-08T02:24:18.164Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:24:20: [2025-03-08T02:24:20.593Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:24:20: [2025-03-08T02:24:20.598Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:24:20: Starting AI War Room Extension initialization...
+2025-03-08 02:24:20: Agent config directory: ./agent-config
+2025-03-08 02:24:20: [2025-03-08T02:24:20.603Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:24:20: [2025-03-08T02:24:20.604Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:24:20: Agent service initialized successfully
+2025-03-08 02:24:20: API router mounted at /api/ai
+2025-03-08 02:24:20: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:24:20: AI War Room extension initialized successfully
+2025-03-08 02:24:20: [2025-03-08T02:24:20.610Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:24:20: [2025-03-08T02:24:20.613Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:24:20: [2025-03-08T02:24:20.613Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:24:20: [2025-03-08T02:24:20.614Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:24:23: [2025-03-08T02:24:23.060Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:24:23: [2025-03-08T02:24:23.066Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:24:23: Starting AI War Room Extension initialization...
+2025-03-08 02:24:23: Agent config directory: ./agent-config
+2025-03-08 02:24:23: [2025-03-08T02:24:23.070Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:24:23: [2025-03-08T02:24:23.077Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:24:23: Agent service initialized successfully
+2025-03-08 02:24:23: API router mounted at /api/ai
+2025-03-08 02:24:23: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:24:23: AI War Room extension initialized successfully
+2025-03-08 02:24:23: [2025-03-08T02:24:23.079Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:24:23: [2025-03-08T02:24:23.082Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:24:23: [2025-03-08T02:24:23.083Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:24:23: [2025-03-08T02:24:23.084Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:24:30: [2025-03-08T02:24:30.045Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:24:30: [2025-03-08T02:24:30.057Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:24:30: Starting AI War Room Extension initialization...
+2025-03-08 02:24:30: Agent config directory: ./agent-config
+2025-03-08 02:24:30: [2025-03-08T02:24:30.063Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:24:30: [2025-03-08T02:24:30.063Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:24:30: Agent service initialized successfully
+2025-03-08 02:24:30: API router mounted at /api/ai
+2025-03-08 02:24:30: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:24:30: AI War Room extension initialized successfully
+2025-03-08 02:24:30: [2025-03-08T02:24:30.068Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:24:30: [2025-03-08T02:24:30.074Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:24:30: [2025-03-08T02:24:30.075Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:24:30: [2025-03-08T02:24:30.075Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:24:33: [2025-03-08T02:24:33.376Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:24:33: [2025-03-08T02:24:33.387Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:24:33: Starting AI War Room Extension initialization...
+2025-03-08 02:24:33: Agent config directory: ./agent-config
+2025-03-08 02:24:33: [2025-03-08T02:24:33.396Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:24:33: [2025-03-08T02:24:33.396Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:24:33: Agent service initialized successfully
+2025-03-08 02:24:33: API router mounted at /api/ai
+2025-03-08 02:24:33: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:24:33: AI War Room extension initialized successfully
+2025-03-08 02:24:33: [2025-03-08T02:24:33.397Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:24:33: [2025-03-08T02:24:33.400Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:24:33: [2025-03-08T02:24:33.400Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:24:33: [2025-03-08T02:24:33.401Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:24:38: [2025-03-08T02:24:38.575Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:24:38: [2025-03-08T02:24:38.578Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:24:38: Starting AI War Room Extension initialization...
+2025-03-08 02:24:38: Agent config directory: ./agent-config
+2025-03-08 02:24:38: [2025-03-08T02:24:38.579Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:24:38: [2025-03-08T02:24:38.580Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:24:38: Agent service initialized successfully
+2025-03-08 02:24:38: API router mounted at /api/ai
+2025-03-08 02:24:38: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:24:38: AI War Room extension initialized successfully
+2025-03-08 02:24:38: [2025-03-08T02:24:38.581Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:24:38: [2025-03-08T02:24:38.583Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:24:38: [2025-03-08T02:24:38.583Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:24:38: [2025-03-08T02:24:38.583Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:24:41: [2025-03-08T02:24:41.537Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:24:41: [2025-03-08T02:24:41.542Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:24:41: Starting AI War Room Extension initialization...
+2025-03-08 02:24:41: Agent config directory: ./agent-config
+2025-03-08 02:24:41: [2025-03-08T02:24:41.546Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:24:41: [2025-03-08T02:24:41.546Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:24:41: Agent service initialized successfully
+2025-03-08 02:24:41: API router mounted at /api/ai
+2025-03-08 02:24:41: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:24:41: AI War Room extension initialized successfully
+2025-03-08 02:24:41: [2025-03-08T02:24:41.549Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:24:41: [2025-03-08T02:24:41.552Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:24:41: [2025-03-08T02:24:41.554Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:24:41: [2025-03-08T02:24:41.555Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents
+2025-03-08 02:24:43: [2025-03-08T02:24:43.762Z] [AI-WARROOM] [INFO] Initializing AI agent service
+2025-03-08 02:24:43: [2025-03-08T02:24:43.765Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:24:43: Starting AI War Room Extension initialization...
+2025-03-08 02:24:43: Agent config directory: ./agent-config
+2025-03-08 02:24:43: [2025-03-08T02:24:43.770Z] [AI-WARROOM] [DEBUG] Loaded agent Code Assistant from /root/code-server/dist/node/agent-config/code-assistant.json
+2025-03-08 02:24:43: [2025-03-08T02:24:43.770Z] [AI-WARROOM] [DEBUG] Loaded agent Debug Wizard from /root/code-server/dist/node/agent-config/debug-wizard.json
+2025-03-08 02:24:43: Agent service initialized successfully
+2025-03-08 02:24:43: API router mounted at /api/ai
+2025-03-08 02:24:43: Serving static files from: /root/code-server/dist/node/src/browser/pages
+2025-03-08 02:24:43: AI War Room extension initialized successfully
+2025-03-08 02:24:43: [2025-03-08T02:24:43.773Z] [AI-WARROOM] [INFO] AI War Room extension initialized
+2025-03-08 02:24:43: [2025-03-08T02:24:43.776Z] [AI-WARROOM] [INFO] AI War Room server running on port 3001
+2025-03-08 02:24:43: [2025-03-08T02:24:43.776Z] [AI-WARROOM] [INFO] Server root path: /root/code-server/dist/node
+2025-03-08 02:24:43: [2025-03-08T02:24:43.776Z] [AI-WARROOM] [INFO] Agent service initialized with 2 agents

@@ -1,93 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI War Room IDE</title>
-  
-  <!-- Using inline styles instead of external CSS files -->
+  <title>AI War Room | Code Server</title>
+  <!-- Load Monaco Editor from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <style>
-    /* Base Theme */
     :root {
-      /* Base colors */
-      --ai-bg-primary: #0A0B14;
-      --ai-bg-secondary: #1E1F2E;
-      --ai-text-primary: #F8FAFC;
-      --ai-text-secondary: #94A3B8;
-      --ai-text-dim: #64748B;
-      --ai-border-color: #2D3748;
-
-      /* Accent colors */
-      --ai-gold-primary: #D4AF37;
-      --ai-gold-secondary: #B4941F;
-      --ai-accent-blue: #3B82F6;
-      --ai-accent-purple: #8B5CF6;
-      --ai-accent-green: #22C55E;
-      --ai-accent-red: #EF4444;
-
-      /* UI elements */
-      --ai-card-bg: rgba(30, 31, 46, 0.8);
-      --ai-input-bg: rgba(15, 16, 30, 0.6);
-      --ai-hover-bg: rgba(255, 255, 255, 0.05);
-      --ai-active-bg: rgba(255, 255, 255, 0.1);
-
-      /* Shadows */
-      --ai-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
-      --ai-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
-      --ai-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+      --ai-dark-bg: #1a1a1a;
+      --ai-darker-bg: #222222;
+      --ai-sidebar-bg: #222222;
+      --ai-panel-bg: #252525;
+      --ai-border-color: #3a3a3a;
+      --ai-text-color: #e6e6e6;
+      --ai-gold-primary: #d4af37;
+      --ai-gold-secondary: #b8860b;
+      --ai-gold-light: rgba(212, 175, 55, 0.15);
+      --ai-gold-border: rgba(212, 175, 55, 0.3);
+      --ai-accent-blue: #0078d4;
+      --ai-accent-purple: #9e66bf;
+      --ai-highlight: rgba(212, 175, 55, 0.08);
+      --ai-selection: rgba(212, 175, 55, 0.15);
     }
 
-    body {
-      background-color: var(--ai-bg-primary);
-      color: var(--ai-text-primary);
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    /* Reset */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Segoe UI', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    /* Glass panel effect */
-    .glass-panel {
-      background: var(--ai-card-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--ai-border-color);
-      border-radius: 12px;
-      box-shadow: var(--ai-shadow-lg);
+    body {
+      background-color: var(--ai-dark-bg);
+      color: var(--ai-text-color);
+      height: 100vh;
+      overflow: hidden;
+      font-size: 14px;
     }
 
-    /* IDE Container */
+    /* Main IDE Container & Layout */
     .ai-ide-container {
       display: grid;
+      grid-template-columns: auto 50px 300px 1fr 300px;
+      grid-template-rows: 30px 40px 1fr 22px;
       grid-template-areas:
-        "logo header header header"
-        "sidebar explorer editor lab"
-        "sidebar explorer editor lab"
-        "sidebar agents editor lab"
-        "status status status status";
-      grid-template-columns: 48px 240px 1fr 400px;
-      grid-template-rows: 48px 1fr 1fr auto auto;
+        "tabs-area logo header header header"
+        "tabs-area sidebar explorer editor agents"
+        "tabs-area sidebar explorer editor agents"
+        "tabs-area sidebar status status status";
       height: 100vh;
-      background: var(--ai-bg-primary);
+      width: 100vw;
+      position: relative;
     }
 
     /* Logo Area */
     .ai-ide-logo {
       grid-area: logo;
+      background-color: var(--ai-dark-bg);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--ai-bg-secondary);
       border-bottom: 1px solid var(--ai-border-color);
     }
 
@@ -100,37 +75,35 @@
     /* Header Bar */
     .ai-ide-header {
       grid-area: header;
+      background-color: var(--ai-dark-bg);
+      border-bottom: 1px solid var(--ai-border-color);
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
-      background: var(--ai-bg-secondary);
-      border-bottom: 1px solid var(--ai-border-color);
     }
 
     .ai-ide-search {
-      flex: 1;
-      max-width: 600px;
-      margin-right: 16px;
+      display: flex;
+      align-items: center;
+      background-color: var(--ai-darker-bg);
+      border-radius: 4px;
+      padding: 4px 8px;
+      width: 300px;
+      border: 1px solid var(--ai-border-color);
     }
 
     .ai-ide-search input {
+      background: transparent;
+      border: none;
+      color: var(--ai-text-color);
+      outline: none;
       width: 100%;
-      height: 32px;
-      padding: 0 32px;
-      background: var(--ai-input-bg);
-      border: 1px solid var(--ai-border-color);
-      border-radius: 4px;
-      color: var(--ai-text-primary);
-      font-size: 14px;
+      margin-left: 8px;
     }
 
     .ai-ide-search-icon {
-      position: absolute;
-      left: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--ai-text-dim);
+      color: var(--ai-gold-primary);
     }
 
     .ai-ide-user-menu {
@@ -140,68 +113,97 @@
     }
 
     .ai-ide-user-avatar {
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--ai-gold-primary), var(--ai-gold-secondary));
       border-radius: 50%;
-      background: var(--ai-accent-purple);
-      color: white;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+      color: #111;
+    }
+
+    /* Badge */
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
       font-weight: 500;
-      font-size: 14px;
+    }
+
+    .badge.success {
+      background-color: rgba(0, 128, 0, 0.2);
+      color: #4caf50;
+    }
+
+    .badge.gold {
+      background-color: var(--ai-gold-light);
+      color: var(--ai-gold-primary);
+      border: 1px solid var(--ai-gold-border);
     }
 
     /* Sidebar */
     .ai-ide-sidebar {
       grid-area: sidebar;
+      background-color: var(--ai-sidebar-bg);
+      border-right: 1px solid var(--ai-border-color);
       display: flex;
       flex-direction: column;
-      background: var(--ai-bg-secondary);
-      border-right: 1px solid var(--ai-border-color);
+      align-items: center;
       padding: 8px 0;
     }
 
     .ai-ide-sidebar-btn {
-      width: 48px;
-      height: 48px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--ai-text-secondary);
+      margin-bottom: 4px;
+      color: var(--ai-text-color);
       cursor: pointer;
+      border-left: 2px solid transparent;
+      position: relative;
       transition: all 0.2s ease;
     }
 
     .ai-ide-sidebar-btn:hover {
-      color: var(--ai-text-primary);
+      background-color: var(--ai-highlight);
+      color: var(--ai-gold-primary);
     }
 
     .ai-ide-sidebar-btn.active {
       color: var(--ai-gold-primary);
       border-left: 2px solid var(--ai-gold-primary);
-      background: var(--ai-active-bg);
+      background-color: var(--ai-highlight);
     }
 
-    /* Explorer Panel */
+    /* Explorer panel */
     .ai-ide-explorer {
       grid-area: explorer;
+      background-color: var(--ai-panel-bg);
+      border-right: 1px solid var(--ai-border-color);
       display: flex;
       flex-direction: column;
-      background: var(--ai-bg-secondary);
-      border-right: 1px solid var(--ai-border-color);
+      overflow: hidden;
     }
 
     .ai-ide-explorer-header {
+      padding: 8px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 16px;
       font-weight: 600;
-      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--ai-text-secondary);
+      font-size: 11px;
+      border-bottom: 1px solid var(--ai-border-color);
+      color: var(--ai-gold-primary);
     }
 
     .ai-ide-explorer-actions {
@@ -210,81 +212,40 @@
     }
 
     .ai-ide-explorer-action {
-      color: var(--ai-text-dim);
+      color: #888;
       cursor: pointer;
-      transition: color 0.2s ease;
     }
 
     .ai-ide-explorer-action:hover {
-      color: var(--ai-text-primary);
+      color: var(--ai-gold-primary);
     }
 
     .ai-ide-explorer-content {
       flex: 1;
       overflow-y: auto;
-      padding: 8px;
+      padding: 8px 0;
     }
 
-    /* Editor Area */
-    .ai-ide-editor {
-      grid-area: editor;
+    /* Agents Panel */
+    .ai-ide-agents {
+      grid-area: agents;
+      background-color: var(--ai-panel-bg);
+      border-left: 1px solid var(--ai-border-color);
       display: flex;
       flex-direction: column;
-      background: var(--ai-bg-primary);
-    }
-
-    .ai-ide-editor-tabs {
-      display: flex;
-      background: var(--ai-bg-secondary);
-      border-bottom: 1px solid var(--ai-border-color);
-      height: 35px;
-      overflow-x: auto;
-    }
-
-    .ai-ide-editor-tab {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 0 12px;
-      height: 100%;
-      font-size: 13px;
-      color: var(--ai-text-secondary);
-      border-right: 1px solid var(--ai-border-color);
-      cursor: pointer;
-      user-select: none;
-      min-width: 120px;
-    }
-
-    .ai-ide-editor-tab.active {
-      background: var(--ai-bg-primary);
-      color: var(--ai-text-primary);
-    }
-
-    .ai-ide-editor-content {
-      flex: 1;
       overflow: hidden;
     }
 
-    /* AI Agents Panel */
-    .ai-ide-agents {
-      grid-area: agents;
-      display: flex;
-      flex-direction: column;
-      background: var(--ai-bg-secondary);
-      border-right: 1px solid var(--ai-border-color);
-      border-top: 1px solid var(--ai-border-color);
-    }
-
     .ai-ide-agents-header {
+      padding: 8px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 16px;
       font-weight: 600;
-      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--ai-text-secondary);
+      font-size: 11px;
+      border-bottom: 1px solid var(--ai-border-color);
+      color: var(--ai-gold-primary);
     }
 
     .ai-ide-agents-content {
@@ -293,141 +254,87 @@
       padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
     }
 
-    /* Agent Card */
-    .ai-agent-card {
-      background: var(--ai-card-bg);
-      border: 1px solid var(--ai-border-color);
-      border-radius: 8px;
-      padding: 12px;
-      transition: all 0.2s ease;
-    }
-
-    .ai-agent-card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--ai-shadow-md);
-    }
-
-    .ai-agent-header {
+    /* Editor Area */
+    .ai-ide-editor {
+      grid-area: editor;
       display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .ai-agent-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      background: var(--ai-accent-blue);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 20px;
-    }
-
-    .ai-agent-info {
-      flex: 1;
-    }
-
-    .ai-agent-name {
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
-
-    .ai-agent-role {
-      font-size: 12px;
-      color: var(--ai-gold-primary);
-    }
-
-    .ai-agent-level {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .ai-agent-level-text {
-      font-size: 12px;
-      color: var(--ai-text-secondary);
-      min-width: 60px;
-    }
-
-    .ai-agent-level-bar {
-      flex: 1;
-      height: 4px;
-      background: var(--ai-input-bg);
-      border-radius: 2px;
+      flex-direction: column;
+      background-color: var(--ai-dark-bg);
       overflow: hidden;
     }
 
-    .ai-agent-level-progress {
-      height: 100%;
-      background: var(--ai-gold-primary);
-      border-radius: 2px;
-      transition: width 0.3s ease;
-    }
-
-    .ai-agent-actions {
+    .ai-ide-editor-tabs {
       display: flex;
-      gap: 8px;
+      background-color: var(--ai-panel-bg);
+      height: 35px;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--ai-border-color);
     }
 
-    .ai-agent-action {
-      flex: 1;
-      text-align: center;
-      padding: 6px 0;
-      background: var(--ai-input-bg);
-      border: 1px solid var(--ai-border-color);
-      border-radius: 4px;
+    .ai-ide-editor-tab {
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      height: 100%;
+      gap: 6px;
       font-size: 13px;
+      border-right: 1px solid var(--ai-border-color);
       cursor: pointer;
+      min-width: 120px;
+      max-width: 200px;
       transition: all 0.2s ease;
     }
 
-    .ai-agent-action:hover {
-      background: var(--ai-hover-bg);
-      border-color: var(--ai-gold-primary);
+    .ai-ide-editor-tab:hover {
+      background-color: var(--ai-highlight);
+    }
+
+    .ai-ide-editor-tab.active {
+      background-color: var(--ai-dark-bg);
       color: var(--ai-gold-primary);
+      border-top: 1px solid var(--ai-gold-primary);
+    }
+
+    .ai-ide-editor-content {
+      flex: 1;
+      overflow: hidden;
     }
 
     /* Status Bar */
     .ai-ide-status {
       grid-area: status;
+      background: linear-gradient(90deg, var(--ai-gold-secondary), var(--ai-gold-primary));
+      color: #111;
       display: flex;
       align-items: center;
-      padding: 0 8px;
-      height: 24px;
-      background: var(--ai-bg-secondary);
-      border-top: 1px solid var(--ai-border-color);
+      padding: 0 12px;
       font-size: 12px;
-      color: var(--ai-text-secondary);
+      border-top: 1px solid var(--ai-border-color);
     }
 
     .ai-ide-status-item {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
       padding: 0 8px;
       cursor: pointer;
     }
 
     .ai-ide-status-item:hover {
-      color: var(--ai-text-primary);
+      background-color: rgba(0, 0, 0, 0.1);
     }
 
     .ai-ide-status-item.active {
-      color: var(--ai-accent-green);
+      font-weight: 500;
     }
 
     .ai-ide-status-separator {
       width: 1px;
       height: 16px;
-      background: var(--ai-border-color);
-      margin: 0 4px;
+      background-color: rgba(0, 0, 0, 0.3);
     }
 
     .ai-ide-status-right {
@@ -436,292 +343,558 @@
       align-items: center;
     }
 
-    /* Chat Messages */
-    .ai-chat-message {
-      margin-bottom: 16px;
+    /* AI Agent Card */
+    .ai-agent-card {
+      background-color: var(--ai-darker-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--ai-border-color);
+      transition: all 0.3s ease;
     }
 
-    .ai-chat-message-avatar {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
+    .ai-agent-card:hover {
+      border-color: var(--ai-gold-border);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .ai-agent-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+    }
+
+    .ai-agent-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      float: left;
-      margin-right: 10px;
+      font-size: 18px;
+      background: linear-gradient(135deg, var(--ai-gold-primary), var(--ai-gold-secondary));
+      color: #111;
     }
 
-    .ai-chat-message-content {
-      background: rgba(30, 58, 138, 0.2);
-      border-radius: 0 8px 8px 8px;
-      padding: 10px;
-      margin-left: 38px;
+    .ai-agent-info {
+      display: flex;
+      flex-direction: column;
     }
 
-    .ai-chat-message-content p {
-      margin: 0;
-      line-height: 1.5;
+    .ai-agent-name {
+      font-weight: 600;
+      margin-bottom: 2px;
     }
 
-    .ai-chat-message-content code {
-      background: var(--ai-input-bg);
-      padding: 2px 4px;
-      border-radius: 4px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.9em;
+    .ai-agent-role {
+      font-size: 11px;
+      color: #888;
     }
 
-    /* Animations */
+    .ai-agent-level {
+      padding: 0 12px 12px;
+    }
+
+    .ai-agent-level-text {
+      font-size: 11px;
+      margin-bottom: 4px;
+      color: #888;
+    }
+
+    .ai-agent-level-bar {
+      height: 4px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .ai-agent-level-progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--ai-gold-secondary), var(--ai-gold-primary));
+    }
+
+    .ai-agent-actions {
+      display: flex;
+      border-top: 1px solid var(--ai-border-color);
+    }
+
+    .ai-agent-action {
+      flex: 1;
+      text-align: center;
+      padding: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .ai-agent-action:hover {
+      background-color: var(--ai-highlight);
+      color: var(--ai-gold-primary);
+    }
+
+    .ai-agent-action:first-child {
+      border-right: 1px solid var(--ai-border-color);
+    }
+
+    /* File Tree */
+    .file-tree-item-content:hover {
+      background-color: var(--ai-highlight);
+    }
+
+    /* Tab Area (Left of Sidebar) */
+    .ai-ide-tab-area {
+      grid-area: tabs-area;
+      background-color: var(--ai-panel-bg);
+      border-right: 1px solid var(--ai-border-color);
+      display: none;
+    }
+
+    /* Pulse Animation */
+    .pulse-animation {
+      animation: pulse 2s infinite;
+    }
+
     @keyframes pulse {
       0% {
         box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
       }
+
       70% {
-        box-shadow: 0 0 0 10px rgba(212, 175, 55, 0);
+        box-shadow: 0 0 0 6px rgba(212, 175, 55, 0);
       }
+
       100% {
         box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
       }
     }
 
-    .pulse-animation {
-      animation: pulse 2s infinite;
-    }
-
-    /* Badges */
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    .badge.success {
-      background: rgba(34, 197, 94, 0.2);
-      color: var(--ai-accent-green);
-    }
-
-    .badge.warning {
-      background: rgba(212, 175, 55, 0.2);
-      color: var(--ai-gold-primary);
-    }
-
-    .badge.error {
-      background: rgba(239, 68, 68, 0.2);
-      color: var(--ai-accent-red);
-    }
-
-    /* Scrollbars */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--ai-bg-primary);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--ai-border-color);
-      border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--ai-text-dim);
-    }
-
-    /* AI Lab Panel */
-    .ai-lab-panel {
-      background: var(--ai-panel-bg);
-      border: 1px solid var(--ai-border-color);
-      border-radius: 8px;
-      backdrop-filter: blur(12px);
+    /* AI Lab Styles */
+    .ai-lab-container {
+      position: relative;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      height: 300px;
+      width: 100%;
+      background-color: var(--ai-panel-bg);
+      border-top: 1px solid var(--ai-border-color);
+      z-index: 100;
+      grid-column: 3 / span 3;
+      grid-row: 3;
+      align-self: end;
     }
 
     .ai-lab-header {
-      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      background-color: var(--ai-darker-bg);
       border-bottom: 1px solid var(--ai-border-color);
+    }
+
+    .ai-lab-title {
+      font-weight: 600;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-    }
-
-    .ai-lab-tabs {
-      display: flex;
       gap: 8px;
-    }
-
-    .ai-lab-tabs button {
-      background: var(--ai-input-bg);
-      border: 1px solid transparent;
-      padding: 6px 12px;
-      border-radius: 4px;
-      color: var(--ai-text-secondary);
-      cursor: pointer;
-      transition: all var(--ai-transition-fast);
-    }
-
-    .ai-lab-tabs button.active {
-      border-color: var(--ai-gold-primary);
       color: var(--ai-gold-primary);
-      background: var(--ai-card-bg);
+    }
+
+    .ai-lab-controls {
+      display: flex;
+      gap: 12px;
+    }
+
+    .ai-lab-control {
+      cursor: pointer;
+      color: #888;
+    }
+
+    .ai-lab-control:hover {
+      color: var(--ai-gold-primary);
     }
 
     .ai-lab-content {
-      flex: 1;
       display: flex;
-      overflow: hidden;
+      height: calc(100% - 38px);
     }
 
-    .lab-tab {
-      display: none;
-      flex: 1;
-      padding: 16px;
-    }
-
-    .lab-tab.active {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .agent-config-editor {
-      flex: 1;
-      background: var(--ai-bg-dark);
-      border: 1px solid var(--ai-border-color);
-      border-radius: 6px;
-      overflow: hidden;
-    }
-
-    .testing-console {
-      background: var(--ai-bg-dark);
-      border: 1px solid var(--ai-border-color);
-      border-radius: 6px;
-      padding: 12px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      color: var(--ai-text-primary);
-      white-space: pre-wrap;
+    .ai-lab-sidebar {
+      width: 200px;
+      background-color: var(--ai-darker-bg);
+      border-right: 1px solid var(--ai-border-color);
       overflow-y: auto;
     }
 
-    .lab-actions {
+    .ai-lab-sidebar-section {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--ai-border-color);
+    }
+
+    .ai-lab-sidebar-title {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      color: var(--ai-gold-primary);
+    }
+
+    .ai-lab-sidebar-item {
       display: flex;
+      align-items: center;
       gap: 8px;
-      padding: 16px 0;
-      border-top: 1px solid var(--ai-border-color);
-      margin-top: 16px;
+      padding: 6px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 4px;
+      font-size: 13px;
+      transition: all 0.2s ease;
     }
 
-    /* Marketplace Grid */
-    .ai-marketplace-content {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 16px;
-      padding: 16px;
+    .ai-lab-sidebar-item:hover {
+      background-color: var(--ai-highlight);
+      color: var(--ai-gold-primary);
     }
 
-    .marketplace-agent-card {
-      background: var(--ai-card-bg);
-      border: 1px solid var(--ai-border-color);
-      border-radius: 8px;
-      padding: 16px;
-      transition: all var(--ai-transition-fast);
+    .ai-lab-sidebar-item.active {
+      background-color: var(--ai-selection);
+      color: var(--ai-gold-primary);
     }
 
-    .marketplace-agent-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--ai-gold-primary);
-    }
-
-    .agent-preview {
-      position: relative;
-      height: 160px;
-      background: var(--ai-bg-dark);
-      border-radius: 6px;
-      margin-bottom: 12px;
+    .ai-lab-editor-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
       overflow: hidden;
     }
 
-    .agent-meta {
+    .ai-lab-editors {
       display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      color: var(--ai-text-dim);
-      margin-bottom: 8px;
+      height: 100%;
     }
 
-    .agent-price {
+    .ai-lab-editor-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--ai-border-color);
+    }
+
+    .ai-lab-editor-header {
+      padding: 8px 12px;
+      font-size: 13px;
+      border-bottom: 1px solid var(--ai-border-color);
+      background-color: var(--ai-darker-bg);
       color: var(--ai-gold-primary);
-      font-weight: 600;
     }
 
-    /* Testing Arena */
-    .testing-toolbar {
+    .ai-lab-editor-content {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .ai-lab-editor-actions {
+      display: flex;
+      justify-content: center;
+      padding: 12px;
+      gap: 12px;
+      border-top: 1px solid var(--ai-border-color);
+    }
+
+    .ai-lab-button {
+      background: linear-gradient(135deg, var(--ai-gold-primary), var(--ai-gold-secondary));
+      color: #111;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .ai-lab-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .ai-lab-button.secondary {
+      background: transparent;
+      border: 1px solid var(--ai-gold-border);
+      color: var(--ai-gold-primary);
+    }
+
+    .ai-lab-button.secondary:hover {
+      background-color: var(--ai-highlight);
+    }
+
+    /* Settings Panel Enhancements */
+    .settings-section {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--ai-border-color);
+    }
+
+    .settings-section:last-child {
+      border-bottom: none;
+    }
+
+    .settings-title {
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--ai-gold-primary);
+    }
+
+    .settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .settings-control {
+      padding: 6px 8px;
+      background-color: var(--ai-darker-bg);
+      border: 1px solid var(--ai-border-color);
+      color: var(--ai-text-color);
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .settings-control:focus {
+      border-color: var(--ai-gold-primary);
+      outline: none;
+    }
+
+    /* Color Picker */
+    .color-picker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .color-option {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .color-option.selected::after {
+      content: "✓";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Toggle Switch */
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #484848;
+      transition: .4s;
+      border-radius: 10px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.toggle-slider {
+      background: linear-gradient(135deg, var(--ai-gold-primary), var(--ai-gold-secondary));
+    }
+
+    input:checked+.toggle-slider:before {
+      transform: translateX(20px);
+    }
+
+    /* OpenRouter Integration */
+    .openrouter-button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      background: linear-gradient(135deg, #2A2A2A, #3A3A3A);
+      border: 1px solid var(--ai-gold-border);
+      color: var(--ai-text-color);
+      transition: all 0.2s ease;
+    }
+
+    .openrouter-button:hover {
+      border-color: var(--ai-gold-primary);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .openrouter-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #4caf50;
+      margin-right: 2px;
+    }
+
+    /* Theme and Mode Selector */
+    .theme-selector {
       display: flex;
       gap: 8px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--ai-border-color);
-      margin-bottom: 12px;
+      margin-top: 8px;
     }
 
-    .test-case {
-      background: var(--ai-card-bg);
+    .theme-option {
+      flex: 1;
+      padding: 8px;
+      border-radius: 4px;
       border: 1px solid var(--ai-border-color);
-      border-radius: 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .theme-option:hover {
+      border-color: var(--ai-gold-primary);
+    }
+
+    .theme-option.selected {
+      border-color: var(--ai-gold-primary);
+      background-color: var(--ai-highlight);
+      color: var(--ai-gold-primary);
+    }
+
+    /* Market Agent Card */
+    .agent-marketplace-item {
+      border: 1px solid var(--ai-border-color);
+      border-radius: 8px;
+      background-color: var(--ai-darker-bg);
       padding: 12px;
+      margin-bottom: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .agent-marketplace-item:hover {
+      border-color: var(--ai-gold-border);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .agent-marketplace-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       margin-bottom: 8px;
     }
 
-    .test-status {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin-right: 8px;
+    .agent-marketplace-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      background: linear-gradient(135deg, var(--ai-accent-purple), #7c5295);
+      color: white;
     }
 
-    .test-status.passed { background: var(--ai-accent-green); }
-    .test-status.failed { background: var(--ai-accent-red); }
-    .test-status.pending { background: var(--ai-gold-primary); }
+    .agent-marketplace-info {
+      flex: 1;
+    }
 
-    /* Responsive Adjustments */
-    @media (max-width: 1200px) {
-      .ai-marketplace-content {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      }
-      
-      .lab-actions {
-        flex-direction: column;
-      }
+    .agent-marketplace-name {
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .agent-marketplace-description {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .agent-marketplace-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 8px;
+    }
+
+    .agent-marketplace-button {
+      background: linear-gradient(135deg, var(--ai-gold-primary), var(--ai-gold-secondary));
+      color: #111;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .agent-marketplace-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
   </style>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
-<body class="ai-theme">
+
+<body>
   <div class="ai-ide-container">
     <!-- Logo Area -->
     <div class="ai-ide-logo">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.33l7 3.5v1.04L12 12.33 5 8.87V7.83l7-3.5zm0 10.34l-7-3.5v-3.5l7 3.5 7-3.5v3.5l-7 3.5z"/>
+        <path
+          d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.33l7 3.5v1.04L12 12.33 5 8.87V7.83l7-3.5zm0 10.34l-7-3.5v-3.5l7 3.5 7-3.5v3.5l-7 3.5z">
+        </path>
       </svg>
     </div>
 
     <!-- Header Bar -->
     <div class="ai-ide-header">
-      <div class="ai-ide-search" style="position: relative;">
+      <div class="ai-ide-search" style="position: relative">
         <i class="bx bx-search ai-ide-search-icon"></i>
-        <input type="text" placeholder="Search everything (Ctrl+Shift+P)" />
+        <input type="text" placeholder="Search everything (Ctrl+Shift+P)">
       </div>
       <div class="ai-ide-user-menu">
-        <div class="badge success">
+        <div class="openrouter-button" id="openrouter-connect">
+          <div class="openrouter-dot"></div>
+          <i class="bx bx-brain"></i>
+          <span>OpenRouter</span>
+        </div>
+        <div class="badge gold">
           <i class="bx bx-wallet"></i>
           Connected
         </div>
@@ -731,34 +904,34 @@
 
     <!-- Side Bar -->
     <div class="ai-ide-sidebar">
-      <div class="ai-ide-sidebar-btn active" title="Explorer">
+      <div class="ai-ide-sidebar-btn active" title="Explorer" data-panel="explorer">
         <i class="bx bx-folder bx-sm"></i>
       </div>
-      <div class="ai-ide-sidebar-btn" title="Search">
+      <div class="ai-ide-sidebar-btn" title="Search" data-panel="search">
         <i class="bx bx-search-alt bx-sm"></i>
       </div>
-      <div class="ai-ide-sidebar-btn" title="Source Control">
+      <div class="ai-ide-sidebar-btn" title="Source Control" data-panel="git">
         <i class="bx bx-git-branch bx-sm"></i>
       </div>
-      <div class="ai-ide-sidebar-btn" title="Extensions">
+      <div class="ai-ide-sidebar-btn" title="Extensions" data-panel="extensions">
         <i class="bx bx-extension bx-sm"></i>
       </div>
-      <div class="ai-ide-sidebar-btn pulse-animation" title="AI Agents">
+      <div class="ai-ide-sidebar-btn pulse-animation" title="AI Agents" data-panel="agents">
         <i class="bx bx-bot bx-sm"></i>
       </div>
-      <div class="ai-ide-sidebar-btn" title="Agent Marketplace" style="margin-top: auto;">
+      <div class="ai-ide-sidebar-btn" title="Agent Marketplace" style="margin-top: auto" data-panel="marketplace">
         <i class="bx bx-store bx-sm"></i>
       </div>
-      <div class="ai-ide-sidebar-btn" title="AI Lab">
-        <i class="bx bx-test-tube bx-sm"></i>
+      <div class="ai-ide-sidebar-btn" title="AI Lab" data-panel="lab">
+        <i class="bx bx-test-tube bx-sm" id="lab-toggle"></i>
       </div>
-      <div class="ai-ide-sidebar-btn" title="Settings">
+      <div class="ai-ide-sidebar-btn" title="Settings" data-panel="settings">
         <i class="bx bx-cog bx-sm"></i>
       </div>
     </div>
 
     <!-- Explorer Panel -->
-    <div class="ai-ide-explorer">
+    <div class="ai-ide-explorer" id="explorer-panel">
       <div class="ai-ide-explorer-header">
         <span>Explorer</span>
         <div class="ai-ide-explorer-actions">
@@ -772,54 +945,65 @@
         <!-- File Tree Structure -->
         <div class="file-tree">
           <!-- Project folder -->
-          <div class="file-tree-item folder open" style="padding-left: 8px; margin-bottom: 4px;">
-            <div class="file-tree-item-content" style="display: flex; align-items: center; padding: 4px 8px; cursor: pointer;">
-              <i class="bx bx-folder-open" style="color: var(--ai-gold-primary); margin-right: 6px;"></i>
-              <span style="font-weight: 600;">ai-warroom-project</span>
+          <div class="file-tree-item folder open" style="padding-left: 8px; margin-bottom: 4px">
+            <div class="file-tree-item-content"
+              style="display: flex; align-items: center; padding: 4px 8px; cursor: pointer">
+              <i class="bx bx-folder-open" style="color: var(--ai-gold-primary); margin-right: 6px"></i>
+              <span style="font-weight: 600">ai-warroom-project</span>
             </div>
-            
+
             <!-- Nested files -->
-            <div class="file-tree-children" style="padding-left: 16px;">
+            <div class="file-tree-children" style="padding-left: 16px">
               <!-- Folders -->
-              <div class="file-tree-item folder" style="margin: 2px 0;">
-                <div class="file-tree-item-content" style="display: flex; align-items: center; padding: 4px 8px; cursor: pointer;">
-                  <i class="bx bx-folder" style="color: var(--ai-gold-primary); margin-right: 6px;"></i>
+              <div class="file-tree-item folder" style="margin: 2px 0">
+                <div class="file-tree-item-content"
+                  style="display: flex; align-items: center; padding: 4px 8px; cursor: pointer">
+                  <i class="bx bx-folder" style="color: var(--ai-gold-primary); margin-right: 6px"></i>
                   <span>src</span>
                 </div>
               </div>
-              
-              <div class="file-tree-item folder" style="margin: 2px 0;">
-                <div class="file-tree-item-content" style="display: flex; align-items: center; padding: 4px 8px; cursor: pointer;">
-                  <i class="bx bx-folder" style="color: var(--ai-gold-primary); margin-right: 6px;"></i>
+
+              <div class="file-tree-item folder" style="margin: 2px 0">
+                <div class="file-tree-item-content"
+                  style="display: flex; align-items: center; padding: 4px 8px; cursor: pointer">
+                  <i class="bx bx-folder" style="color: var(--ai-gold-primary); margin-right: 6px"></i>
                   <span>models</span>
                 </div>
               </div>
-              
+
               <!-- Files -->
-              <div class="file-tree-item" style="margin: 2px 0;">
-                <div class="file-tree-item-content" style="display: flex; align-items: center; padding: 4px 8px; cursor: pointer;">
-                  <i class="bx bxs-file-json" style="color: #e8d44d; margin-right: 6px;"></i>
+              <div class="file-tree-item" style="margin: 2px 0">
+                <div class="file-tree-item-content"
+                  style="display: flex; align-items: center; padding: 4px 8px; cursor: pointer"
+                  onclick="openFile('package.json')">
+                  <i class="bx bxs-file-json" style="color: #e8d44d; margin-right: 6px"></i>
                   <span>package.json</span>
                 </div>
               </div>
-              
-              <div class="file-tree-item" style="margin: 2px 0;">
-                <div class="file-tree-item-content" style="display: flex; align-items: center; padding: 4px 8px; cursor: pointer;">
-                  <i class="bx bxs-file-md" style="color: #9ca3af; margin-right: 6px;"></i>
+
+              <div class="file-tree-item" style="margin: 2px 0">
+                <div class="file-tree-item-content"
+                  style="display: flex; align-items: center; padding: 4px 8px; cursor: pointer"
+                  onclick="openFile('README.md')">
+                  <i class="bx bxs-file-md" style="color: #9ca3af; margin-right: 6px"></i>
                   <span>README.md</span>
                 </div>
               </div>
-              
-              <div class="file-tree-item" style="margin: 2px 0;">
-                <div class="file-tree-item-content" style="display: flex; align-items: center; padding: 4px 8px; cursor: pointer;">
-                  <i class="bx bxs-file-js" style="color: #e8d44d; margin-right: 6px;"></i>
+
+              <div class="file-tree-item active" style="margin: 2px 0">
+                <div class="file-tree-item-content"
+                  style="display: flex; align-items: center; padding: 4px 8px; cursor: pointer; background-color: var(--ai-selection);"
+                  onclick="openFile('index.js')">
+                  <i class="bx bxs-file-js" style="color: #e8d44d; margin-right: 6px"></i>
                   <span>index.js</span>
                 </div>
               </div>
-              
-              <div class="file-tree-item" style="margin: 2px 0;">
-                <div class="file-tree-item-content" style="display: flex; align-items: center; padding: 4px 8px; cursor: pointer;">
-                  <i class="bx bxs-file" style="color: #9ca3af; margin-right: 6px;"></i>
+
+              <div class="file-tree-item" style="margin: 2px 0">
+                <div class="file-tree-item-content"
+                  style="display: flex; align-items: center; padding: 4px 8px; cursor: pointer"
+                  onclick="openFile('.env')">
+                  <i class="bx bxs-file" style="color: #9ca3af; margin-right: 6px"></i>
                   <span>.env</span>
                 </div>
               </div>
@@ -829,164 +1013,378 @@
       </div>
     </div>
 
-    <!-- Editor Area -->
-    <div class="ai-ide-editor">
-      <div class="ai-ide-editor-tabs">
-        <div class="ai-ide-editor-tab active">
-          <i class="bx bxs-file-js" style="color: #e8d44d;"></i>
-          <span>index.js</span>
-          <i class="bx bx-x" style="margin-left: auto;"></i>
-        </div>
-        <div class="ai-ide-editor-tab">
-          <i class="bx bxs-file-json" style="color: #e8d44d;"></i>
-          <span>package.json</span>
-          <i class="bx bx-x" style="margin-left: auto;"></i>
+    <!-- Search Panel -->
+    <div class="ai-ide-explorer" id="search-panel" style="display: none;">
+      <div class="ai-ide-explorer-header">
+        <span>Search</span>
+        <div class="ai-ide-explorer-actions">
+          <i class="bx bx-x ai-ide-explorer-action" title="Clear"></i>
+          <i class="bx bx-refresh ai-ide-explorer-action" title="Refresh"></i>
         </div>
       </div>
-      <div class="ai-ide-editor-content">
-        <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.39.0/min/vs/loader.js"></script>
-        <script src="/ai-warroom/agent-interactions.js"></script>
-        <script src="/ai-warroom/agents.js"></script>
-        <script src="/ai-warroom/filesystem.js"></script>
-        <script src="/ai-warroom/extensions.js"></script>
-        <script src="/ai-warroom/vs/editor/editor.main.js"></script>
+      <div class="ai-ide-explorer-content">
+        <div style="padding: 16px;">
+          <input type="text" placeholder="Search in files"
+            style="width: 100%; padding: 6px 8px; background-color: var(--ai-darker-bg); border: 1px solid var(--ai-border-color); color: var(--ai-text-color); border-radius: 4px;">
+          <div style="margin-top: 16px; color: #888; font-size: 13px; text-align: center;">
+            Type to search in files
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <script>
-          // Initialize Monaco Editor with AI capabilities
-          require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.39.0/min/vs' }});
-          require(['vs/editor/editor.main'], () => {
-            const editor = monaco.editor.create(document.getElementById('monaco-editor'), {
-              value: fs.readFile('/ai-warroom/workspace/main.js') || '// AI-Powered Code Editor\n',
-              language: 'javascript',
-              theme: 'ai-war-room-theme',
-              automaticLayout: true,
-              minimap: { enabled: true },
-              scrollBeyondLastLine: false,
-              fontSize: 14,
-              fontFamily: "'JetBrains Mono', monospace",
-              suggest: {
-                showWords: false,
-                showSnippets: true,
-                showClasses: true,
-                showFunctions: true,
-                showVariables: true,
-                showInterfaces: true,
-                showStructs: true
-              }
-            });
+    <!-- Git Panel -->
+    <div class="ai-ide-explorer" id="git-panel" style="display: none;">
+      <div class="ai-ide-explorer-header">
+        <span>Source Control</span>
+        <div class="ai-ide-explorer-actions">
+          <i class="bx bx-refresh ai-ide-explorer-action" title="Refresh"></i>
+          <i class="bx bx-git-commit ai-ide-explorer-action" title="Commit"></i>
+        </div>
+      </div>
+      <div class="ai-ide-explorer-content">
+        <div style="padding: 16px;">
+          <div style="color: #888; font-size: 13px; text-align: center;">
+            No changes detected
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Extensions Panel -->
+    <div class="ai-ide-explorer" id="extensions-panel" style="display: none;">
+      <div class="ai-ide-explorer-header">
+        <span>Extensions</span>
+        <div class="ai-ide-explorer-actions">
+          <i class="bx bx-refresh ai-ide-explorer-action" title="Refresh"></i>
+        </div>
+      </div>
+      <div class="ai-ide-explorer-content">
+        <div style="padding: 16px;">
+          <input type="text" placeholder="Search extensions"
+            style="width: 100%; padding: 6px 8px; background-color: var(--ai-darker-bg); border: 1px solid var(--ai-border-color); color: var(--ai-text-color); border-radius: 4px;">
+          <div style="margin-top: 16px;">
+            <div style="font-weight: 600; margin-bottom: 8px; color: var(--ai-gold-primary);">Installed</div>
+            <div class="extension-item"
+              style="display: flex; padding: 12px; border-radius: 6px; margin-bottom: 12px; background-color: var(--ai-darker-bg); border: 1px solid var(--ai-border-color); transition: all 0.2s ease;">
+              <div style="margin-right: 12px;">
+                <i class="bx bx-code-block" style="font-size: 24px; color: var(--ai-gold-primary);"></i>
+              </div>
+              <div style="flex: 1;">
+                <div style="font-weight: 500;">AI Assist</div>
+                <div style="font-size: 12px; color: #888;">v1.2.0 • AI-powered coding assistance</div>
+              </div>
+              <div style="display: flex; align-items: center;">
+                <label class="toggle-switch" title="Enable/Disable">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
 
-            // AI Editor Integrations
-            const aiEditorInterface = {
-              getContext: () => ({
-                code: editor.getValue(),
-                language: monaco.editor.getModel(editor.getModel().uri).getLanguageId(),
-                cursorPosition: editor.getPosition(),
-                selection: editor.getSelection(),
-                diagnostics: monaco.editor.getModelMarkers()
-              }),
-              applyChanges: (changes) => {
-                editor.executeEdits('ai-agent', changes.map(change => ({
-                  range: new monaco.Range(
-                    change.startLineNumber,
-                    change.startColumn,
-                    change.endLineNumber,
-                    change.endColumn
-                  ),
-                  text: change.text,
-                  forceMoveMarkers: true
-                })));
-              },
-              registerCodeLensProvider: (provider) => {
-                return monaco.languages.registerCodeLensProvider('javascript', {
-                  provideCodeLenses: (model, token) => provider(model, token)
-                });
-              }
-            };
+            <div class="extension-item"
+              style="display: flex; padding: 12px; border-radius: 6px; margin-bottom: 12px; background-color: var(--ai-darker-bg); border: 1px solid var(--ai-border-color); transition: all 0.2s ease;">
+              <div style="margin-right: 12px;">
+                <i class="bx bx-brain" style="font-size: 24px; color: var(--ai-gold-primary);"></i>
+              </div>
+              <div style="flex: 1;">
+                <div style="font-weight: 500;">OpenRouter Integration</div>
+                <div style="font-size: 12px; color: #888;">v1.0.1 • Connect to advanced AI models</div>
+              </div>
+              <div style="display: flex; align-items: center;">
+                <label class="toggle-switch" title="Enable/Disable">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
 
-            // Connect to AI Agent System
-            const aiCodeAssistant = new AICodeAssistant({
-              editor: aiEditorInterface,
-              fileSystem: fs,
-              model: 'anthropic/claude-3-sonnet',
-              capabilities: {
-                codeCompletion: true,
-                errorDiagnostics: true,
-                refactoring: true,
-                documentation: true,
-                testGeneration: true
-              }
-            });
+            <div style="font-weight: 600; margin-top: 24px; margin-bottom: 8px; color: var(--ai-gold-primary);">
+              Recommended</div>
+            <div class="extension-item"
+              style="display: flex; padding: 12px; border-radius: 6px; margin-bottom: 12px; background-color: var(--ai-darker-bg); border: 1px solid var(--ai-border-color); transition: all 0.2s ease;">
+              <div style="margin-right: 12px;">
+                <i class="bx bx-git-branch" style="font-size: 24px; color: #888;"></i>
+              </div>
+              <div style="flex: 1;">
+                <div style="font-weight: 500;">GitLens</div>
+                <div style="font-size: 12px; color: #888;">v12.3.5 • Git supercharged</div>
+              </div>
+              <div>
+                <button
+                  style="background: linear-gradient(135deg, var(--ai-gold-primary), var(--ai-gold-secondary)); color: #111; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 500;">Install</button>
+              </div>
+            </div>
 
-            // Real-time AI Interactions
-            editor.onDidChangeModelContent(() => {
-              aiCodeAssistant.analyzeCode(editor.getValue(), {
-                provideSuggestions: true,
-                checkErrors: true,
-                updateDocumentation: true
-              });
-            });
+            <div class="extension-item"
+              style="display: flex; padding: 12px; border-radius: 6px; margin-bottom: 12px; background-color: var(--ai-darker-bg); border: 1px solid var(--ai-border-color); transition: all 0.2s ease;">
+              <div style="margin-right: 12px;">
+                <i class="bx bx-library" style="font-size: 24px; color: #888;"></i>
+              </div>
+              <div style="flex: 1;">
+                <div style="font-weight: 500;">Smart Snippets</div>
+                <div style="font-size: 12px; color: #888;">v2.1.0 • AI-powered code snippets</div>
+              </div>
+              <div>
+                <button
+                  style="background: linear-gradient(135deg, var(--ai-gold-primary), var(--ai-gold-secondary)); color: #111; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 500;">Install</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            // Register AI-powered completion provider
-            monaco.languages.registerCompletionItemProvider('javascript', {
-              provideCompletionItems: async (model, position) => {
-                const suggestions = await aiCodeAssistant.getCodeSuggestions({
-                  prefix: model.getValueInRange({
-                    startLineNumber: 1,
-                    startColumn: 1,
-                    endLineNumber: position.lineNumber,
-                    endColumn: position.column
-                  }),
-                  cursorPosition: position
-                });
-                
-                return {
-                  suggestions: suggestions.map(s => ({
-                    label: s.text,
-                    kind: monaco.languages.CompletionItemKind[s.type],
-                    insertText: s.insertText || s.text,
-                    documentation: s.documentation,
-                    range: s.range
-                  }))
-                };
-              }
-            });
+    <!-- Marketplace Panel -->
+    <div class="ai-ide-explorer" id="marketplace-panel" style="display: none;">
+      <div class="ai-ide-explorer-header">
+        <span>Agent Marketplace</span>
+        <div class="ai-ide-explorer-actions">
+          <i class="bx bx-refresh ai-ide-explorer-action" title="Refresh"></i>
+        </div>
+      </div>
+      <div class="ai-ide-explorer-content">
+        <div style="padding: 16px;">
+          <input type="text" placeholder="Search agents"
+            style="width: 100%; padding: 6px 8px; background-color: var(--ai-darker-bg); border: 1px solid var(--ai-border-color); color: var(--ai-text-color); border-radius: 4px;">
 
-            // Connect to Agent Management System
-            window.AIEditor = {
-              editor,
-              agents: {
-                codeAssistant: aiCodeAssistant,
-                debugger: new AIDebugger({ editor: aiEditorInterface }),
-                documentation: new AIDocumentationBot({ editor: aiEditorInterface })
-              },
-              executeAgentTask: (task, payload) => {
-                return AIAgentOrchestrator.executeTask(task, {
-                  editor: aiEditorInterface,
-                  fileSystem: fs,
-                  ...payload
-                });
-              }
-            };
-          });
-        </script>
-        <div id="monaco-editor" style="width: 100%; height: 100%;"></div>
+          <!-- Featured Section -->
+          <div style="margin-top: 16px;">
+            <div style="font-weight: 600; margin-bottom: 12px; color: var(--ai-gold-primary);">Featured Agents</div>
+
+            <div class="agent-marketplace-item">
+              <div class="agent-marketplace-header">
+                <div class="agent-marketplace-avatar">
+                  <i class="bx bx-code"></i>
+                </div>
+                <div class="agent-marketplace-info">
+                  <div class="agent-marketplace-name">Senior Developer</div>
+                  <div class="agent-marketplace-description">Full-stack coding expert</div>
+                </div>
+              </div>
+              <div style="font-size: 12px; color: #aaa; margin: 8px 0;">
+                Expert in multiple languages with advanced architecture design skills and code optimization
+                capabilities.
+              </div>
+              <div class="agent-marketplace-actions">
+                <button class="agent-marketplace-button">Add Agent</button>
+              </div>
+            </div>
+
+            <div class="agent-marketplace-item">
+              <div class="agent-marketplace-header">
+                <div class="agent-marketplace-avatar" style="background: linear-gradient(135deg, #2d7dd2, #45a1ff);">
+                  <i class="bx bx-search-alt"></i>
+                </div>
+                <div class="agent-marketplace-info">
+                  <div class="agent-marketplace-name">Research Assistant</div>
+                  <div class="agent-marketplace-description">Information gathering specialist</div>
+                </div>
+              </div>
+              <div style="font-size: 12px; color: #aaa; margin: 8px 0;">
+                Specialized in gathering, summarizing and organizing information from multiple sources.
+              </div>
+              <div class="agent-marketplace-actions">
+                <button class="agent-marketplace-button">Add Agent</button>
+              </div>
+            </div>
+
+            <div class="agent-marketplace-item">
+              <div class="agent-marketplace-header">
+                <div class="agent-marketplace-avatar" style="background: linear-gradient(135deg, #ff6b6b, #ff8e8e);">
+                  <i class="bx bx-bug-alt"></i>
+                </div>
+                <div class="agent-marketplace-info">
+                  <div class="agent-marketplace-name">Debug Specialist</div>
+                  <div class="agent-marketplace-description">Error tracking and fixing</div>
+                </div>
+              </div>
+              <div style="font-size: 12px; color: #aaa; margin: 8px 0;">
+                Expert at identifying complex bugs, performance issues, and suggesting optimized solutions.
+              </div>
+              <div class="agent-marketplace-actions">
+                <button class="agent-marketplace-button">Add Agent</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Community Agents -->
+          <div style="margin-top: 24px;">
+            <div style="font-weight: 600; margin-bottom: 12px; color: var(--ai-gold-primary);">Community Agents</div>
+
+            <div class="agent-marketplace-item">
+              <div class="agent-marketplace-header">
+                <div class="agent-marketplace-avatar" style="background: linear-gradient(135deg, #00b894, #55efc4);">
+                  <i class="bx bx-paint"></i>
+                </div>
+                <div class="agent-marketplace-info">
+                  <div class="agent-marketplace-name">UI Designer</div>
+                  <div class="agent-marketplace-description">Web design specialist</div>
+                </div>
+              </div>
+              <div style="font-size: 12px; color: #aaa; margin: 8px 0;">
+                Specializes in creating modern, responsive user interfaces with clean design principles.
+              </div>
+              <div class="agent-marketplace-actions">
+                <button class="agent-marketplace-button">Add Agent</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Panel with Enhanced Customization -->
+    <div class="ai-ide-explorer" id="settings-panel" style="display: none;">
+      <div class="ai-ide-explorer-header">
+        <span>Settings</span>
+        <div class="ai-ide-explorer-actions">
+          <i class="bx bx-refresh ai-ide-explorer-action" title="Refresh"></i>
+        </div>
+      </div>
+      <div class="ai-ide-explorer-content">
+        <div style="padding: 16px;">
+          <!-- Editor Settings -->
+          <div class="settings-section">
+            <div class="settings-title">Editor</div>
+
+            <div class="settings-row">
+              <span>Font Size</span>
+              <input type="number" class="settings-control" value="14" min="8" max="24" style="width: 60px;">
+            </div>
+
+            <div class="settings-row">
+              <span>Tab Size</span>
+              <input type="number" class="settings-control" value="2" min="1" max="8" style="width: 60px;">
+            </div>
+
+            <div class="settings-row">
+              <span>Word Wrap</span>
+              <label class="toggle-switch">
+                <input type="checkbox">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="settings-row">
+              <span>Line Numbers</span>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="settings-row">
+              <span>Minimap</span>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Appearance Settings -->
+          <div class="settings-section">
+            <div class="settings-title">Appearance</div>
+
+            <div class="settings-row">
+              <span>Theme</span>
+              <select class="settings-control" style="width: 150px;">
+                <option selected>Dark Gold (Default)</option>
+                <option>Light Gold</option>
+                <option>Dark Blue</option>
+                <option>High Contrast</option>
+              </select>
+            </div>
+
+            <div style="margin-top: 10px;">
+              <div style="margin-bottom: 8px;">Accent Color</div>
+              <div class="color-picker">
+                <div class="color-option selected"
+                  style="background: linear-gradient(135deg, var(--ai-gold-primary), var(--ai-gold-secondary));"
+                  data-color="gold"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #0078d4, #0054a3);"
+                  data-color="blue"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #9e66bf, #8045a3);"
+                  data-color="purple"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #4cb050, #2e8b57);"
+                  data-color="green"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #e64a19, #c41c00);"
+                  data-color="orange"></div>
+              </div>
+            </div>
+
+            <div class="settings-row" style="margin-top: 16px;">
+              <span>Font Family</span>
+              <select class="settings-control" style="width: 150px;">
+                <option selected>Consolas</option>
+                <option>Fira Code</option>
+                <option>JetBrains Mono</option>
+                <option>Courier New</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- AI Settings -->
+          <div class="settings-section">
+            <div class="settings-title">AI Integration</div>
+
+            <div class="settings-row">
+              <span>OpenRouter API Key</span>
+              <input type="password" class="settings-control" value="sk-•••••••••••••••••••••••" style="width: 150px;">
+            </div>
+
+            <div class="settings-row">
+              <span>Default AI Model</span>
+              <select class="settings-control" style="width: 150px;">
+                <option selected>Claude 3 Opus</option>
+                <option>GPT-4 Turbo</option>
+                <option>Claude 3 Sonnet</option>
+                <option>Mistral Large</option>
+                <option>Llama 3 70B</option>
+              </select>
+            </div>
+
+            <div class="settings-row">
+              <span>Auto-Completion</span>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="settings-row">
+              <span>Code Analysis</span>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="settings-row">
+              <button
+                style="background: linear-gradient(135deg, var(--ai-gold-primary), var(--ai-gold-secondary)); color: #111; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500; width: 100%; margin-top: 8px;">
+                Test AI Connection
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- AI Agents Panel -->
-    <div class="ai-ide-agents">
+    <div class="ai-ide-agents" id="agents-panel">
       <div class="ai-ide-agents-header">
         <span>AI Agents</span>
         <div class="ai-ide-explorer-actions">
-          <i class="bx bx-plus ai-ide-explorer-action" title="Add Agent"></i>
+          <i class="bx bx-plus ai-ide-explorer-action" title="Add Agent" id="add-agent-btn"></i>
           <i class="bx bx-cog ai-ide-explorer-action" title="Agent Settings"></i>
         </div>
       </div>
-      <div class="ai-ide-agents-content">
-        <!-- Agent cards sample (will be replaced by agent-interactions.js) -->
+      <div class="ai-ide-agents-content" id="agents-container">
         <div class="ai-agent-card" data-id="agent-1">
           <div class="ai-agent-header">
-            <div class="ai-agent-avatar" style="background: var(--ai-accent-blue)">
+            <div class="ai-agent-avatar"
+              style="background: linear-gradient(135deg, var(--ai-gold-primary), var(--ai-gold-secondary)); color: #111;">
               <i class="bx bx-code-alt"></i>
             </div>
             <div class="ai-agent-info">
@@ -997,7 +1395,7 @@
           <div class="ai-agent-level">
             <div class="ai-agent-level-text">Level 3</div>
             <div class="ai-agent-level-bar">
-              <div class="ai-agent-level-progress" style="width: 70%"></div>
+              <div class="ai-agent-level-progress" style="width: 87.5%"></div>
             </div>
           </div>
           <div class="ai-agent-actions">
@@ -1005,25 +1403,154 @@
             <div class="ai-agent-action" data-action="assign">Assign Task</div>
           </div>
         </div>
-        <div class="ai-agent-card" data-id="agent-2">
+
+        <!-- OpenRouter AI Agent -->
+        <div class="ai-agent-card" data-id="agent-openrouter">
           <div class="ai-agent-header">
-            <div class="ai-agent-avatar" style="background: var(--ai-accent-red)">
-              <i class="bx bx-bug"></i>
+            <div class="ai-agent-avatar"
+              style="background: linear-gradient(135deg, #2A2A2A, #3A3A3A); border: 2px solid var(--ai-gold-primary);">
+              <i class="bx bx-brain"></i>
             </div>
             <div class="ai-agent-info">
-              <div class="ai-agent-name">Debug Wizard</div>
-              <div class="ai-agent-role">Debugger</div>
+              <div class="ai-agent-name">OpenRouter AI</div>
+              <div class="ai-agent-role">Connected • Claude 3 Opus</div>
             </div>
           </div>
           <div class="ai-agent-level">
-            <div class="ai-agent-level-text">Level 2</div>
+            <div class="ai-agent-level-text">Premium</div>
             <div class="ai-agent-level-bar">
-              <div class="ai-agent-level-progress" style="width: 45%"></div>
+              <div class="ai-agent-level-progress" style="width: 100%"></div>
             </div>
           </div>
           <div class="ai-agent-actions">
             <div class="ai-agent-action" data-action="chat">Chat</div>
             <div class="ai-agent-action" data-action="assign">Assign Task</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Editor Area -->
+    <div class="ai-ide-editor">
+      <div class="ai-ide-editor-tabs">
+        <div class="ai-ide-editor-tab active" data-file="index.js">
+          <i class="bx bxs-file-js" style="color: #e8d44d"></i>
+          <span>index.js</span>
+          <i class="bx bx-x" style="margin-left: auto"></i>
+        </div>
+        <div class="ai-ide-editor-tab" data-file="package.json">
+          <i class="bx bxs-file-json" style="color: #e8d44d"></i>
+          <span>package.json</span>
+          <i class="bx bx-x" style="margin-left: auto"></i>
+        </div>
+      </div>
+      <div class="ai-ide-editor-content">
+        <div id="monaco-editor" style="width: 100%; height: 100%;"></div>
+      </div>
+    </div>
+
+    <!-- AI Lab Container -->
+    <div class="ai-lab-container" id="ai-lab" style="display: none;">
+      <div class="ai-lab-header">
+        <div class="ai-lab-title">
+          <i class="bx bx-test-tube"></i>
+          <span>AI Agent Lab</span>
+        </div>
+        <div class="ai-lab-controls">
+          <i class="bx bx-minimize ai-lab-control" id="minimize-lab" title="Minimize"></i>
+          <i class="bx bx-x ai-lab-control" id="close-lab" title="Close"></i>
+        </div>
+      </div>
+      <div class="ai-lab-content">
+        <div class="ai-lab-sidebar">
+          <div class="ai-lab-sidebar-section">
+            <div class="ai-lab-sidebar-title">Templates</div>
+            <div class="ai-lab-sidebar-item active">
+              <i class="bx bx-code"></i>
+              <span>Code Assistant</span>
+            </div>
+            <div class="ai-lab-sidebar-item">
+              <i class="bx bx-bot"></i>
+              <span>Custom Agent</span>
+            </div>
+            <div class="ai-lab-sidebar-item">
+              <i class="bx bx-search"></i>
+              <span>Research Assistant</span>
+            </div>
+          </div>
+          <div class="ai-lab-sidebar-section">
+            <div class="ai-lab-sidebar-title">My Agents</div>
+            <div class="ai-lab-sidebar-item">
+              <i class="bx bx-code-alt"></i>
+              <span>Code Helper</span>
+            </div>
+          </div>
+        </div>
+        <div class="ai-lab-editor-container">
+          <div class="ai-lab-editors">
+            <div class="ai-lab-editor-area">
+              <div class="ai-lab-editor-header">
+                Agent Configuration
+              </div>
+              <div class="ai-lab-editor-content">
+                <div id="lab-editor" style="width: 100%; height: 100%;"></div>
+              </div>
+            </div>
+            <div class="ai-lab-editor-area" style="width: 40%;">
+              <div class="ai-lab-editor-header">
+                Agent Preview
+              </div>
+              <div class="ai-lab-editor-content" style="padding: 16px;">
+                <div style="background-color: var(--ai-darker-bg); border-radius: 8px; padding: 16px; height: 100%;">
+                  <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                    <div
+                      style="width: 48px; height: 48px; border-radius: 8px; background: linear-gradient(135deg, var(--ai-gold-primary), var(--ai-gold-secondary)); color: #111; display: flex; align-items: center; justify-content: center; font-size: 24px;">
+                      <i class="bx bx-code-alt"></i>
+                    </div>
+                    <div>
+                      <div style="font-weight: 600; font-size: 16px;">Code Assistant</div>
+                      <div style="font-size: 13px; color: #888;">Specialized in coding tasks</div>
+                    </div>
+                  </div>
+                  <div style="font-size: 13px; margin-bottom: 16px;">
+                    <strong>Capabilities:</strong>
+                    <ul style="padding-left: 16px; margin-top: 8px;">
+                      <li>Write, review, and refactor code</li>
+                      <li>Debug issues and provide solutions</li>
+                      <li>Explain code functionality</li>
+                      <li>Suggest optimizations</li>
+                    </ul>
+                  </div>
+                  <div style="font-size: 13px;">
+                    <strong>Language Support:</strong>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;">
+                      <span
+                        style="background-color: rgba(212, 175, 55, 0.2); color: var(--ai-gold-primary); padding: 4px 8px; border-radius: 4px; font-size: 12px;">JavaScript</span>
+                      <span
+                        style="background-color: rgba(212, 175, 55, 0.2); color: var(--ai-gold-primary); padding: 4px 8px; border-radius: 4px; font-size: 12px;">TypeScript</span>
+                      <span
+                        style="background-color: rgba(212, 175, 55, 0.2); color: var(--ai-gold-primary); padding: 4px 8px; border-radius: 4px; font-size: 12px;">Python</span>
+                      <span
+                        style="background-color: rgba(212, 175, 55, 0.2); color: var(--ai-gold-primary); padding: 4px 8px; border-radius: 4px; font-size: 12px;">Java</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ai-lab-editor-actions">
+            <button class="ai-lab-button secondary" id="reset-agent-config">
+              <i class="bx bx-reset"></i>
+              Reset
+            </button>
+            <button class="ai-lab-button" id="save-agent-config">
+              <i class="bx bx-save"></i>
+              Save Configuration
+            </button>
+            <button class="ai-lab-button" id="deploy-test-agent">
+              <i class="bx bx-rocket"></i>
+              Deploy Agent
+            </button>
           </div>
         </div>
       </div>
@@ -1045,7 +1572,7 @@
         <i class="bx bx-bot"></i>
         <span>3 Agents Online</span>
       </div>
-      
+
       <div class="ai-ide-status-right">
         <div class="ai-ide-status-item">
           <i class="bx bx-wallet"></i>
@@ -1065,239 +1592,819 @@
     </div>
   </div>
 
-  <!-- AI Chat Dialog -->
-  <div class="ai-chat-dialog glass-panel" style="position: fixed; bottom: 20px; right: 20px; width: 380px; height: 480px; display: none; flex-direction: column; overflow: hidden; z-index: 1000;">
-    <div class="ai-chat-header" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--ai-border-color);">
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <div class="ai-agent-avatar" style="width: 28px; height: 28px;">
-          <i class="bx bx-code-alt"></i>
+  <!-- OpenRouter Connection Modal -->
+  <div id="openrouter-modal"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1000; align-items: center; justify-content: center;">
+    <div
+      style="background-color: var(--ai-panel-bg); width: 450px; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); border: 1px solid var(--ai-gold-border);">
+      <div
+        style="padding: 16px; background-color: var(--ai-darker-bg); border-bottom: 1px solid var(--ai-border-color); display: flex; justify-content: space-between; align-items: center;">
+        <div style="font-weight: 600; color: var(--ai-gold-primary); display: flex; align-items: center; gap: 8px;">
+          <i class="bx bx-brain"></i>
+          <span>OpenRouter Integration</span>
         </div>
-        <span style="font-weight: 600;">Code Assistant</span>
+        <i class="bx bx-x" style="cursor: pointer; font-size: 20px;" id="close-openrouter-modal"></i>
       </div>
-      <div style="display: flex; gap: 8px;">
-        <i class="bx bx-minus" style="cursor: pointer;"></i>
-        <i class="bx bx-x" style="cursor: pointer;"></i>
-      </div>
-    </div>
-    <div class="ai-chat-messages" style="flex: 1; overflow-y: auto; padding: 16px;">
-      <!-- Messages will be populated by agent-interactions.js -->
-    </div>
-    <div class="ai-chat-input" style="padding: 12px 16px; border-top: 1px solid var(--ai-border-color);">
-      <div style="position: relative;">
-        <textarea placeholder="Ask me anything..." style="width: 100%; height: 40px; resize: none; padding: 8px 36px 8px 12px; background: var(--ai-input-bg); border: 1px solid var(--ai-border-color); border-radius: 6px;"></textarea>
-        <button style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--ai-gold-primary); cursor: pointer;">
-          <i class="bx bx-send"></i>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Agent Marketplace Modal -->
-  <div class="ai-marketplace-modal glass-panel" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 600px; display: none; flex-direction: column; z-index: 1001; border-radius: 12px; overflow: hidden;">
-    <div class="ai-marketplace-header" style="display: flex; align-items: center; justify-content: space-between; padding: 16px; border-bottom: 1px solid var(--ai-border-color);">
-      <h2 style="margin: 0;">AI Agent Marketplace</h2>
-      <i class="bx bx-x" style="font-size: 24px; cursor: pointer;"></i>
-    </div>
-    <div class="ai-marketplace-content" style="flex: 1; overflow-y: auto; padding: 20px;">
-      <!-- Marketplace content will be populated by agent-interactions.js -->
-       
-    </div>
-  </div>
-
-  <!-- AI Lab Panel -->
-  <div class="ai-lab-panel">
-    <div class="ai-lab-header">
-      <h3>AI Agent Playground</h3>
-      <div class="ai-lab-tabs">
-        <button class="active" data-tab="builder">Agent Builder</button>
-        <button data-tab="testing">Testing Arena</button>
-      </div>
-    </div>
-    
-    <div class="ai-lab-content">
-      <div id="agent-builder" class="lab-tab active">
-        <div class="agent-config-editor" id="agent-config-editor"></div>
-        <div class="lab-actions">
-          <button class="btn-save" onclick="saveAgentConfig()">
-            <i class="bx bx-save"></i> Save Agent
-          </button>
-          <button class="btn-test" onclick="deployTestAgent()">
-            <i class="bx bx-rocket"></i> Deploy Test
-          </button>
+      <div style="padding: 20px;">
+        <div style="margin-bottom: 20px;">
+          <div style="margin-bottom: 8px; font-weight: 500;">API Key</div>
+          <input type="password" id="openrouter-api-key" placeholder="Enter your OpenRouter API key"
+            style="width: 100%; padding: 8px 12px; background-color: var(--ai-darker-bg); border: 1px solid var(--ai-border-color); color: var(--ai-text-color); border-radius: 4px;">
+        </div>
+        <div style="margin-bottom: 20px;">
+          <div style="margin-bottom: 8px; font-weight: 500;">Default Model</div>
+          <select id="openrouter-model"
+            style="width: 100%; padding: 8px 12px; background-color: var(--ai-darker-bg); border: 1px solid var(--ai-border-color); color: var(--ai-text-color); border-radius: 4px;">
+            <option value="anthropic/claude-3-opus">Claude 3 Opus</option>
+            <option value="anthropic/claude-3-sonnet">Claude 3 Sonnet</option>
+            <option value="openai/gpt-4-turbo">GPT-4 Turbo</option>
+            <option value="meta-llama/llama-3-70b-instruct">Llama 3 70B</option>
+            <option value="mistralai/mistral-large">Mistral Large</option>
+          </select>
+        </div>
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+          <button id="test-openrouter"
+            style="background-color: transparent; color: var(--ai-gold-primary); border: 1px solid var(--ai-gold-border); padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: 500;">Test
+            Connection</button>
+          <button id="save-openrouter"
+            style="background: linear-gradient(135deg, var(--ai-gold-primary), var(--ai-gold-secondary)); color: #111; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: 500;">Connect</button>
         </div>
       </div>
-      
-      <div id="testing-arena" class="lab-tab">
-        <div class="testing-console" id="testing-console"></div>
-      </div>
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.39.0/min/vs/loader.js"></script>
-  <script src="/ai-warroom/agent-interactions.js"></script>
-  <script src="/ai-warroom/agents.js"></script>
-  <script src="/ai-warroom/filesystem.js"></script>
-  <script src="/ai-warroom/extensions.js"></script>
   <script>
-    // Initialize Monaco Editor
-    require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.39.0/min/vs' } });
-    require(['/src/browser/pages/vs/editor/editor.main.js'], function() {
-      // Load sample code for demonstration
-      const sampleCode = `// Welcome to AI War Room IDE
-// Start coding with AI assistance
+    // File system simulation
+    class VirtualFileSystem {
+      constructor() {
+        this.files = {
+          'index.js': `// Welcome to AI War Room IDE
+    // Start coding with AI assistance
+    
+    function calculateFibonacci(n) {
+      if (n <= 1) return n;
+      
+      let a = 0, b = 1;
+      for (let i = 2; i <= n; i++) {
+        const temp = a + b;
+        a = b;
+        b = temp;
+      }
+      
+      return b;
+    }
+    
+    // Example usage
+    console.log("Fibonacci(10) =", calculateFibonacci(10));
+    `,
+          'package.json': `{
+      "name": "ai-warroom-project",
+      "version": "1.0.0",
+      "description": "AI War Room Project",
+      "main": "index.js",
+      "scripts": {
+        "start": "node index.js",
+        "test": "echo \\"Error: no test specified\\" && exit 1"
+      },
+      "dependencies": {
+        "express": "^4.18.2",
+        "dotenv": "^16.0.3"
+      },
+      "author": "",
+      "license": "MIT"
+    }`,
+          'README.md': `# AI War Room Project
+    
+    A powerful development environment with AI assistance.
+    
+    ## Features
+    
+    - Integrated AI support
+    - Real-time collaboration
+    - Advanced code completion
+    
+    ## Getting Started
+    
+    1. Clone this repository
+    2. Run \`npm install\`
+    3. Run \`npm start\`
+    `,
+          '.env': `PORT=3000
+    NODE_ENV=development
+    API_KEY=your-api-key-here
+    `
+        };
 
-function calculateFibonacci(n) {
-  if (n <= 1) return n;
-  
-  let a = 0, b = 1;
-  for (let i = 2; i <= n; i++) {
-    const temp = a + b;
-    a = b;
-    b = temp;
-  }
-  
-  return b;
-}
+        // Register globally
+        window.VirtualFileSystem = this;
+        console.log("VirtualFileSystem initialized");
+      }
 
-// Example usage
-const result = calculateFibonacci(10);
-console.log(\`The 10th Fibonacci number is: \${result}\`);
+      getFile(filename) {
+        return this.files[filename] || null;
+      }
 
-// You can ask the AI agents for help with:
-// - Code optimization
-// - Bug fixing
-// - Feature implementation
-// - Best practices
-`;
+      saveFile(filename, content) {
+        this.files[filename] = content;
+        return true;
+      }
 
+      getAllFiles() {
+        return Object.keys(this.files);
+      }
+    }
+
+    // Extension manager simulation
+    class ExtensionManager {
+      constructor() {
+        this.extensions = [
+          {
+            id: 'ai-assist',
+            name: 'AI Assist',
+            version: '1.2.0',
+            description: 'AI assistance for coding tasks',
+            active: true
+          },
+          {
+            id: 'openrouter',
+            name: 'OpenRouter Integration',
+            version: '1.0.1',
+            description: 'Connect to advanced AI models',
+            active: true
+          }
+        ];
+
+        // Register globally
+        window.ExtensionManager = this;
+        console.log("ExtensionManager initialized");
+      }
+
+      getExtensions() {
+        return this.extensions;
+      }
+
+      activateExtension(id) {
+        const ext = this.extensions.find(e => e.id === id);
+        if (ext) {
+          ext.active = true;
+          return true;
+        }
+        return false;
+      }
+
+      deactivateExtension(id) {
+        const ext = this.extensions.find(e => e.id === id);
+        if (ext) {
+          ext.active = false;
+          return true;
+        }
+        return false;
+      }
+    }
+
+    // OpenRouter Integration
+    class OpenRouterIntegration {
+      constructor() {
+        this.apiKey = localStorage.getItem('openrouter_api_key') || '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';
+        this.model = localStorage.getItem('openrouter_model') || 'cognitivecomputations/dolphin3.0-r1-mistral-24b:free';
+        this.connected = !!this.apiKey;
+
+        // Register globally
+        window.OpenRouterIntegration = this;
+        console.log("OpenRouter Integration initialized");
+      }
+
+      connect(apiKey, model) {
+        this.apiKey = apiKey;
+        this.model = model;
+        localStorage.setItem('openrouter_api_key', apiKey);
+        localStorage.setItem('openrouter_model', model);
+        this.connected = true;
+        return true;
+      }
+
+      disconnect() {
+        this.apiKey = '';
+        localStorage.removeItem('openrouter_api_key');
+        this.connected = false;
+        return true;
+      }
+      async testConnection() {
+        if (!this.apiKey) return false;
+        try {
+          const response = await fetch('https://api.openrouter.ai/api/v1/auth/test', {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${this.apiKey}`,
+              'Content-Type': 'application/json'
+            }
+          });
+          return response.ok;
+        } catch (error) {
+          console.error('OpenRouter connection test failed:', error);
+          return false;
+        }
+      }
+
+      async sendQuery(prompt) {
+        if (!this.connected) return null;
+        try {
+          const response = await fetch('https://api.openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${this.apiKey}`, 
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              model: this.model,
+              messages: [{
+                role: 'user',
+                content: prompt
+              }]
+            })
+          });
+          
+          const data = await response.json();
+          
+          return {
+            success: true,
+            model: this.model,
+            response: data.choices[0].message.content
+          };
+        } catch (error) {
+          console.error('OpenRouter query failed:', error);
+          return {
+            success: false,
+            error: error.message
+          };
+        }
+      }
+    }
+    // Agent manager simulation
+    class AgentManager {
+      constructor() {
+        this.agents = [
+          {
+            id: 'agent-1',
+            name: 'Code Assistant',
+            role: 'Code Assistant',
+            level: 3,
+            progress: 87.5,
+            avatar: {
+              type: 'icon',
+              value: 'bx-code-alt',
+              background: 'linear-gradient(135deg, var(--ai-gold-primary), var(--ai-gold-secondary))'
+            }
+          },
+          {
+            id: 'agent-openrouter',
+            name: 'OpenRouter AI',
+            role: 'Connected • Claude 3 Opus',
+            level: 'Premium',
+            progress: 100,
+            avatar: {
+              type: 'icon',
+              value: 'bx-brain',
+              background: 'linear-gradient(135deg, #2A2A2A, #3A3A3A)',
+              border: '2px solid var(--ai-gold-primary)'
+            }
+          }
+        ];
+        // Register globally
+        window.AgentManager = this;
+      }
+      async initialize() {
+        try {
+          await this.fetchAgents();
+          console.log("Agent Manager initialized successfully");
+          this.renderAgents();
+          return true;
+        } catch (error) {
+          console.log("Failed to initialize Agent Manager:", error);
+          // Fall back to using built-in agents data
+          this.renderAgents();
+          return false;
+        }
+      }
+      async fetchAgents() {
+        try {
+          // In a real app, this would fetch from a server
+          // We'll simulate a successful fetch with our built-in data
+          console.log("Agents fetched successfully");
+          return this.agents;
+        } catch (error) {
+          console.error("Error fetching agents:", error);
+          throw new Error("Failed to fetch agents");
+        }
+      }
+      renderAgents() {
+        const container = document.getElementById('agents-container');
+        container.innerHTML = '';
+        
+        this.agents.forEach(agent => {
+          const agentCard = document.createElement('div');
+          agentCard.className = 'ai-agent-card';
+          agentCard.dataset.id = agent.id;
+
+          // Special styling for OpenRouter agent
+          const avatarStyle = agent.avatar.border
+            ? `background: ${agent.avatar.background}; border: ${agent.avatar.border}`
+            : `background: ${agent.avatar.background}`;
+
+          // Determine level display
+          const levelText = typeof agent.level === 'string'
+            ? agent.level 
+            : `Level ${agent.level}`;
+
+          agentCard.innerHTML = `
+            <div class="ai-agent-header">
+              <div class="ai-agent-avatar" style="${avatarStyle}">
+                <i class="bx ${agent.avatar.value}"></i>
+              </div>
+              <div class="ai-agent-info">
+                <div class="ai-agent-name">${agent.name}</div>
+                <div class="ai-agent-role">${agent.role}</div>
+              </div>
+            </div>
+            <div class="ai-agent-level">
+              <div class="ai-agent-level-text">${levelText}</div>
+              <div class="ai-agent-level-bar">
+                <div class="ai-agent-level-progress" style="width: ${agent.progress}%"></div>
+              </div>
+            </div>
+            <div class="ai-agent-actions">
+              <div class="ai-agent-action" data-action="chat">Chat</div>
+              <div class="ai-agent-action" data-action="assign">Assign Task</div>
+            </div>
+          `;
+
+          container.appendChild(agentCard);
+        });
+
+        // Add event listeners after creating agents
+        container.querySelectorAll('.ai-agent-action').forEach(action => {
+          action.addEventListener('click', (e) => {
+            const actionType = e.target.dataset.action;
+            const agentId = e.target.closest('.ai-agent-card').dataset.id;
+            this.handleAgentAction(agentId, actionType);
+          });
+        });
+      }
+      handleAgentAction(agentId, actionType) {
+        const agent = this.agents.find(a => a.id === agentId);
+        if (!agent) return;
+        if (actionType === 'chat') {
+          alert(`Starting chat with ${agent.name}`);
+        } else if (actionType === 'assign') {
+          alert(`Assigning task to ${agent.name}`);
+        }
+      }
+      // Add agent
+      addAgent(agent) {
+        this.agents.push(agent);
+        this.renderAgents();
+        return agent;
+      }
+    }
+    // Agent interactions and WebSocket simulation
+    class AgentInteractions {
+      constructor() {
+        this.agents = [];
+        this.socket = null;
+        this.connected = false;
+        // Register globally
+        window.AgentInteractions = this;
+      }
+      async init() {
+        try {
+          await this.loadAgents();
+          this.setupWebSocket();
+          console.log("Agent Interactions initialized successfully");
+          return true;
+        } catch (error) {
+          console.error("Failed to initialize Agent Interactions:", error);
+          return false;
+        }
+      }
+      async loadAgents() {
+        try {
+          // In a real app, this would fetch from a server
+          // We'll simulate a successful fetch with AgentManager's data
+          this.agents = window.AgentManager.agents;
+          return this.agents;
+        } catch (error) {
+          console.error("Error loading agents:", error);
+          throw new Error("Failed to load agents");
+        }
+      }
+      setupWebSocket() {
+        // In a real app, this would connect to a real WebSocket server
+        // For now, we'll simulate the connection
+        setTimeout(() => {
+          this.connected = true;
+          // Simulate receiving a message
+          this.handleWebSocketMessage({
+            type: 'system',
+            message: 'Connected to AI War Room'
+          });
+        }, 1000);
+      }
+      handleWebSocketMessage(message) {
+        console.log("Received message:", message);
+        // In a real app, this would handle different message types
+      }
+      sendMessage(message) {
+        if (!this.connected) {
+          console.warn("WebSocket not connected");
+          return false;
+        }
+        console.log("Sending message:", message);
+        // In a real app, this would send the message to the server
+        return true;
+      }
+    }
+    // Initialize when the DOM is loaded
+    document.addEventListener('DOMContentLoaded', function () {
+      // Create file system first
+      const fileSystem = new VirtualFileSystem();
+      // Create extension manager
+      const extensionManager = new ExtensionManager();
+      // Create OpenRouter Integration
+      const openRouter = new OpenRouterIntegration();
+      // Initialize Monaco Editor
+      require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs' } });
+      window.MonacoEnvironment = {
+        getWorkerUrl: function (workerId, label) {
+          return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
+            self.MonacoEnvironment = {
+              baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/'
+            };
+            importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/base/worker/workerMain.js');`)}`;
+        }
+      };
+    });
+    require(['vs/editor/editor.main'], function () {
+      // Initialize the editor with the current file
       const editor = monaco.editor.create(document.getElementById('monaco-editor'), {
-        value: sampleCode,
+        value: fileSystem.getFile('index.js'),
         language: 'javascript',
         theme: 'vs-dark',
+        automaticLayout: true
       });
-
-      // Custom theme with gold accents
-      monaco.editor.defineTheme('ai-war-room-theme', {
-        base: 'vs-dark',
-        inherit: true,
-        rules: [
-          { token: 'comment', foreground: '6A9955', fontStyle: 'italic' },
-          { token: 'keyword', foreground: 'D4AF37' },
-          { token: 'string', foreground: 'CE9178' },
-          { token: 'number', foreground: 'B5CEA8' },
-          { token: 'regexp', foreground: 'D16969' },
-          { token: 'type', foreground: '9CDCFE' },
-          { token: 'function', foreground: 'DCDCAA' },
-          { token: 'variable', foreground: '9CDCFE' },
-          { token: 'variable.predefined', foreground: '4FC1FF' },
-        ],
-        colors: {
-          'editor.background': '#0A0B14',
-          'editor.foreground': '#F8FAFC',
-          'editorCursor.foreground': '#D4AF37',
-          'editor.lineHighlightBackground': '#1E293B',
-          'editorLineNumber.foreground': '#64748B',
-          'editorLineNumber.activeForeground': '#D4AF37',
-          'editor.selectionBackground': '#264F78',
-          'editor.inactiveSelectionBackground': '#3A3D41',
-          'editorIndentGuide.background': '#404040',
-          'editorIndentGuide.activeBackground': '#707070',
+      // Store editor instance globally
+      window.editor = editor;
+      // Initialize the lab editor
+      const labEditor = monaco.editor.create(document.getElementById('lab-editor'), {
+        value: { "name": "Code Assistant", "role": "coding", "description": "Specialized in coding tasks", "capabilities": ["write", "review", "debug", "explain", "optimize"], "languages": ["JavaScript", "TypeScript", "Python", "Java"], "model": "anthropic/claude-3-opus", "temperature": 0.7 },
+        language: 'json',
+        theme: 'vs-dark',
+        automaticLayout: true
+      });
+      // Store lab editor instance globally
+      window.labEditor = labEditor;
+      // Make sure editor is ready
+      editor.onDidChangeModelContent(() => {
+        const currentTab = document.querySelector('.ai-ide-editor-tab.active');
+        if (currentTab) {
+          const file = currentTab.dataset.file;
+          fileSystem.saveFile(file, editor.getValue());
         }
       });
-      
-      // Set the custom theme
-      monaco.editor.setTheme('ai-war-room-theme');
+      // Initialize agent manager after the editor is ready
+      const agentManager = new AgentManager();
+      agentManager.initialize();
+      // Initialize agent interactions after agent manager
+      const agentInteractions = new AgentInteractions();
+      agentInteractions.init();
+      // Set up global theme functionality
+      window.setTheme = function (theme) {
+        document.documentElement.style.setProperty('--ai-gold-primary', theme === 'gold' ? '#d4af37' : '#0078d4');
+        document.documentElement.style.setProperty('--ai-gold-secondary', theme === 'gold' ? '#b8860b' : '#0054a3');
+      };
+      // Set up event listeners
+      setupEventListeners();
+      // Set up OpenRouter status
+      updateOpenRouterStatus();
     });
-    
-    // Initialize basic UI interactions until agent-interactions.js fully loads
-    document.addEventListener('DOMContentLoaded', function() {
-      // Show chat dialog when clicking on agent cards or chat actions
-      const agentCards = document.querySelectorAll('.ai-agent-card');
-      const chatDialog = document.querySelector('.ai-chat-dialog');
-      
-      agentCards.forEach(card => {
-        card.addEventListener('click', function(e) {
-          // Check if clicked on the chat action or the card itself
-          if (e.target.closest('.ai-agent-action[data-action="chat"]') || !e.target.closest('.ai-agent-action')) {
-            const agentName = card.querySelector('.ai-agent-name').textContent;
-            const agentAvatar = card.querySelector('.ai-agent-avatar').innerHTML;
-            
-            // Update chat dialog header
-            document.querySelector('.ai-chat-header span').textContent = agentName;
-            document.querySelector('.ai-chat-header .ai-agent-avatar').innerHTML = agentAvatar;
-            
-            // Show chat dialog
-            chatDialog.style.display = 'flex';
-            
-            // Focus on input
-            setTimeout(() => {
-              document.querySelector('.ai-chat-input textarea').focus();
-            }, 100);
+    // Set up event listeners
+    function setupEventListeners() {
+      // File tabs click handler
+      document.querySelectorAll('.ai-ide-editor-tab').forEach(tab => {
+        tab.addEventListener('click', function () {
+          const file = this.dataset.file;
+          openFile(file);
+        });
+        // Close button handler
+        const closeBtn = tab.querySelector('.bx-x');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            closeFile(tab.dataset.file);
+          });
+        }
+      });
+      // Sidebar buttons click handler
+      document.querySelectorAll('.ai-ide-sidebar-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+          const panelId = this.dataset.panel;
+          if (panelId === 'lab') {
+            toggleLabPanel();
+          } else {
+            showPanel(panelId);
           }
         });
       });
-      
-      // Close chat dialog when clicking on the close button
-      document.querySelector('.ai-chat-header .bx-x').addEventListener('click', function() {
-        chatDialog.style.display = 'none';
+      // Lab controls
+      document.getElementById('close-lab').addEventListener('click', function () {
+        document.getElementById('ai-lab').style.display = 'none';
       });
-      
-      // Handle minimize chat
-      document.querySelector('.ai-chat-header .bx-minus').addEventListener('click', function() {
-        if (chatDialog.style.height === '48px') {
-          chatDialog.style.height = '480px';
-          chatDialog.querySelector('.ai-chat-messages').style.display = 'block';
-          chatDialog.querySelector('.ai-chat-input').style.display = 'block';
+      document.getElementById('minimize-lab').addEventListener('click', function () {
+        const labContent = document.querySelector('.ai-lab-content');
+        if (labContent.style.display === 'none') {
+          labContent.style.display = 'flex';
+          this.classList.remove('bx-maximize');
+          this.classList.add('bx-minimize');
         } else {
-          chatDialog.style.height = '48px';
-          chatDialog.querySelector('.ai-chat-messages').style.display = 'none';
-          chatDialog.querySelector('.ai-chat-input').style.display = 'none';
+          labContent.style.display = 'none';
+          this.classList.remove('bx-minimize');
+          this.classList.add('bx-maximize');
         }
       });
-      
-      // Handle agent marketplace button
-      document.querySelector('.ai-ide-sidebar-btn[title="Agent Marketplace"]').addEventListener('click', function() {
-        document.querySelector('.ai-marketplace-modal').style.display = 'flex';
+      // Lab buttons
+      document.getElementById('save-agent-config').addEventListener('click', function () {
+        saveAgentConfig();
       });
-      
-      // Close marketplace modal
-      document.querySelector('.ai-marketplace-modal .bx-x').addEventListener('click', function() {
-        document.querySelector('.ai-marketplace-modal').style.display = 'none';
+      document.getElementById('reset-agent-config').addEventListener('click', function () {
+        resetAgentConfig();
       });
-    });
-
-    // File System Integration
-    const fs = new VirtualFileSystem({
-      basePath: '/ai-warroom/workspace',
-      useBrowserFS: true
-    });
-
-    // Extension Management
-    const extensionManager = new ExtensionManager({
-      apiEndpoint: '/api/extensions',
-      wsEndpoint: `wss://${location.host}/extensions`
-    });
-
-    // AI Lab Initialization
-    const labEditor = monaco.editor.create(document.getElementById('agent-config-editor'), {
-      language: 'json',
-      theme: 'ai-war-room-theme',
-      value: JSON.stringify({
-        name: "New Agent",
-        description: "",
-        model: "anthropic/claude-3-sonnet",
-        skills: []
-      }, null, 2)
-    });
-
-    async function saveAgentConfig() {
-      const config = labEditor.getValue();
-      await fetch('/api/agents/config', {
-        method: 'POST',
-        body: config
+      document.getElementById('deploy-test-agent').addEventListener('click', function () {
+        deployTestAgent();
+      });
+      // Add agent button
+      document.getElementById('add-agent-btn').addEventListener('click', function () {
+        showAgentMarketplace();
+      });
+      // OpenRouter button
+      document.getElementById('openrouter-connect').addEventListener('click', function () {
+        showOpenRouterModal();
+      });
+      // OpenRouter modal close button
+      document.getElementById('close-openrouter-modal').addEventListener('click', function () {
+        hideOpenRouterModal();
+      });
+      // OpenRouter save button
+      document.getElementById('save-openrouter').addEventListener('click', async function () {
+        const apiKey = document.getElementById('openrouter-api-key').value;
+        const model = document.getElementById('openrouter-model').value;
+        if (!apiKey) {
+          alert('Please enter an API key');
+          return;
+        }
+        window.OpenRouterIntegration.connect(apiKey, model);
+        updateOpenRouterStatus();
+        hideOpenRouterModal();
+        alert('OpenRouter connection saved successfully!');
+      });
+      // OpenRouter test button
+      document.getElementById('test-openrouter').addEventListener('click', async function () {
+        const apiKey = document.getElementById('openrouter-api-key').value;
+        if (!apiKey) {
+          alert('Please enter an API key to test');
+          return;
+        }
+        // Show loading state
+        const button = this;
+        const originalText = button.textContent;
+        button.textContent = 'Testing...';
+        button.disabled = true;
+        // Create temporary connection for testing
+        const tempOpenRouter = new OpenRouterIntegration();
+        tempOpenRouter.apiKey = apiKey;
+        try {
+          const success = await tempOpenRouter.testConnection();
+          if (success) {
+            alert('Connection successful!');
+          } else {
+            alert('Connection failed. Please check your API key.');
+          }
+        } catch (error) {
+          alert('Connection failed: ' + error.message);
+        } finally {
+          // Restore button state
+          button.textContent = originalText;
+          button.disabled = false;
+        }
+      });
+      // Theme color picker
+      document.querySelectorAll('.color-option').forEach(option => {
+        option.addEventListener('click', function () {
+          const color = this.dataset.color;
+          // Update selected state
+          document.querySelectorAll('.color-option').forEach(opt => {
+            opt.classList.remove('selected');
+          });
+          this.classList.add('selected');
+          // Apply theme
+          if (color === 'gold') {
+            document.documentElement.style.setProperty('--ai-gold-primary', '#d4af37');
+            document.documentElement.style.setProperty('--ai-gold-secondary', '#b8860b');
+          } else if (color === 'blue') {
+            document.documentElement.style.setProperty('--ai-gold-primary', '#0078d4');
+            document.documentElement.style.setProperty('--ai-gold-secondary', '#0054a3');
+          } else if (color === 'purple') {
+            document.documentElement.style.setProperty('--ai-gold-primary', '#9e66bf');
+            document.documentElement.style.setProperty('--ai-gold-secondary', '#8045a3');
+          } else if (color === 'green') {
+            document.documentElement.style.setProperty('--ai-gold-primary', '#4cb050');
+            document.documentElement.style.setProperty('--ai-gold-secondary', '#2e8b57');
+          } else if (color === 'orange') {
+            document.documentElement.style.setProperty('--ai-gold-primary', '#e64a19');
+            document.documentElement.style.setProperty('--ai-gold-secondary', '#c41c00');
+          }
+        });
       });
     }
+    // Update OpenRouter connection status
+    function updateOpenRouterStatus() {
+      const openRouter = window.OpenRouterIntegration;
+      const button = document.getElementById('openrouter-connect');
+      if (openRouter && openRouter.connected) {
+        button.querySelector('.openrouter-dot').style.backgroundColor = '#4caf50';
+        button.querySelector('span').textContent = 'OpenRouter';
+      } else {
+        button.querySelector('.openrouter-dot').style.backgroundColor = '#f44336';
+        button.querySelector('span').textContent = 'Connect AI';
+      }
+    }
+    // Show OpenRouter Modal
+    function showOpenRouterModal() {
+      const modal = document.getElementById('openrouter-modal');
+      modal.style.display = 'flex';
+      // Populate with existing values if available
+      const openRouter = window.OpenRouterIntegration;
+      if (openRouter) {
+        // For security, don't show the full API key, but indicate if one exists
+        const apiKey = openRouter.apiKey ? 'sk-•••••••••••••••••••••••' : '';
+        document.getElementById('openrouter-api-key').value = '';
+        document.getElementById('openrouter-api-key').placeholder = apiKey ? 'Enter to change API key' : 'Enter your OpenRouter API key';
+        // Set the model dropdown
+        const modelSelect = document.getElementById('openrouter-model');
+        if (openRouter.model) {
+          for (let i = 0; i < modelSelect.options.length; i++) {
+            if (modelSelect.options[i].value === openRouter.model) {
+              modelSelect.selectedIndex = i;
+              break;
+            }
+          }
+        }
+      }
+    }
+    // Hide OpenRouter Modal
+    function hideOpenRouterModal() {
+      const modal = document.getElementById('openrouter-modal');
+      modal.style.display = 'none';
+    }
+    // Open file in editor
+    function openFile(file) {
+      // Update active tab
+      document.querySelectorAll('.ai-ide-editor-tab').forEach(tab => {
+        if (tab.dataset.file === file) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+      // Update file tree selection
+      document.querySelectorAll('.file-tree-item').forEach(item => {
+        const fileSpan = item.querySelector('span');
+        if (fileSpan && fileSpan.textContent === file) {
+          item.querySelector('.file-tree-item-content').style.backgroundColor = 'var(--ai-selection)';
+        } else {
+          const content = item.querySelector('.file-tree-item-content');
+          if (content) {
+            content.style.backgroundColor = '';
+          }
+        }
+      });
+      // Load file content
+      const fileContent = window.VirtualFileSystem.getFile(file);
+      if (fileContent) {
+        const language = getLanguageForFile(file);
+        monaco.editor.setModelLanguage(window.editor.getModel(), language);
+        window.editor.setValue(fileContent);
+      }
+    }
+    // Close file tab
+    function closeFile(file) {
+      const tab = document.querySelector(`.ai-ide-editor-tab[data-file="${file}"]`);
+      if (tab) {
+        const isActive = tab.classList.contains('active');
+        tab.remove();
+        // If was active, activate another tab
+        if (isActive) {
+          const firstTab = document.querySelector('.ai-ide-editor-tab');
+          if (firstTab) {
+            openFile(firstTab.dataset.file);
+          }
+        }
+      }
+    }
+    // Get language for file
+    function getLanguageForFile(file) {
+      const ext = file.split('.').pop().toLowerCase();
+      const languageMap = {
+        'js': 'javascript',
+        'ts': 'typescript',
+        'jsx': 'javascript',
+        'tsx': 'typescript',
+        'json': 'json',
+        'html': 'html',
+        'css': 'css',
+        'scss': 'scss',
+        'less': 'less',
+        'md': 'markdown',
+        'py': 'python',
+        'java': 'java',
+        'c': 'c',
+        'cpp': 'cpp',
+        'cs': 'csharp',
+        'go': 'go',
+        'rs': 'rust',
+        'php': 'php',
+        'rb': 'ruby',
+        'env': 'plaintext'
+      };
+      return languageMap[ext] || 'plaintext';
+    }
+    // Show panel
+    function showPanel(panelId) {
+      // Update active button
+      document.querySelectorAll('.ai-ide-sidebar-btn').forEach(btn => {
+        if (btn.dataset.panel === panelId) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      // Show selected panel, hide others
+      const panels = ['explorer', 'search', 'git', 'extensions', 'agents', 'marketplace', 'settings'];
+      panels.forEach(panel => {
+        const panelElement = document.getElementById(`${panel}-panel`);
+        if (panelElement) {
+          if (panel === panelId) {
+            panelElement.style.display = 'flex';
+          } else {
+            panelElement.style.display = 'none';
+          }
+        }
+      });
+    }
+    // Toggle lab panel
+    function toggleLabPanel() {
+      const labPanel = document.getElementById('ai-lab');
+      if (labPanel.style.display === 'none' || !labPanel.style.display) {
+        labPanel.style.display = 'flex';
+      } else {
+        labPanel.style.display = 'none';
+      }
+    }
+    // Save agent configuration
+    function saveAgentConfig() {
+      alert(`Configuration saved for ${config.name}`);
+    }
+    // Reset agent configuration
+    function resetAgentConfig() {
+      window.labEditor.setValue({ "name": "Code Assistant", "role": "coding", "description": "Specialized in coding tasks", "capabilities": ["write", "review", "debug", "explain", "optimize"], "languages": ["JavaScript", "TypeScript", "Python", "Java"], "model": "anthropic/claude-3-opus", "temperature": 0.7 });
+    }
+    // Deploy test agent
+    function deployTestAgent() {
+      alert(`Agent ${config.name} deployed successfully!`);
+    }
+    // Show agent marketplace
+    function showAgentMarketplace() {
+      showPanel('marketplace');
+      const marketplacePanel = document.getElementById('marketplace-panel');
+      marketplacePanel.style.display = 'flex';
+      const marketplaceContent = document.getElementById('marketplace-content');
+      marketplaceContent.style.display = 'flex';
+      const marketplaceItems = document.querySelectorAll('.marketplace-item');
+      marketplaceItems.forEach(item => {
+        item.style.display = 'flex';
+      });
+    }
+    // Show agent settings
+    function showAgentSettings() {
+      showPanel('settings');
+      const settingsPanel = document.getElementById('settings-panel');
+      settingsPanel.style.display = 'flex';
+      const settingsContent = document.getElementById('settings-content');
+      settingsContent.style.display = 'flex';
+      const settingsItems = document.querySelectorAll('.settings-item');
+      settingsItems.forEach(item => {
+        item.style.display = 'flex';
+      });
+    }
+    
   </script>
 </body>
-</html> 
+</html>

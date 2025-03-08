@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI War Room Test Page</title>
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        pre {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 4px;
+            overflow: auto;
+            margin-top: 20px;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI War Room Test Page</h1>
+        
+        <button id="testApiKey">Test OpenRouter API Key</button>
+        <button id="testAgents">Test Agent List</button>
+        
+        <div id="status" class="status"></div>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        document.getElementById('testApiKey').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/api/ai/check-api-key');
+                const data = await response.json();
+                
+                document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+                
+                const statusEl = document.getElementById('status');
+                if (data.valid) {
+                    statusEl.textContent = 'API Key is valid!';
+                    statusEl.className = 'status success';
+                } else {
+                    statusEl.textContent = 'API Key is not valid or not configured.';
+                    statusEl.className = 'status error';
+                }
+            } catch (error) {
+                document.getElementById('status').textContent = 'Error: ' + error.message;
+                document.getElementById('status').className = 'status error';
+                document.getElementById('output').textContent = error.stack;
+            }
+        });
+
+        document.getElementById('testAgents').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/api/agents');
+                const data = await response.json();
+                
+                document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+                
+                const statusEl = document.getElementById('status');
+                if (data && data.length > 0) {
+                    statusEl.textContent = `Successfully loaded ${data.length} agents!`;
+                    statusEl.className = 'status success';
+                } else {
+                    statusEl.textContent = 'No agents found or error loading agents.';
+                    statusEl.className = 'status error';
+                }
+            } catch (error) {
+                document.getElementById('status').textContent = 'Error: ' + error.message;
+                document.getElementById('status').className = 'status error';
+                document.getElementById('output').textContent = error.stack;
+            }
+        });
+    </script>
+</body>
+</html> 

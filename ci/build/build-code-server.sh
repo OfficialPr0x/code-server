@@ -6,6 +6,12 @@ set -euo pipefail
 main() {
   cd "$(dirname "${0}")/../.."
 
+  # Add submodule validation
+  if [ ! -f "lib/vscode/package.json" ]; then
+    echo "Missing VS Code submodule - run: git submodule update --init --recursive"
+    exit 1
+  fi
+
   tsc
 
   # If out/node/entry.js does not already have the shebang,

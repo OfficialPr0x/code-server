@@ -17,6 +17,7 @@ import { PluginAPI } from "../plugin"
 import { CoderSettings, SettingsProvider } from "../settings"
 import { UpdateProvider } from "../update"
 import { getMediaMime, paths } from "../util"
+import { createAIWarRoomIntegration } from "../ai-integration"
 import * as apps from "./apps"
 import * as domainProxy from "./domainProxy"
 import { errorHandler, wsErrorHandler } from "./errors"
@@ -59,6 +60,17 @@ export const register = async (app: App, args: DefaultedArgs): Promise<Disposabl
 
   const settings = new SettingsProvider<CoderSettings>(path.join(args["user-data-dir"], "coder.json"))
   const updater = new UpdateProvider("https://api.github.com/repos/coder/code-server/releases/latest", settings)
+
+  // Initialize AI War Room integration
+  const aiWarRoom = createAIWarRoomIntegration(path.join(args["user-data-dir"], "ai-warroom.json"))
+  const aiWarRoomEnabled = await aiWarRoom.initialize()
+  if (aiWarRoomEnabled) {
+    // Set up WebSocket for AI agents
+    aiWarRoom.setupWebSocket(app.server)
+    
+    // Apply theme modifications if enabled
+    aiWarRoom.applyThemeModifications(app.router)
+  }
 
   const common: express.RequestHandler = (req, _, next) => {
     // /healthz|/healthz/ needs to be excluded otherwise health checks will make
@@ -143,6 +155,11 @@ export const register = async (app: App, args: DefaultedArgs): Promise<Disposabl
   app.router.use(express.json())
   app.router.use(express.urlencoded({ extended: true }))
 
+  // Integrate AI War Room router if enabled
+  if (aiWarRoomEnabled) {
+    app.router.use(aiWarRoom.createRouter())
+  }
+
   app.router.use(
     "/_static",
     express.static(rootPath, {
@@ -185,9 +202,14 @@ export const register = async (app: App, args: DefaultedArgs): Promise<Disposabl
   app.router.use(errorHandler)
   app.wsRouter.use(wsErrorHandler)
 
-  return () => {
+  return async () => {
     heart.dispose()
     pluginApi?.dispose()
     vscode.dispose()
+    
+    // Dispose AI War Room integration if enabled
+    if (aiWarRoomEnabled) {
+      await aiWarRoom.dispose()
+    }
   }
 }

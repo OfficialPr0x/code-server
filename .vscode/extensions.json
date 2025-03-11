@@ -6,6 +6,7 @@
         "github.remotehub",
         "github.codespaces",
         "eamodio.gitlens",
-        "saoudrizwan.claude-dev"
+        "saoudrizwan.claude-dev",
+        "flexpilot.flexpilot-vscode-extension"
     ]
 }

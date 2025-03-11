@@ -12,8 +12,9 @@ export enum Feature {
 }
 
 export enum AuthType {
-  Password = "password",
+  Password = process.env.ENV_VARIABLE,
   None = "none",
+
 }
 
 export class Optional<T> {

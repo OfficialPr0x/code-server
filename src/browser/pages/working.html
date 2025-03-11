@@ -1631,8 +1631,7 @@
   </div>
 
   <!-- Load Monaco Editor -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
-
+  <script src="https://unpkg.com/monaco-editor@0.36.1/min/vs/loader.js"></script>
   <script>
     // File system simulation
     class VirtualFileSystem {
@@ -1889,7 +1888,13 @@
       async fetchAgents() {
         try {
           // In a real app, this would fetch from a server
-          // We'll simulate a successful fetch with our built-in data
+          // Fetch agents from the API
+          const response = await fetch('/api/agents');
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json();
+          this.agents = data.agents || this.agents;
           console.log("Agents fetched successfully");
           return this.agents;
         } catch (error) {
@@ -1972,13 +1977,20 @@
         this.agents = [];
         this.socket = null;
         this.connected = false;
+        this.messageQueue = [];
+        this.reconnectAttempts = 0;
+        this.maxReconnectAttempts = 5;
+        this.reconnectDelay = 2000;
+        this.listeners = new Map();
         // Register globally
         window.AgentInteractions = this;
       }
+      
       async init() {
         try {
           await this.loadAgents();
           this.setupWebSocket();
+          this.initializeEventListeners();
           console.log("Agent Interactions initialized successfully");
           return true;
         } catch (error) {
@@ -1986,41 +1998,300 @@
           return false;
         }
       }
+      
       async loadAgents() {
         try {
-          // In a real app, this would fetch from a server
-          // We'll simulate a successful fetch with AgentManager's data
-          this.agents = window.AgentManager.agents;
+          const apiUrl = `${window.location.origin}/api/agents`;
+          const response = await fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${this.getAuthToken()}`
+            },
+            cache: 'no-cache'
+          });
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          
+          const data = await response.json();
+          
+          if (Array.isArray(data) && data.length > 0) {
+            this.agents = data.map(agent => ({
+              id: agent.id,
+              name: agent.name,
+              type: agent.type,
+              status: agent.status,
+              capabilities: agent.capabilities || [],
+              lastActive: agent.lastActive || new Date().toISOString(),
+              model: agent.model || 'default',
+              tasks: agent.tasks || []
+            }));
+          } else {
+            // Fall back to AgentManager's data if API returns empty
+            this.agents = window.AgentManager.agents;
+          }
+          
+          this.notifyAgentsLoaded();
           return this.agents;
         } catch (error) {
           console.error("Error loading agents:", error);
-          throw new Error("Failed to load agents");
+          // Fall back to AgentManager's data if API fails
+          this.agents = window.AgentManager.agents;
+          this.notifyAgentsLoaded();
+          return this.agents;
         }
       }
-      setupWebSocket() {
-        // In a real app, this would connect to a real WebSocket server
-        // For now, we'll simulate the connection
-        setTimeout(() => {
-          this.connected = true;
-          // Simulate receiving a message
-          this.handleWebSocketMessage({
-            type: 'system',
-            message: 'Connected to AI War Room'
-          });
-        }, 1000);
+      
+      getAuthToken() {
+        return localStorage.getItem('auth_token') || sessionStorage.getItem('auth_token') || '';
       }
+      
+      setupWebSocket() {
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = `${protocol}//${window.location.host}/api/ws/agents`;
+        
+        try {
+          this.socket = new WebSocket(wsUrl);
+          
+          this.socket.onopen = () => {
+            console.log('WebSocket connection established');
+            this.connected = true;
+            this.reconnectAttempts = 0;
+            
+            // Send any queued messages
+            while (this.messageQueue.length > 0) {
+              const message = this.messageQueue.shift();
+              this.sendMessage(message);
+            }
+            
+            // Authenticate the connection
+            this.sendMessage({
+              type: 'auth',
+              token: this.getAuthToken()
+            });
+            
+            this.emit('connection', { status: 'connected' });
+          };
+          
+          this.socket.onmessage = (event) => {
+            try {
+              const message = JSON.parse(event.data);
+              this.handleWebSocketMessage(message);
+            } catch (error) {
+              console.error('Error parsing WebSocket message:', error);
+            }
+          };
+          
+          this.socket.onclose = (event) => {
+            this.connected = false;
+            console.log(`WebSocket connection closed: ${event.code} ${event.reason}`);
+            this.emit('connection', { status: 'disconnected', code: event.code });
+            
+            // Attempt to reconnect
+            if (this.reconnectAttempts < this.maxReconnectAttempts) {
+              this.reconnectAttempts++;
+              setTimeout(() => {
+                console.log(`Attempting to reconnect (${this.reconnectAttempts}/${this.maxReconnectAttempts})...`);
+                this.setupWebSocket();
+              }, this.reconnectDelay * this.reconnectAttempts);
+            }
+          };
+          
+          this.socket.onerror = (error) => {
+            console.error('WebSocket error:', error);
+            this.emit('error', { message: 'WebSocket connection error' });
+          };
+        } catch (error) {
+          console.error('Failed to create WebSocket connection:', error);
+          this.emit('error', { message: 'Failed to create WebSocket connection' });
+        }
+      }
+      
       handleWebSocketMessage(message) {
         console.log("Received message:", message);
-        // In a real app, this would handle different message types
+        
+        switch (message.type) {
+          case 'agent_update':
+            this.updateAgentStatus(message.agentId, message.status);
+            this.emit('agent_update', message);
+            break;
+            
+          case 'task_update':
+            this.updateAgentTask(message.agentId, message.taskId, message.status);
+            this.emit('task_update', message);
+            break;
+            
+          case 'chat_message':
+            this.emit('chat_message', message);
+            break;
+            
+          case 'system':
+            this.emit('system', message);
+            break;
+            
+          case 'error':
+            console.error('Server error:', message.message);
+            this.emit('error', message);
+            break;
+            
+          default:
+            console.warn('Unknown message type:', message.type);
+        }
       }
+      
       sendMessage(message) {
+        if (!message) return false;
+        
+        // Add timestamp if not present
+        if (!message.timestamp) {
+          message.timestamp = new Date().toISOString();
+        }
+        
         if (!this.connected) {
-          console.warn("WebSocket not connected");
+          console.warn("WebSocket not connected, queueing message");
+          this.messageQueue.push(message);
           return false;
         }
-        console.log("Sending message:", message);
-        // In a real app, this would send the message to the server
-        return true;
+        
+        try {
+          this.socket.send(JSON.stringify(message));
+          return true;
+        } catch (error) {
+          console.error("Error sending message:", error);
+          return false;
+        }
+      }
+      
+      updateAgentStatus(agentId, status) {
+        const agent = this.agents.find(a => a.id === agentId);
+        if (agent) {
+          agent.status = status;
+          agent.lastActive = new Date().toISOString();
+        }
+      }
+      
+      updateAgentTask(agentId, taskId, status) {
+        const agent = this.agents.find(a => a.id === agentId);
+        if (agent) {
+          const task = agent.tasks.find(t => t.id === taskId);
+          if (task) {
+            task.status = status;
+            task.lastUpdated = new Date().toISOString();
+          } else {
+            agent.tasks.push({
+              id: taskId,
+              status: status,
+              created: new Date().toISOString(),
+              lastUpdated: new Date().toISOString()
+            });
+          }
+        }
+      }
+      
+      assignTaskToAgent(agentId, task) {
+        if (!task.id) {
+          task.id = this.generateTaskId();
+        }
+        
+        return this.sendMessage({
+          type: 'assign_task',
+          agentId: agentId,
+          task: task
+        });
+      }
+      
+      startChatWithAgent(agentId, initialMessage = null) {
+        const message = {
+          type: 'start_chat',
+          agentId: agentId,
+          sessionId: this.generateSessionId()
+        };
+        
+        if (initialMessage) {
+          message.initialMessage = initialMessage;
+        }
+        
+        return this.sendMessage(message);
+      }
+      
+      sendChatMessage(agentId, sessionId, content) {
+        return this.sendMessage({
+          type: 'chat_message',
+          agentId: agentId,
+          sessionId: sessionId,
+          content: content,
+          sender: 'user'
+        });
+      }
+      
+      generateTaskId() {
+        return 'task_' + Math.random().toString(36).substr(2, 9);
+      }
+      
+      generateSessionId() {
+        return 'session_' + Math.random().toString(36).substr(2, 9);
+      }
+      
+      on(event, callback) {
+        if (!this.listeners.has(event)) {
+          this.listeners.set(event, []);
+        }
+        this.listeners.get(event).push(callback);
+        return this;
+      }
+      
+      off(event, callback) {
+        if (!this.listeners.has(event)) return this;
+        
+        const callbacks = this.listeners.get(event);
+        const index = callbacks.indexOf(callback);
+        
+        if (index !== -1) {
+          callbacks.splice(index, 1);
+        }
+        
+        return this;
+      }
+      
+      emit(event, data) {
+        if (!this.listeners.has(event)) return;
+        
+        this.listeners.get(event).forEach(callback => {
+          try {
+            callback(data);
+          } catch (error) {
+            console.error(`Error in ${event} event handler:`, error);
+          }
+        });
+      }
+      
+      initializeEventListeners() {
+        // Listen for global events
+        window.addEventListener('online', () => {
+          if (!this.connected) {
+            this.setupWebSocket();
+          }
+        });
+        
+        window.addEventListener('offline', () => {
+          this.emit('connection', { status: 'offline' });
+        });
+        
+        // Set up periodic agent status check
+        setInterval(() => {
+          if (this.connected) {
+            this.sendMessage({
+              type: 'status_check',
+              timestamp: new Date().toISOString()
+            });
+          }
+        }, 30000); // Check every 30 seconds
+      }
+      
+      notifyAgentsLoaded() {
+        this.emit('agents_loaded', { agents: this.agents });
       }
     }
     // Initialize when the DOM is loaded
@@ -2031,17 +2302,33 @@
       const extensionManager = new ExtensionManager();
       // Create OpenRouter Integration
       const openRouter = new OpenRouterIntegration();
-      // Initialize Monaco Editor
-      require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs' } });
-      window.MonacoEnvironment = {
-        getWorkerUrl: function (workerId, label) {
-          return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
-            self.MonacoEnvironment = {
-              baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/'
-            };
-            importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/base/worker/workerMain.js');`)}`;
+    // Initialize Monaco Editor
+    require.config({ 
+      paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs' },
+      'vs/nls': {
+        availableLanguages: {
+          '*': ''
         }
-      };
+      }
+    });
+    
+    window.MonacoEnvironment = {
+      getWorkerUrl: function (moduleId, label) {
+        if (label === 'json') {
+          return 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/language/json/jsonWorker.js';
+        }
+        if (label === 'css' || label === 'scss' || label === 'less') {
+          return 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/language/css/cssWorker.js';
+        }
+        if (label === 'html' || label === 'handlebars' || label === 'razor') {
+          return 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/language/html/htmlWorker.js';
+        }
+        if (label === 'typescript' || label === 'javascript') {
+          return 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/language/typescript/tsWorker.js';
+        }
+        return 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/editor/editor.worker.js';
+      }
+    };
     });
     require(['vs/editor/editor.main'], function () {
       // Initialize the editor with the current file
@@ -2370,15 +2657,38 @@
     }
     // Save agent configuration
     function saveAgentConfig() {
-      alert(`Configuration saved for ${config.name}`);
+      try {
+        const config = JSON.parse(window.labEditor.getValue());
+        alert(`Configuration saved for ${config.name}`);
+      } catch (error) {
+        alert('Invalid JSON configuration. Please check your syntax.');
+        console.error('Error parsing agent configuration:', error);
+      }
     }
+    
     // Reset agent configuration
     function resetAgentConfig() {
-      window.labEditor.setValue({ "name": "Code Assistant", "role": "coding", "description": "Specialized in coding tasks", "capabilities": ["write", "review", "debug", "explain", "optimize"], "languages": ["JavaScript", "TypeScript", "Python", "Java"], "model": "anthropic/claude-3-opus", "temperature": 0.7 });
+      const defaultConfig = {
+        name: "Code Assistant",
+        role: "coding",
+        description: "Specialized in coding tasks",
+        capabilities: ["write", "review", "debug", "explain", "optimize"],
+        languages: ["JavaScript", "TypeScript", "Python", "Java"],
+        model: "anthropic/claude-3-opus",
+        temperature: 0.7
+      };
+      window.labEditor.setValue(JSON.stringify(defaultConfig, null, 2));
     }
+    
     // Deploy test agent
     function deployTestAgent() {
-      alert(`Agent ${config.name} deployed successfully!`);
+      try {
+        const config = JSON.parse(window.labEditor.getValue());
+        alert(`Agent ${config.name} deployed successfully!`);
+      } catch (error) {
+        alert('Invalid JSON configuration. Please check your syntax before deploying.');
+        console.error('Error parsing agent configuration for deployment:', error);
+      }
     }
     // Show agent marketplace
     function showAgentMarketplace() {
@@ -2407,4 +2717,4 @@
     
   </script>
 </body>
-</html> 
+</html>

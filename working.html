@@ -282,11 +282,13 @@
     <!-- Monaco Editor - CDN sources to ensure proper loading -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
     <script>
-        // Configure Monaco loader
+        // Configure Monaco loader with proper CDN path
         require.config({
             paths: {
                 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs'
-            }
+            },
+            // Add a timeout and retry logic
+            waitSeconds: 10
         });
 
         // Utility functions
@@ -300,7 +302,7 @@
                 this.files = {
                     'index.js': '// Your JavaScript code here\nconsole.log("Hello world!");\n\nfunction init() {\n  return "Application initialized";\n}\n',
                     'styles.css': 'body {\n  font-family: sans-serif;\n  margin: 0;\n  padding: 20px;\n}\n\n.container {\n  max-width: 1200px;\n  margin: 0 auto;\n}\n',
-                    'index.html': '<!DOCTYPE html>\n<html>\n<head>\n  <title>My App</title>\n  <link rel="stylesheet" href="styles.css">\n</head>\n<body>\n  <div class="container">\n    <h1>Hello World</h1>\n  </div>\n  <script src="index.js"></script>\n</body>\n</html>'
+                    'index.html': '<!DOCTYPE html>\n<html>\n<head>\n  <title>My App</title>\n  <link rel="stylesheet" href="styles.css">\n</head>\n<body>\n  <div class="container">\n    <h1>Hello World</h1>\n  </div>\n  <script src="index.js"><\/script>\n</body>\n</html>'
                 };
                 this.fileTypes = {
                     'js': 'javascript',
@@ -406,65 +408,96 @@
 
         // Wait for DOM content to load before initializing Monaco
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Monaco editor
-            require(['vs/editor/editor.main'], function() {
-                editor = monaco.editor.create(document.getElementById('monaco-editor'), {
-                    value: vfs.getFile(currentFile),
-                    language: getLanguageFromFilename(currentFile),
-                    theme: 'vs-dark',
-                    automaticLayout: true,
-                    minimap: {
-                        enabled: true
-                    },
-                    fontSize: 14,
-                    lineNumbers: 'on',
-                    scrollBeyondLastLine: false,
-                    renderWhitespace: 'selection',
-                    tabSize: 2,
-                    wordWrap: 'on'
-                });
+            // Add fallback mechanism for Monaco editor
+            let monacoLoadAttempts = 0;
+            const maxLoadAttempts = 3;
+            
+            function initMonaco() {
+                monacoLoadAttempts++;
+                try {
+                    // Initialize Monaco editor with proper error handling
+                    require(['vs/editor/editor.main'], function() {
+                        try {
+                            editor = monaco.editor.create(document.getElementById('monaco-editor'), {
+                                value: vfs.getFile(currentFile),
+                                language: getLanguageFromFilename(currentFile),
+                                theme: 'vs-dark',
+                                automaticLayout: true,
+                                minimap: {
+                                    enabled: true
+                                },
+                                fontSize: 14,
+                                lineNumbers: 'on',
+                                scrollBeyondLastLine: false,
+                                renderWhitespace: 'selection',
+                                tabSize: 2,
+                                wordWrap: 'on'
+                            });
 
-                // Add additional editor capabilities
-                monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
-                    noSemanticValidation: false,
-                    noSyntaxValidation: false
-                });
+                            // Add additional editor capabilities
+                            if (monaco.languages.typescript) {
+                                monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+                                    noSemanticValidation: false,
+                                    noSyntaxValidation: false
+                                });
 
-                monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
-                    target: monaco.languages.typescript.ScriptTarget.Latest,
-                    allowNonTsExtensions: true
-                });
+                                monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+                                    target: monaco.languages.typescript.ScriptTarget.Latest,
+                                    allowNonTsExtensions: true
+                                });
+                            }
 
-                // Update cursor position display
-                editor.onDidChangeCursorPosition(e => {
-                    document.getElementById('cursor-position').textContent = `Ln ${e.position.lineNumber}, Col ${e.position.column}`;
-                });
+                            // Update cursor position display
+                            editor.onDidChangeCursorPosition(e => {
+                                document.getElementById('cursor-position').textContent = `Ln ${e.position.lineNumber}, Col ${e.position.column}`;
+                            });
 
-                // Setup file tabs
-                setupTabs();
-                
-                // Setup file tree
-                setupFileTree();
+                            // Setup file tabs
+                            setupTabs();
+                            
+                            // Setup file tree
+                            setupFileTree();
 
-                // Setup settings
-                setupSettings();
+                            // Setup settings
+                            setupSettings();
 
-                // Setup OpenRouter form
-                setupOpenRouterForm();
+                            // Setup OpenRouter form
+                            setupOpenRouterForm();
 
-                // Listen for editor content changes and save to VFS
-                editor.onDidChangeModelContent(() => {
-                    vfs.saveFile(currentFile, editor.getValue());
-                    document.getElementById('status-message').textContent = 'File modified';
-                });
+                            // Listen for editor content changes and save to VFS
+                            editor.onDidChangeModelContent(() => {
+                                vfs.saveFile(currentFile, editor.getValue());
+                                document.getElementById('status-message').textContent = 'File modified';
+                            });
 
-                // Register example extension
-                extensionManager.registerExtension('SyntaxHighlighter', '1.0.0', function() {
-                    log('SyntaxHighlighter extension activated');
-                });
+                            // Register example extension
+                            extensionManager.registerExtension('SyntaxHighlighter', '1.0.0', function() {
+                                log('SyntaxHighlighter extension activated');
+                            });
 
-                extensionManager.activateExtensions();
-            });
+                            extensionManager.activateExtensions();
+                            
+                            document.getElementById('status-message').textContent = 'Editor initialized successfully';
+                        } catch (editorError) {
+                            console.error('Error creating Monaco editor:', editorError);
+                            document.getElementById('monaco-editor').innerHTML = '<div style="padding: 20px; color: #f44336;">Error initializing editor. Please try refreshing the page.</div>';
+                        }
+                    }, function(error) {
+                        console.error('Failed to load Monaco modules:', error);
+                        if (monacoLoadAttempts < maxLoadAttempts) {
+                            console.log(`Retrying Monaco load (attempt ${monacoLoadAttempts}/${maxLoadAttempts})...`);
+                            setTimeout(initMonaco, 1000);
+                        } else {
+                            document.getElementById('monaco-editor').innerHTML = '<div style="padding: 20px; color: #f44336;">Failed to load editor after multiple attempts. Please check your internet connection and try again.</div>';
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error in Monaco initialization:', error);
+                }
+            }
+            
+            // Start initialization
+            initMonaco();
         });
 
         // Helper functions
@@ -498,7 +531,12 @@
                     tabs.forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
                     const filename = tab.getAttribute('data-file');
-                    openFile(filename);
+                    try {
+                        openFile(filename);
+                    } catch (e) {
+                        console.error('Error switching tabs:', e);
+                        document.getElementById('status-message').textContent = `Error switching to ${filename}`;
+                    }
                 });
             });
         }
@@ -508,22 +546,34 @@
             fileItems.forEach(item => {
                 item.addEventListener('click', () => {
                     const filename = item.getAttribute('data-file');
-                    openFile(filename);
-                    
-                    // Also update tabs
-                    const tabs = document.querySelectorAll('#editor-tabs .tab');
-                    tabs.forEach(tab => {
-                        if (tab.getAttribute('data-file') === filename) {
-                            tabs.forEach(t => t.classList.remove('active'));
-                            tab.classList.add('active');
-                        }
-                    });
+                    try {
+                        // Also update tabs
+                        const tabs = document.querySelectorAll('#editor-tabs .tab');
+                        tabs.forEach(tab => {
+                            if (tab.getAttribute('data-file') === filename) {
+                                tabs.forEach(t => t.classList.remove('active'));
+                                tab.classList.add('active');
+                            }
+                        });
+                        
+                        openFile(filename);
+                    } catch (e) {
+                        console.error('Error opening file:', e);
+                        document.getElementById('status-message').textContent = `Error opening ${filename}`;
+                    }
                 });
             });
         }
 
         function openFile(filename) {
             currentFile = filename;
+            
+            if (typeof monaco === 'undefined') {
+                document.getElementById('monaco-editor').innerHTML = `<div style="white-space: pre; font-family: monospace; padding: 10px;">${vfs.getFile(filename).replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>`;
+                document.getElementById('status-message').textContent = `Viewing ${filename} (Monaco Editor not loaded)`;
+                return;
+            }
+            
             const model = editor.getModel();
             
             if (model) {

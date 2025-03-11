@@ -6,7 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI War Room | Code Server</title>
   <!-- Load Monaco Editor from local server -->
-  <script src="/vs/editor/loader.min.js"></script>
+  <script src="/vs/loader.js"></script>
+  <script>
+    require.config({ paths: { 'vs': '/vs' }});
+    require(['vs/editor/editor.main'], function() {
+        // Monaco editor initialization code
+    });
+  </script>
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <style>
     :root {

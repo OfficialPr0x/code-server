@@ -588,6 +588,14 @@ class AgentInteractions {
     }
 
     formatRole(role) {
+        if (!role) return '';
+        
+        // Check if the role already contains spaces
+        if (role.includes(' ')) {
+            return role;
+        }
+        
+        // Otherwise, format hyphenated roles
         return role
             .split('-')
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))

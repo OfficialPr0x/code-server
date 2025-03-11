@@ -1,6 +1,6 @@
-import { logger } from "@coder/logger"
+import { logger } from "./logger"
 import compression from "compression"
-import express, { Express } from "express"
+import express, { Express, Router } from "express"
 import { promises as fs } from "fs"
 import http from "http"
 import * as httpolyglot from "httpolyglot"
@@ -12,7 +12,11 @@ import { isNodeJSErrnoException } from "./util"
 import { EditorSessionManager, makeEditorSessionManagerServer } from "./vscodeSocket"
 import { handleUpgrade } from "./wsRouter"
 import { AgentService } from "./agents/agent-service"
+import path from 'path'
+import { ensureAuthenticated } from './http'
 
+// Define ROOT
+const ROOT = path.join(__dirname, "../..")
 
 type SocketOptions = { socket: string; "socket-mode"?: string }
 type ListenOptions = DefaultedArgs | SocketOptions
@@ -134,3 +138,20 @@ export const handleArgsSocketCatchError = (error: any) => {
     throw Error(error.message ? error.message : error)
   }
 }
+
+// Add AI Warroom route
+export const aiWarroomRouter = Router()
+aiWarroomRouter.get('/ai-warroom', (req, res, next) => {
+  // For demo purposes, allow access without authentication
+  next();
+}, async (req, res) => {
+  res.sendFile(path.join(ROOT, 'src/browser/pages/ai-warroom.html'))
+})
+
+// Add static assets route for AI components
+aiWarroomRouter.use('/ai-warroom/static', (req, res, next) => {
+  // For demo purposes, allow access without authentication
+  next();
+}, express.static(
+  path.join(ROOT, 'src/browser/ai')
+))

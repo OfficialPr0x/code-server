@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  cdn-deployer:
+    image: edge-deployer:1.0
+    environment:
+      - CDN_API_KEY=${CDN_KEY}
+    volumes:
+      - ./agent-specs:/specs
+
+  contract-deployer:
+    image: hardhat:2.9
+    command: npx hardhat run /scripts/deployAll.ts --network mainnet
+    volumes:
+      - ./contracts:/contracts
+      - ./scripts:/scripts
+
+  monitoring-setup:
+    image: monitoring-stack:1.4
+    ports:
+      - 3000:3000
+      - 9090:9090
+    environment:
+      - PROMETHEUS_CONFIG=/etc/prometheus.yml
+
+  security-init:
+    image: hsm-initializer:1.2
+    volumes:
+      - ./hsm-config:/config
+    secrets:
+      - hsm-pin 

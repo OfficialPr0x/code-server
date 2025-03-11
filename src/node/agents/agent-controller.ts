@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
-import { logger } from "./logger";
+import { logger } from "../logger";
 import { AgentService } from "./agent-service";
-import { Agent, AgentResponse, AgentExperience, Task, TaskResult } from "../../common/types";
+import { Agent, AgentResponse, Task, TaskResult } from "./types";
 
 /**
  * Controller that exposes agent functionality via REST API
@@ -24,58 +24,64 @@ export class AgentController {
   }
   
   /**
-   * Setup all routes
+   * Set up API routes
    */
   private setupRoutes(): void {
-    // Agents
-    this.router.get("/agents", this.getAllAgents.bind(this));
-    this.router.get("/agents/:id", this.getAgentById.bind(this));
-    this.router.post("/agents/:id/query", this.queryAgent.bind(this));
-    
-    // Tasks
-    this.router.post("/tasks", this.createTask.bind(this));
-    this.router.get("/tasks/:id", this.getTaskById.bind(this));
-    this.router.post("/tasks/:id/execute", this.executeTask.bind(this));
-    
-    logger.debug("Agent controller routes initialized");
+    this.router.get('/', this.getAllAgents.bind(this));
+    this.router.get('/:id', this.getAgentById.bind(this));
+    this.router.post('/:id/query', this.queryAgent.bind(this));
+    this.router.post('/:id/tasks', this.createTask.bind(this));
+    this.router.get('/tasks/:taskId', this.getTaskById.bind(this));
+    this.router.post('/tasks/:taskId/execute', this.executeTask.bind(this));
   }
   
   /**
-   * Get all agents
+   * Get all available agents
    */
   private async getAllAgents(req: Request, res: Response): Promise<void> {
     try {
       const agents = this.agentService.getAllAgents();
       
       // Map to ensure we don't expose methods in JSON
-      const agentsData = agents.map(agent => ({
-        id: agent.id,
-        name: agent.name,
-        description: agent.description,
-        role: agent.role,
-        level: agent.level,
-        experience: agent.experience,
-        skills: agent.skills,
-        model: agent.model,
-        createdAt: agent.createdAt,
-        updatedAt: agent.updatedAt
-      }));
+      const agentsData = agents.map(agent => {
+        // Create a plain object without methods
+        const plainAgent = {
+          id: agent.id,
+          name: agent.name,
+          description: agent.description,
+          systemPrompt: agent.systemPrompt,
+          model: agent.model,
+          maxTokens: agent.maxTokens,
+          temperature: agent.temperature,
+          role: agent.role,
+          skills: agent.skills,
+          level: agent.level,
+          experience: agent.experience,
+          ownerAddress: agent.ownerAddress,
+          tokenId: agent.tokenId,
+          // Use default values for timestamp fields if not present
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+        
+        return plainAgent;
+      });
       
       res.json({
         success: true,
         data: agentsData
       });
     } catch (error) {
-      logger.error("Failed to get all agents", error);
+      logger.error('Error getting agents:', error);
       res.status(500).json({
         success: false,
-        error: "Failed to get agents"
+        error: 'Failed to get agents'
       });
     }
   }
   
   /**
-   * Get agent by ID
+   * Get a single agent by ID
    */
   private async getAgentById(req: Request, res: Response): Promise<void> {
     try {
@@ -95,13 +101,18 @@ export class AgentController {
         id: agent.id,
         name: agent.name,
         description: agent.description,
+        systemPrompt: agent.systemPrompt,
+        model: agent.model,
+        maxTokens: agent.maxTokens,
+        temperature: agent.temperature,
         role: agent.role,
+        skills: agent.skills,
         level: agent.level,
         experience: agent.experience,
-        skills: agent.skills,
-        model: agent.model,
-        createdAt: agent.createdAt,
-        updatedAt: agent.updatedAt
+        ownerAddress: agent.ownerAddress,
+        tokenId: agent.tokenId,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       };
       
       res.json({
@@ -109,10 +120,10 @@ export class AgentController {
         data: agentData
       });
     } catch (error) {
-      logger.error(`Failed to get agent by ID: ${req.params.id}`, error);
+      logger.error(`Error getting agent ${req.params.id}:`, error);
       res.status(500).json({
         success: false,
-        error: "Failed to get agent"
+        error: 'Failed to get agent'
       });
     }
   }
@@ -183,7 +194,7 @@ export class AgentController {
    */
   private async getTaskById(req: Request, res: Response): Promise<void> {
     try {
-      const taskId = req.params.id;
+      const taskId = req.params.taskId;
       // For simplicity, we don't have a separate method to get a task by ID
       // In a real implementation, you would add this method to the agent service
       
@@ -195,7 +206,7 @@ export class AgentController {
         }
       });
     } catch (error) {
-      logger.error(`Failed to get task by ID: ${req.params.id}`, error);
+      logger.error(`Failed to get task by ID: ${req.params.taskId}`, error);
       res.status(500).json({
         success: false,
         error: "Failed to get task"
@@ -208,7 +219,7 @@ export class AgentController {
    */
   private async executeTask(req: Request, res: Response): Promise<void> {
     try {
-      const taskId = req.params.id;
+      const taskId = req.params.taskId;
       
       const result = await this.agentService.executeTask(taskId);
       
@@ -217,7 +228,7 @@ export class AgentController {
         data: result
       });
     } catch (error) {
-      logger.error(`Failed to execute task: ${req.params.id}`, error);
+      logger.error(`Failed to execute task: ${req.params.taskId}`, error);
       res.status(500).json({
         success: false,
         error: "Failed to execute task"

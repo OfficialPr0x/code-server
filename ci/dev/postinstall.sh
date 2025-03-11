@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
+#!/usr/bin/env bash
 set -euo pipefail
+
+# Add recursive submodule init
+git submodule update --init --recursive
 
 # Install dependencies in $1.
 install-deps() {

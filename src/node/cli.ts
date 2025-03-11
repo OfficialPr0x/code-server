@@ -1,4 +1,5 @@
-import { field, Level, logger } from "@coder/logger"
+import { field, Level } from "@coder/logger"
+import { logger, coderLogger } from "./logger"
 import { promises as fs } from "fs"
 import { load } from "js-yaml"
 import * as path from "path"
@@ -448,7 +449,8 @@ export const parse = (
     throw new Error("--cert-key is missing")
   }
 
-  logger.debug(() => [`parsed ${opts?.configFile ? "config" : "command line"}`, field("args", redactArgs(args))])
+  const source = opts?.configFile ? "config" : "command line";
+  logger.debug(`parsed ${source}`, field("args", redactArgs(args)));
 
   return args
 }
@@ -525,28 +527,7 @@ export async function setDefaults(cliArgs: UserProvidedArgs, configArgs?: Config
   if (args.log) {
     process.env.LOG_LEVEL = args.log
   }
-  switch (args.log) {
-    case LogLevel.Trace:
-      logger.level = Level.Trace
-      args.verbose = true
-      break
-    case LogLevel.Debug:
-      logger.level = Level.Debug
-      args.verbose = false
-      break
-    case LogLevel.Info:
-      logger.level = Level.Info
-      args.verbose = false
-      break
-    case LogLevel.Warn:
-      logger.level = Level.Warn
-      args.verbose = false
-      break
-    case LogLevel.Error:
-      logger.level = Level.Error
-      args.verbose = false
-      break
-  }
+  setDefaultLogLevel(args.log)
 
   // Default to using a password.
   if (!args.auth) {
@@ -599,7 +580,7 @@ export async function setDefaults(cliArgs: UserProvidedArgs, configArgs?: Config
 
   // Filter duplicate proxy domains and remove any leading `*.`.
   const proxyDomains = new Set((args["proxy-domain"] || []).map((d) => d.replace(/^\*\./, "")))
-  const finalProxies = []
+  const finalProxies: string[] = []
 
   for (const proxyDomain of proxyDomains) {
     if (!proxyDomain.includes("{{port}}")) {
@@ -854,5 +835,26 @@ export const toCodeArgs = async (args: DefaultedArgs): Promise<CodeArgs> => {
     version: !!args.version,
     port: args.port?.toString(),
     log: args.log ? [args.log] : undefined,
+  }
+}
+
+export const setDefaultLogLevel = (logLevel?: LogLevel): void => {
+  // Set @coder/logger level
+  switch (logLevel) {
+    case LogLevel.Trace:
+      coderLogger.level = Level.Trace
+      break
+    case LogLevel.Debug:
+      coderLogger.level = Level.Debug
+      break
+    case LogLevel.Info:
+      coderLogger.level = Level.Info
+      break
+    case LogLevel.Warn:
+      coderLogger.level = Level.Warn
+      break
+    case LogLevel.Error:
+      coderLogger.level = Level.Error
+      break
   }
 }

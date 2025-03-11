@@ -5,25 +5,27 @@ import { promises as fs } from "fs"
 export type Settings = { [key: string]: Settings | string | boolean | number }
 
 /**
- * Provides read and write access to settings.
+ * Read and write settings.
  */
-export class SettingsProvider<T> {
+export class SettingsProvider<T extends object> {
   public constructor(private readonly settingsPath: string) {}
 
   /**
-   * Read settings from the file. On a failure return last known settings and
-   * log a warning.
+   * Read settings from the file. Will return an empty object if the file does
+   * not exist. Otherwise will return the parsed contents of the file. If the
+   * file cannot be parsed, the promise will reject and the error will be
+   * logged.
    */
   public async read(): Promise<T> {
     try {
       const raw = (await fs.readFile(this.settingsPath, "utf8")).trim()
-      return raw ? JSON.parse(raw) : {}
+      return raw ? JSON.parse(raw) : {} as T
     } catch (error: any) {
       if (error.code !== "ENOENT") {
         logger.warn(error.message)
       }
+      return {} as T
     }
-    return {} as T
   }
 
   /**

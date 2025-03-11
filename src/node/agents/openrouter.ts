@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { logger } from "@coder/logger"
+import { logger } from "../logger"
 import { OpenRouterCompletionRequest, OpenRouterCompletionResponse, AgentResponse } from './types';
 import * as crypto from 'crypto';
 
@@ -39,7 +39,7 @@ export class OpenRouterClient {
         stop: request.stop
       };
       
-      logger.debug(`Sending request to OpenRouter: ${model}`, { prompt_length: request.prompt.length });
+      logger.debug(`Sending request to OpenRouter: ${model}`, { promptLength: request.prompt.length })
       
       const response = await fetch(`${this.baseUrl}/chat/completions`, {
         method: 'POST',
@@ -54,7 +54,7 @@ export class OpenRouterClient {
       
       if (!response.ok) {
         const errorText = await response.text();
-        logger.error(`OpenRouter API error: ${response.status}`, { error: errorText });
+        logger.error(`OpenRouter API error: ${response.status}`, { errorMessage: errorText })
         throw new Error(`OpenRouter API error: ${response.status} - ${errorText}`);
       }
       

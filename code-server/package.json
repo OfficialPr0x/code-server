@@ -1,17 +1,8 @@
 {
-  "name": "code-server",
-  "license": "MIT",
-  "version": "0.0.0",
-  "description": "Run VS Code on a remote server.",
-  "homepage": "https://github.com/coder/code-server",
-  "bugs": {
-    "url": "https://github.com/coder/code-server/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/coder/code-server.git"
-  },
+  "name": "ai-warroom",
+  "version": "1.0.0",
   "scripts": {
+<<<<<<< HEAD:code-server/package.json
     "clean": "code-server/ci/build/clean.sh",
     "build": "code-server/ci/build/build-code-server.sh",
     "build:vscode": "code-server/ci/build/build-vscode.sh",
@@ -69,95 +60,82 @@
     "ts-node": "^10.9.1",
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.8.0"
+=======
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "start": "node dist/node/server.js",
+    "dev": "tsc-watch --onSuccess \"node dist/node/server.js\"",
+    "lint": "eslint src --ext .ts --fix && prettier --write src",
+    "test": "jest",
+    "test:integration": "NODE_OPTIONS=--experimental-vm-modules jest --testPathPattern=test/integration",
+    "test:watch": "jest --watch",
+    "format": "prettier --write .",
+    "release:standalone": "npm run clean && npm run build && esbuild dist/node/server.js --bundle --platform=node --outfile=dist/standalone.js"
+>>>>>>> bc1b5572f4b8826f1bc352e2b5f3009b2be77613:package.json
   },
   "dependencies": {
     "@coder/logger": "^3.0.1",
-    "argon2": "^0.31.1",
+    "argon2": "^0.28.1",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.7",
     "env-paths": "^2.2.1",
-    "express": "5.0.0-beta.3",
+    "express": "^4.21.2",
     "http-proxy": "^1.18.1",
+    "http-proxy-middleware": "^3.0.3",
     "httpolyglot": "^0.1.2",
-    "i18next": "^23.5.1",
+    "i18next": "^21.9.2",
     "js-yaml": "^4.1.0",
     "limiter": "^2.1.0",
-    "pem": "^1.14.8",
-    "proxy-agent": "^6.3.1",
-    "qs": "6.13.0",
-    "rotating-file-stream": "^3.1.1",
-    "safe-buffer": "^5.2.1",
+    "monaco-editor": "^0.34.1",
+    "node-fetch": "^2.6.7",
+    "pem": "^1.14.5",
+    "proxy-agent": "^6.5.0",
+    "rotating-file-stream": "^2.0.6",
     "safe-compare": "^1.1.4",
-    "semver": "^7.5.4",
-    "ws": "^8.14.2",
+    "semver": "^7.3.8",
+    "webpack-dev-server": "^5.2.0",
+    "winston": "^3.8.2",
+    "ws": "^8.11.0",
     "xdg-basedir": "^4.0.0"
   },
-  "resolutions": {
-    "@types/node": "20.x"
+  "devDependencies": {
+    "@schemastore/package": "^0.0.6",
+    "@types/compression": "^1.7.5",
+    "@types/cookie-parser": "^1.4.8",
+    "@types/express": "^4.17.21",
+    "@types/http-proxy": "^1.17.16",
+    "@types/http-proxy-middleware": "^1.0.0",
+    "@types/jest": "^29.5.14",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^18.19.79",
+    "@types/node-fetch": "^2.6.12",
+    "@types/semver": "^7.5.8",
+    "@types/ws": "^8.18.0",
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.57.1",
+    "esbuild": "^0.25.0",
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-jest": "^27.2.1",
+    "husky": "^8.0.3",
+    "jest": "^29.5.0",
+    "lint-staged": "^15.2.4",
+    "prettier": "^2.8.7",
+    "ts-jest": "^29.1.0",
+    "tsc-watch": "^6.0.0",
+    "typescript": "^5.0.4"
   },
-  "bin": {
-    "code-server": "out/node/entry.js"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
-  "keywords": [
-    "vscode",
-    "development",
-    "ide",
-    "coder",
-    "vscode-remote",
-    "browser-ide",
-    "remote-development"
-  ],
-  "engines": {
-    "node": "20"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.ts$": "<rootDir>/test/node_modules/ts-jest"
-    },
-    "testEnvironment": "node",
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/lib/",
-      "/out/",
-      "test/e2e"
-    ],
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "<rootDir>/src/**/*.ts"
-    ],
-    "coverageDirectory": "<rootDir>/coverage",
-    "coverageReporters": [
-      "json",
-      "json-summary",
-      "text",
-      "clover"
-    ],
-    "coveragePathIgnorePatterns": [
-      "/out"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "lines": 60
-      }
-    },
-    "modulePathIgnorePatterns": [
-      "<rootDir>/release-packages",
-      "<rootDir>/release",
-      "<rootDir>/release-standalone",
-      "<rootDir>/release-npm-package",
-      "<rootDir>/release-gcp",
-      "<rootDir>/release-images",
-      "<rootDir>/lib"
-    ],
-    "moduleNameMapper": {
-      "^.+\\.(css|less)$": "<rootDir>/test/utils/cssStub.ts"
-    },
-    "globalSetup": "<rootDir>/test/utils/globalUnitSetup.ts"
-  },
-  "directories": {
-    "doc": "docs",
-    "lib": "lib",
-    "test": "test"
-  },
-  "author": ""
+  "lint-staged": {
+    "*.{ts,js,json}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  }
 }

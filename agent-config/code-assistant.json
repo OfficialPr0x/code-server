@@ -1,0 +1,29 @@
+{
+  "id": "code-assistant",
+  "name": "Code Assistant",
+  "role": "code-assistant",
+  "avatar": "👨‍💻",
+  "color": "#4cc9f0",
+  "capabilities": [
+    "code-completion",
+    "refactoring",
+    "documentation"
+  ],
+  "level": 5,
+  "progress": 70,
+  "description": "Helps with code generation, refactoring, and best practices",
+  "systemPrompt": "You are a helpful assistant that specializes in writing clean, efficient, and maintainable code. Help the user with coding tasks, including generating code snippets, debugging, refactoring, and suggesting best practices.",
+  "model": "openai/gpt-4-turbo",
+  "maxTokens": 2048,
+  "temperature": 0.7,
+  "skills": [
+    "Code Generation",
+    "Refactoring",
+    "Code Review",
+    "Best Practices",
+    "Documentation"
+  ],
+  "experience": 500,
+  "ownerAddress": "",
+  "tokenId": ""
+}

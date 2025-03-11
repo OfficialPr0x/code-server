@@ -1,0 +1,51 @@
+.todo-item {
+  background: white;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todo-item.completed {
+  opacity: 0.7;
+  background: #f0f0f0;
+}
+
+.todo-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.todo-meta {
+  font-size: 0.8rem;
+  color: #666;
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.priority {
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  text-transform: capitalize;
+}
+
+.priority.high { background: #ffe5e5; color: #cc0000; }
+.priority.medium { background: #fff3d6; color: #cc7a00; }
+.priority.low { background: #e5f4ff; color: #0066cc; }
+
+.todo-filter {
+  margin: 1rem 0;
+  display: flex;
+  gap: 1rem;
+}
+
+.todo-filter select {
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+} 

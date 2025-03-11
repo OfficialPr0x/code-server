@@ -34,6 +34,8 @@ export interface Agent {
   experience: number;
   ownerAddress?: string;
   tokenId?: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
   query: (prompt: string, context?: any) => Promise<AgentResponse>;
   addExperience: (amount: number) => Promise<void>;
 }

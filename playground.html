@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Update CDN links to working versions -->
+    <script src="https://cdn.jsdelivr.net/npm/ipfs-http-client/dist/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    
+    <!-- Add Monaco editor loader -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
+    <script src="websocket-service.js"></script>
+</head>
+<body>
+    <!-- ...existing code... -->
+    
+    <script>
+        let wsService;
+
+        function initServices() {
+            wsService = new WebSocketService('ws://localhost:8080');
+            wsService.on('codeUpdate', handleCodeUpdate);
+            wsService.on('compilation', handleCompilation);
+        }
+
+        function initMonacoEditor() {
+            if (typeof monaco === 'undefined') {
+                require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs' }});
+                require(['vs/editor/editor.main'], function() {
+                    createEditor();
+                });
+            } else {
+                createEditor();
+            }
+        }
+
+        function createEditor() {
+            const editor = monaco.editor.create(document.getElementById('editor'), {
+                value: '',
+                language: 'javascript',
+                theme: 'vs-dark'
+            });
+
+            editor.onDidChangeModelContent(() => {
+                const code = editor.getValue();
+                wsService.send('codeUpdate', { code });
+            });
+
+            return editor;
+        }
+
+        // Update ABI loading to use relative path
+        async function loadAbis() {
+            try {
+                const response = await fetch('/abis.js');
+                if (!response.ok) throw new Error('Failed to load ABIs');
+                const abisModule = await response.text();
+                eval(abisModule); // Only if you trust the source
+            } catch (error) {
+                console.error('Error loading ABIs:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initMonacoEditor();
+            initServices();
+        });
+    </script>
+</body>
+</html>

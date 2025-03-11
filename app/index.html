@@ -3,29 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo App</title>
+  <meta name="description" content="Advanced Todo Application">
+  <title>Advanced Todo App</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  
+  <!-- CSS -->
   <link rel="stylesheet" href="../styles/globals.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <!-- PWA Support -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
 </head>
 <body>
   <div id="root"></div>
-  
-  <!-- React and ReactDOM -->
-  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
-  
-  <!-- UUID library -->
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+
+  <!-- Core Libraries -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/uuid@8.3.2/dist/umd/uuid.min.js"></script>
   
-  <!-- Babel for JSX -->
+  <!-- Development Tools -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="./babel-config.js"></script>
   
-  <!-- App Scripts -->
-  <script type="text/babel" data-type="module" src="../types/Todo.ts"></script>
+  <!-- State Management -->
+  <script type="text/babel" data-type="module" src="../store/index.ts"></script>
   <script type="text/babel" data-type="module" src="../context/TodoContext.tsx"></script>
+  
+  <!-- Types -->
+  <script type="text/babel" data-type="module" src="../types/Todo.ts"></script>
+  <script type="text/babel" data-type="module" src="../types/User.ts"></script>
+  
+  <!-- Components -->
   <script type="text/babel" data-type="module" src="./components/TodoItem.tsx"></script>
   <script type="text/babel" data-type="module" src="./components/TodoFilter.tsx"></script>
+  <script type="text/babel" data-type="module" src="./components/TodoForm.tsx"></script>
+  <script type="text/babel" data-type="module" src="./components/TodoList.tsx"></script>
+  <script type="text/babel" data-type="module" src="./components/Header.tsx"></script>
+  <script type="text/babel" data-type="module" src="./components/Footer.tsx"></script>
+  
+  <!-- Services -->
+  <script type="text/babel" data-type="module" src="../services/api.ts"></script>
+  <script type="text/babel" data-type="module" src="../services/storage.ts"></script>
+  
+  <!-- Main App -->
   <script type="text/babel" data-type="module" src="./App.tsx"></script>
   <script type="text/babel" data-type="module" src="./index.tsx"></script>
+  
+  <!-- Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js');
+      });
+    }
+  </script>
 </body>
 </html>

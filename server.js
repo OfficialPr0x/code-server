@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const WebSocket = require('ws');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,4 +17,17 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
   console.log(`Press Ctrl+C to stop the server`);
+});
+
+const wss = new WebSocket.Server({ 
+    port: 3001,
+    path: '/807aab1f7efd5f710ab9164118ded086afa7251b'
+});
+
+wss.on('connection', function connection(ws) {
+    console.log('Client connected');
+    // Add error handling
+    ws.on('error', function(error) {
+        console.error('WebSocket error:', error);
+    });
 });

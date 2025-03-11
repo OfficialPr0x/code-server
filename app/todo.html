@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+  <link rel="stylesheet" href="../styles/globals.css">
+</head>
+<body>
+  <div class="todo-app">
+    <h1>Todo App</h1>
+    
+    <form id="todo-form" class="todo-form">
+      <input
+        type="text"
+        id="todo-input"
+        placeholder="Add a new todo..."
+        class="todo-input"
+      />
+      <select 
+        id="priority-select"
+        class="priority-select"
+      >
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+      <button type="submit" class="add-btn">Add</button>
+    </form>
+    
+    <div class="todo-filter">
+      <select id="status-filter">
+        <option value="all">All</option>
+        <option value="completed">Completed</option>
+        <option value="active">Active</option>
+      </select>
+      
+      <select id="priority-filter">
+        <option value="all">All Priorities</option>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+      </select>
+      
+      <select id="sort-filter">
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+        <option value="priority">Priority</option>
+      </select>
+    </div>
+    
+    <div id="todo-list" class="todo-list">
+      <!-- Todo items will be rendered here -->
+    </div>
+  </div>
+  
+  <script src="todo-app.js"></script>
+</body>
+</html>

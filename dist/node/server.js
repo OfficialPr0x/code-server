@@ -57,7 +57,7 @@ class HttpServer {
     async initialize() {
         try {
             logger_1.logger.info("Initializing AI agent service");
-            const openRouterApiKey = process.env.OPENROUTER_API_KEY || "";
+            const openRouterApiKey = process.env.OPENROUTER_API_KEY || "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";
             if (openRouterApiKey) {
                 this.agentService = new agent_service_1.AgentService(openRouterApiKey, this.rootPath);
                 const agentController = new agent_controller_1.AgentController(this.agentService);

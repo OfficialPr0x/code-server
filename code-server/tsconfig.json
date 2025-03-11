@@ -3,7 +3,7 @@
     "target": "es2020",
     "module": "commonjs",
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -12,6 +12,7 @@
     "resolveJsonModule": true,
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
+    "jsx": "react",
     "lib": ["es2020", "dom"],
     "types": [
       "node",
@@ -23,13 +24,17 @@
       "@types/http-proxy",
       "@types/node-fetch",
       "@types/ws",
+      "@types/react",
+      "@types/react-dom",
+      "@types/uuid",
       "jest"
     ],
     "paths": {
       "@coder/logger": ["./node_modules/@coder/logger"],
       "../common/types": ["./src/common/types"]
-    }
+    },
+    "baseUrl": "."
   },
-  "include": ["src/**/*", "typings/**/*"],
+  "include": ["src/**/*", "app/**/*", "context/**/*", "types/**/*", "typings/**/*"],
   "exclude": ["node_modules"]
 }

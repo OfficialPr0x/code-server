@@ -5,6 +5,7 @@
         "ms-vscode.remote-repositories",
         "github.remotehub",
         "github.codespaces",
-        "eamodio.gitlens"
+        "eamodio.gitlens",
+        "saoudrizwan.claude-dev"
     ]
 }

@@ -1,0 +1,88 @@
+{
+  "name": "ai-warroom",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "start": "node dist/node/server.js",
+    "dev": "tsc-watch --onSuccess \"node dist/node/server.js\"",
+    "lint": "eslint src --ext .ts --fix && prettier --write src",
+    "test": "jest",
+    "test:integration": "NODE_OPTIONS=--experimental-vm-modules jest --testPathPattern=test/integration",
+    "test:watch": "jest --watch",
+    "format": "prettier --write .",
+    "release:standalone": "npm run clean && npm run build && esbuild dist/node/server.js --bundle --platform=node --outfile=dist/standalone.js"
+  },
+  "dependencies": {
+    "@coder/logger": "^3.0.1",
+    "argon2": "^0.28.1",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.7",
+    "env-paths": "^2.2.1",
+    "express": "^4.21.2",
+    "http-proxy": "^1.18.1",
+    "http-proxy-middleware": "^3.0.3",
+    "httpolyglot": "^0.1.2",
+    "i18next": "^21.9.2",
+    "js-yaml": "^4.1.0",
+    "limiter": "^2.1.0",
+    "monaco-editor": "^0.34.1",
+    "node-fetch": "^2.6.7",
+    "pem": "^1.14.5",
+    "proxy-agent": "^6.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rotating-file-stream": "^2.0.6",
+    "safe-compare": "^1.1.4",
+    "semver": "^7.3.8",
+    "uuid": "^9.0.1",
+    "webpack-dev-server": "^5.2.0",
+    "winston": "^3.8.2",
+    "ws": "^8.11.0",
+    "xdg-basedir": "^4.0.0"
+  },
+  "devDependencies": {
+    "@schemastore/package": "^0.0.6",
+    "@types/compression": "^1.7.5",
+    "@types/cookie-parser": "^1.4.8",
+    "@types/express": "^4.17.21",
+    "@types/http-proxy": "^1.17.16",
+    "@types/http-proxy-middleware": "^1.0.0",
+    "@types/jest": "^29.5.14",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^18.19.79",
+    "@types/node-fetch": "^2.6.12",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "@types/semver": "^7.5.8",
+    "@types/uuid": "^9.0.7",
+    "@types/ws": "^8.18.0",
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.57.1",
+    "esbuild": "^0.25.0",
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-jest": "^27.2.1",
+    "eslint-plugin-react": "^7.33.2",
+    "husky": "^8.0.3",
+    "jest": "^29.5.0",
+    "lint-staged": "^15.2.4",
+    "prettier": "^2.8.7",
+    "ts-jest": "^29.1.0",
+    "tsc-watch": "^6.0.0",
+    "typescript": "^5.0.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js,json}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  }
+}

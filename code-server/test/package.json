@@ -30,6 +30,6 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "node dist/node/server.js"
+    "start": "npm run build && PORT=6969 node dist/node/server.js"
   }
 }

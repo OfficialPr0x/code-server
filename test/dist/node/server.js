@@ -33,34 +33,34 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.initializeAIMonaco = initializeAIMonaco;
-const monaco = __importStar(require("monaco-editor"));
-function initializeAIMonaco() {
-    monaco.editor.defineTheme('ai-war-room-theme', {
-        base: 'vs-dark',
-        inherit: true,
-        rules: [
-            { token: 'comment', foreground: '6A9955', fontStyle: 'italic' },
-            { token: 'keyword', foreground: 'D4AF37' },
-            { token: 'string', foreground: 'CE9178' },
-            { token: 'number', foreground: 'B5CEA8' },
-            { token: 'regexp', foreground: 'D16969' },
-            { token: 'type', foreground: '9CDCFE' },
-            { token: 'function', foreground: 'DCDCAA' },
-            { token: 'variable', foreground: '9CDCFE' },
-            { token: 'variable.predefined', foreground: '4FC1FF' },
-        ],
-        colors: {
-            'editor.background': '#0A0B14',
-            'editor.foreground': '#F8FAFC',
-            'editorCursor.foreground': '#D4AF37',
-            'editor.lineHighlightBackground': '#1E293B',
-            'editorLineNumber.foreground': '#64748B',
-            'editorLineNumber.activeForeground': '#D4AF37',
-            'editor.selectionBackground': '#264F78',
-            'editor.inactiveSelectionBackground': '#3A3D41',
-            'editorIndentGuide.background': '#404040',
-            'editorIndentGuide.activeBackground': '#707070',
-        }
-    });
-}
+/**
+ * Simple test server that forwards to the main server
+ */
+const path = __importStar(require("path"));
+const child_process = __importStar(require("child_process"));
+// Path to the main server.js file
+const mainServerPath = path.resolve(__dirname, '../../../dist/node/server.js');
+console.log(`Forwarding to main server at: ${mainServerPath}`);
+// Spawn the main server process
+const serverProcess = child_process.spawn('node', [mainServerPath], {
+    stdio: 'inherit',
+    env: {
+        ...process.env,
+        PORT: process.env.PORT || '3000'
+    }
+});
+// Handle process exit
+serverProcess.on('exit', (code) => {
+    console.log(`Main server exited with code ${code}`);
+    process.exit(code || 0);
+});
+// Handle process errors
+serverProcess.on('error', (err) => {
+    console.error('Failed to start main server:', err);
+    process.exit(1);
+});
+// Handle SIGINT (Ctrl+C)
+process.on('SIGINT', () => {
+    console.log('Received SIGINT, shutting down...');
+    serverProcess.kill('SIGINT');
+});

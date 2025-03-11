@@ -10,6 +10,7 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 const WebSocket = require('ws');
 const http = require('http');
+const fetch = require('node-fetch');
 // Create a simple logger
 const logger = {
   info: (message) => console.log(`[INFO] ${message}`),
@@ -19,7 +20,7 @@ const logger = {
 
 // Configuration
 const config = {
-  port: process.env.PORT || 3000,
+  port: process.env.PORT || 3052,
   rootPath: __dirname,
   staticPath: path.join(__dirname, 'src/browser'),
   apiKey: process.env.OPENROUTER_API_KEY || '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'
@@ -70,6 +71,9 @@ app.get('/ai-warroom', (req, res) => {
   res.sendFile(path.join(__dirname, 'src/browser/pages/ai-warroom.html'));
 });
 
+// Add body parser middleware
+app.use(express.json());
+
 // API routes - Create a simple router for now
 const apiRouter = express.Router();
 apiRouter.get('/', (req, res) => {
@@ -93,6 +97,73 @@ apiRouter.get('/agents', (req, res) => {
       }
     ]
   });
+});
+
+// OpenRouter API proxy endpoint
+apiRouter.post('/openrouter/chat', async (req, res) => {
+  try {
+    // Get API key from request headers or use the default one
+    const apiKey = req.headers['x-openrouter-api-key'] || config.apiKey;
+    
+    if (!apiKey) {
+      return res.status(401).json({ error: 'API key is required' });
+    }
+    
+    // Forward the request to OpenRouter
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': `http://localhost:${config.port}`, // Required by OpenRouter
+        'X-Title': 'AI War Room IDE' // Optional but recommended
+      },
+      body: JSON.stringify(req.body)
+    });
+    
+    // Get the response data
+    const data = await response.json();
+    
+    // Return the response to the client
+    res.json(data);
+  } catch (error) {
+    logger.error(`OpenRouter API error: ${error.message}`);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// OpenRouter API test endpoint
+apiRouter.get('/openrouter/test', async (req, res) => {
+  try {
+    // Get API key from request headers or use the default one
+    const apiKey = req.headers['x-openrouter-api-key'] || config.apiKey;
+    
+    if (!apiKey) {
+      return res.status(401).json({ error: 'API key is required' });
+    }
+    
+    // Test the API key with OpenRouter
+    const response = await fetch('https://openrouter.ai/api/v1/auth/key', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      res.json({ success: true, data });
+    } else {
+      res.status(response.status).json({ 
+        success: false, 
+        error: `OpenRouter API error: ${response.statusText}` 
+      });
+    }
+  } catch (error) {
+    logger.error(`OpenRouter API test error: ${error.message}`);
+    res.status(500).json({ success: false, error: error.message });
+  }
 });
 
 app.use('/api', apiRouter);

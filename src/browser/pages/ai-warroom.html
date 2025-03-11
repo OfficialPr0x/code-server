@@ -1999,25 +1999,33 @@
         }
             }
             setupWebSocket() {
-        this.socket = new WebSocket('wss://example.com/socket');
-        this.socket.onopen = () => {
-          this.connected = true;
-          this.handleWebSocketMessage({
-            type: 'system',
-            message: 'Connected to AI War Room'
-          });
-        };
-        this.socket.onmessage = (event) => {
-          const message = JSON.parse(event.data);
-          this.handleWebSocketMessage(message);
-        };
-        this.socket.onclose = () => {
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const host = window.location.host;
+        
+        try {
+          this.socket = new WebSocket(`${protocol}//${host}/ai-warroom`);
+          this.socket.onopen = () => {
+            this.connected = true;
+            this.handleWebSocketMessage({
+              type: 'system',
+              message: 'Connected to AI War Room'
+            });
+          };
+          this.socket.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            this.handleWebSocketMessage(message);
+          };
+          this.socket.onclose = () => {
+            this.connected = false;
+            console.warn('WebSocket connection closed');
+          };
+          this.socket.onerror = (error) => {
+            console.error('WebSocket error:', error);
+          };
+        } catch (error) {
+          console.error('Failed to setup WebSocket:', error);
           this.connected = false;
-          console.warn('WebSocket connection closed');
-        };
-        this.socket.onerror = (error) => {
-          console.error('WebSocket error:', error);
-        };
+        }
             }
             handleWebSocketMessage(message) {
         console.log("Received message:", message);
@@ -2068,77 +2076,76 @@
             console.log('Initializing editor with monaco:', window.monaco);
             
             if (window.monaco) {
-        try {
-          // Initialize the main editor
-          const editorElement = document.getElementById('monaco-editor');
-          if (editorElement) {
-            console.log('Creating main editor');
-            const editor = window.monaco.editor.create(editorElement, {
-              value: window.VirtualFileSystem.getFile('index.js') || '// Loading...',
-              language: 'javascript',
-              theme: 'vs-dark',
-              automaticLayout: true
-            });
-            
-            // Store editor instance globally
-            window.editor = editor;
-            
-            // Handle content changes
-            if (editor.onDidChangeModelContent) {
-              editor.onDidChangeModelContent(() => {
-          const currentTab = document.querySelector('.ai-ide-editor-tab.active');
-          if (currentTab) {
-            const file = currentTab.dataset.file;
-            window.VirtualFileSystem.saveFile(file, editor.getValue());
-          }
-              });
-            }
-            
-            console.log('Main editor initialized');
-          }
+              try {
+                // Initialize the main editor
+                const editorElement = document.getElementById('monaco-editor');
+                if (editorElement) {
+                  console.log('Creating main editor');
+                  const editor = window.monaco.editor.create(editorElement, {
+                    value: window.VirtualFileSystem.getFile('index.js') || '// Loading...',
+                    language: 'javascript',
+                    theme: 'vs-dark',
+                    automaticLayout: true
+                  });
+                  
+                  // Store editor instance globally
+                  window.editor = editor;
+                  
+                  // Handle content changes
+                  editor.onDidChangeModelContent(() => {
+                    const currentTab = document.querySelector('.ai-ide-editor-tab.active');
+                    if (currentTab) {
+                      const file = currentTab.dataset.file;
+                      window.VirtualFileSystem.saveFile(file, editor.getValue());
+                    }
+                  });
+                  
+                  console.log('Main editor initialized');
+                }
+              } catch (error) {
+                console.error('Error initializing main editor:', error);
+              }
           
-          // Initialize the lab editor
-          const labEditorElement = document.getElementById('lab-editor');
-          if (labEditorElement) {
-            console.log('Creating lab editor');
-            const labEditor = window.monaco.editor.create(labEditorElement, {
-              value: JSON.stringify({
-          "name": "Code Assistant",
-          "role": "coding",
-          "description": "Specialized in coding tasks",
-          "capabilities": ["write", "review", "debug", "explain", "optimize"],
-          "languages": ["JavaScript", "TypeScript", "Python", "Java"],
-          "model": "anthropic/claude-3-opus",
-          "temperature": 0.7
-              }, null, 2),
-              language: 'json',
-              theme: 'vs-dark',
-              automaticLayout: true
-            });
-            
-            // Store lab editor instance globally
-            window.labEditor = labEditor;
-            console.log('Lab editor initialized');
-          }
+              try {
+                // Initialize the lab editor
+                const labEditorElement = document.getElementById('lab-editor');
+                if (labEditorElement) {
+                  console.log('Creating lab editor');
+                  const labEditor = window.monaco.editor.create(labEditorElement, {
+                    value: JSON.stringify({
+                      "name": "Code Assistant",
+                      "role": "coding",
+                      "description": "Specialized in coding tasks",
+                      "capabilities": ["write", "review", "debug", "explain", "optimize"],
+                      "languages": ["JavaScript", "TypeScript", "Python", "Java"],
+                      "model": "anthropic/claude-3-opus",
+                      "temperature": 0.7
+                    }, null, 2),
+                    language: 'json',
+                    theme: 'vs-dark',
+                    automaticLayout: true
+                  });
+                  
+                  // Store lab editor instance globally
+                  window.labEditor = labEditor;
+                  console.log('Lab editor initialized');
+                }
+              } catch (error) {
+                console.error('Error initializing lab editor:', error);
+              }
           
-          // If we have pending content to set in the editor
-          if (window._pendingEditorContent && window.editor) {
-            console.log('Setting pending editor content');
-            window.editor.setValue(window._pendingEditorContent);
-            if (window._pendingEditorLanguage && window.monaco.editor.setModelLanguage && window.editor.getModel()) {
-              window.monaco.editor.setModelLanguage(window.editor.getModel(), window._pendingEditorLanguage);
-            }
-            window._pendingEditorContent = null;
-            window._pendingEditorLanguage = null;
-          }
-          
-          // Initialize other components
-          setupComponents();
-        } catch (error) {
-          console.error('Error initializing editors:', error);
-        }
+              // Handle pending content
+              if (window._pendingEditorContent && window.editor) {
+                console.log('Setting pending editor content');
+                window.editor.setValue(window._pendingEditorContent);
+                if (window._pendingEditorLanguage && window.monaco.editor.setModelLanguage && window.editor.getModel()) {
+                  window.monaco.editor.setModelLanguage(window.editor.getModel(), window._pendingEditorLanguage);
+                }
+                window._pendingEditorContent = null;
+                window._pendingEditorLanguage = null;
+              }
             } else {
-        console.error('Monaco editor not available');
+              console.error('Monaco editor not available');
             }
           }
           

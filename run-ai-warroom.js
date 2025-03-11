@@ -8,6 +8,8 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const { spawn } = require('child_process');
+const WebSocket = require('ws');
+const http = require('http');
 // Create a simple logger
 const logger = {
   info: (message) => console.log(`[INFO] ${message}`),
@@ -100,8 +102,73 @@ app.get('/', (req, res) => {
   res.redirect('/ai-warroom');
 });
 
+// Create HTTP server
+const server = http.createServer(app);
+
+// Create WebSocket server
+const wss = new WebSocket.Server({ 
+  server,
+  path: '/ai-warroom'
+});
+
+// WebSocket connection handling
+wss.on('connection', (ws) => {
+  logger.info('WebSocket client connected');
+  
+  // Send initial status message
+  ws.send(JSON.stringify({
+    type: 'agent-status',
+    agents: [
+      {
+        id: 'agent-1',
+        name: 'Code Assistant',
+        level: 1,
+        progress: 25
+      },
+      {
+        id: 'agent-openrouter',
+        name: 'OpenRouter AI',
+        level: 2,
+        progress: 50
+      }
+    ]
+  }));
+  
+  // Handle messages from client
+  ws.on('message', (message) => {
+    try {
+      const data = JSON.parse(message);
+      logger.info(`Received message: ${JSON.stringify(data)}`);
+      
+      // Handle user messages
+      if (data.type === 'user-message') {
+        // Echo back a response for now
+        setTimeout(() => {
+          ws.send(JSON.stringify({
+            type: 'agent-message',
+            agentId: data.agentId,
+            content: `Received your message: "${data.content}". This is a placeholder response from the server.`
+          }));
+        }, 1000);
+      }
+    } catch (error) {
+      logger.error(`Error processing WebSocket message: ${error.message}`);
+    }
+  });
+  
+  // Handle disconnection
+  ws.on('close', () => {
+    logger.info('WebSocket client disconnected');
+  });
+  
+  // Handle errors
+  ws.on('error', (error) => {
+    logger.error(`WebSocket error: ${error.message}`);
+  });
+});
+
 // Start the server
-const server = app.listen(config.port, () => {
+server.listen(config.port, () => {
   console.log(`
 ╔════════════════════════════════════════════════════════════════╗
 ║                                                                ║

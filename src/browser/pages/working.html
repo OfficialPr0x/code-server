@@ -636,7 +636,6 @@
       padding-bottom: 20px;
       border-bottom: 1px solid var(--ai-border-color);
     }
-
     .settings-section:last-child {
       border-bottom: none;
     }
@@ -1766,8 +1765,8 @@
     // OpenRouter Integration
     class OpenRouterIntegration {
       constructor() {
-        this.apiKey = localStorage.getItem('openrouter_api_key') || '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';
-        this.model = localStorage.getItem('openrouter_model') || 'cognitivecomputations/dolphin3.0-r1-mistral-24b:free';
+        this.apiKey = localStorage.getItem('apiKey') || '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';
+        this.model = localStorage.getItem('model') || 'cognitivecomputations/dolphin3.0-r1-mistral-24b:free';
         this.connected = !!this.apiKey;
 
         // Register globally
@@ -1776,17 +1775,17 @@
       }
 
       connect(apiKey, model) {
-        this.apiKey = apiKey;
+        this.apiKey = apiKey || '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';
         this.model = model;
-        localStorage.setItem('openrouter_api_key', apiKey);
-        localStorage.setItem('openrouter_model', model);
+        localStorage.setItem('apiKey', apiKey);
+        localStorage.setItem('model', model);
         this.connected = true;
         return true;
       }
 
       disconnect() {
         this.apiKey = '';
-        localStorage.removeItem('openrouter_api_key');
+        localStorage.removeItem('apiKey');
         this.connected = false;
         return true;
       }
@@ -2408,4 +2407,4 @@
     
   </script>
 </body>
-</html>
+</html> 

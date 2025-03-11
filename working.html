@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Code Editor with OpenRouter Integration</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+    <style>
+        :root {
+            --ai-text-color: #f8f9fa;
+            --ai-bg-color: #2d2d2d;
+            --ai-darker-bg: #1e1e1e;
+            --ai-border-color: #444;
+            --ai-primary-color: #0d6efd;
+            --ai-secondary-color: #6c757d;
+            --ai-success-color: #198754;
+            --ai-danger-color: #dc3545;
+            --ai-warning-color: #ffc107;
+            --ai-info-color: #0dcaf0;
+        }
+        
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--ai-bg-color);
+            color: var(--ai-text-color);
+            overflow: hidden;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: var(--ai-darker-bg);
+            border-bottom: 1px solid var(--ai-border-color);
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .main-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: var(--ai-darker-bg);
+            border-right: 1px solid var(--ai-border-color);
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .editor-container {
+            flex: 1;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        #monaco-editor {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .file-explorer {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .file-tree {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .file-tree li {
+            padding: 5px 0;
+            cursor: pointer;
+        }
+        
+        .file-tree li:hover {
+            color: var(--ai-primary-color);
+        }
+        
+        .settings-panel {
+            margin-top: 20px;
+            border-top: 1px solid var(--ai-border-color);
+            padding-top: 15px;
+        }
+        
+        .settings-panel h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        .footer {
+            padding: 10px 20px;
+            background-color: var(--ai-darker-bg);
+            border-top: 1px solid var(--ai-border-color);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .button {
+            padding: 8px 12px;
+            background-color: var(--ai-primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .button:hover {
+            background-color: #0b5ed7;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 8px 12px;
+            background-color: var(--ai-darker-bg);
+            border: 1px solid var(--ai-border-color);
+            color: var(--ai-text-color);
+            border-radius: 4px;
+        }
+        
+        .tabs {
+            display: flex;
+            background-color: var(--ai-darker-bg);
+            border-bottom: 1px solid var(--ai-border-color);
+        }
+        
+        .tab {
+            padding: 8px 15px;
+            cursor: pointer;
+            border-right: 1px solid var(--ai-border-color);
+        }
+        
+        .tab.active {
+            background-color: var(--ai-bg-color);
+            border-bottom: 2px solid var(--ai-primary-color);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 10px;
+            background-color: var(--ai-darker-bg);
+            border-top: 1px solid var(--ai-border-color);
+            font-size: 0.8rem;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: var(--ai-bg-color);
+            padding: 20px;
+            border-radius: 8px;
+            width: 500px;
+            max-width: 90%;
+        }
+        
+        .close {
+            color: var(--ai-secondary-color);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: var(--ai-text-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Advanced Code Editor</h1>
+            <button id="settings-btn" class="button">Settings</button>
+        </div>
+        
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="file-explorer">
+                    <h3>File Explorer</h3>
+                    <ul class="file-tree" id="file-tree">
+                        <li data-file="index.js">index.js</li>
+                        <li data-file="styles.css">styles.css</li>
+                        <li data-file="index.html">index.html</li>
+                    </ul>
+                </div>
+                
+                <div class="settings-panel">
+                    <h3>OpenRouter Integration</h3>
+                    <form id="openrouter-form">
+                        <div class="form-group">
+                            <label for="openrouter-api-key">API Key</label>
+                            <input type="password" id="openrouter-api-key" placeholder="Enter your OpenRouter API key">
+                        </div>
+                        <button type="submit" class="button">Save API Key</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="editor-container">
+                <div class="tabs" id="editor-tabs">
+                    <div class="tab active" data-file="index.js">index.js</div>
+                    <div class="tab" data-file="styles.css">styles.css</div>
+                    <div class="tab" data-file="index.html">index.html</div>
+                </div>
+                <div id="monaco-editor"></div>
+            </div>
+        </div>
+        
+        <div class="status-bar">
+            <div id="status-message">Ready</div>
+            <div id="cursor-position">Ln 1, Col 1</div>
+        </div>
+    </div>
+    
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Editor Settings</h2>
+            <div class="form-group">
+                <label for="theme-select">Theme</label>
+                <select id="theme-select" class="form-control">
+                    <option value="vs-dark">Dark</option>
+                    <option value="vs">Light</option>
+                    <option value="hc-black">High Contrast</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="font-size">Font Size</label>
+                <input type="number" id="font-size" value="14" min="8" max="30">
+            </div>
+            <button id="apply-settings" class="button">Apply</button>
+        </div>
+    </div>
+
+    <!-- Monaco Editor - CDN sources to ensure proper loading -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+    <script>
+        // Configure Monaco loader
+        require.config({
+            paths: {
+                'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs'
+            }
+        });
+
+        // Utility functions
+        function log(message) {
+            console.log(message);
+        }
+
+        // VirtualFileSystem implementation
+        class VirtualFileSystem {
+            constructor() {
+                this.files = {
+                    'index.js': '// Your JavaScript code here\nconsole.log("Hello world!");\n\nfunction init() {\n  return "Application initialized";\n}\n',
+                    'styles.css': 'body {\n  font-family: sans-serif;\n  margin: 0;\n  padding: 20px;\n}\n\n.container {\n  max-width: 1200px;\n  margin: 0 auto;\n}\n',
+                    'index.html': '<!DOCTYPE html>\n<html>\n<head>\n  <title>My App</title>\n  <link rel="stylesheet" href="styles.css">\n</head>\n<body>\n  <div class="container">\n    <h1>Hello World</h1>\n  </div>\n  <script src="index.js"></script>\n</body>\n</html>'
+                };
+                this.fileTypes = {
+                    'js': 'javascript',
+                    'html': 'html',
+                    'css': 'css',
+                    'json': 'json',
+                    'md': 'markdown',
+                    'py': 'python',
+                    'ts': 'typescript'
+                };
+            }
+
+            getFile(filename) {
+                return this.files[filename] || '';
+            }
+
+            saveFile(filename, content) {
+                this.files[filename] = content;
+                return true;
+            }
+
+            listFiles() {
+                return Object.keys(this.files);
+            }
+        }
+
+        // Extension Manager
+        class ExtensionManager {
+            constructor() {
+                this.extensions = [];
+            }
+
+            registerExtension(name, version, activate) {
+                this.extensions.push({ name, version, activate });
+                return true;
+            }
+
+            activateExtensions() {
+                this.extensions.forEach(ext => {
+                    try {
+                        ext.activate();
+                    } catch (e) {
+                        console.error(`Failed to activate extension ${ext.name}: ${e.message}`);
+                    }
+                });
+            }
+        }
+
+        // OpenRouter Integration
+        class OpenRouterIntegration {
+            constructor() {
+                this.apiKey = localStorage.getItem('apiKey') || '';
+                this.endpoint = 'https://openrouter.ai/api/v1/chat/completions';
+            }
+
+            async generateCompletion(prompt, model = 'openai/gpt-3.5-turbo') {
+                if (!this.apiKey) {
+                    throw new Error('API key not set');
+                }
+
+                try {
+                    const response = await fetch(this.endpoint, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${this.apiKey}`
+                        },
+                        body: JSON.stringify({
+                            model: model,
+                            messages: [{ role: 'user', content: prompt }]
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API request failed: ${response.statusText}`);
+                    }
+
+                    return await response.json();
+                } catch (error) {
+                    console.error('OpenRouter error:', error);
+                    throw error;
+                }
+            }
+
+            setApiKey(key) {
+                this.apiKey = key;
+                localStorage.setItem('apiKey', key);
+                return true;
+            }
+        }
+
+        // Main application
+        let editor;
+        let currentFile = 'index.js';
+        const vfs = new VirtualFileSystem();
+        log('VirtualFileSystem initialized');
+
+        const extensionManager = new ExtensionManager();
+        log('ExtensionManager initialized');
+
+        const openRouter = new OpenRouterIntegration();
+        log('OpenRouter Integration initialized');
+
+        // Wait for DOM content to load before initializing Monaco
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Monaco editor
+            require(['vs/editor/editor.main'], function() {
+                editor = monaco.editor.create(document.getElementById('monaco-editor'), {
+                    value: vfs.getFile(currentFile),
+                    language: getLanguageFromFilename(currentFile),
+                    theme: 'vs-dark',
+                    automaticLayout: true,
+                    minimap: {
+                        enabled: true
+                    },
+                    fontSize: 14,
+                    lineNumbers: 'on',
+                    scrollBeyondLastLine: false,
+                    renderWhitespace: 'selection',
+                    tabSize: 2,
+                    wordWrap: 'on'
+                });
+
+                // Add additional editor capabilities
+                monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+                    noSemanticValidation: false,
+                    noSyntaxValidation: false
+                });
+
+                monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+                    target: monaco.languages.typescript.ScriptTarget.Latest,
+                    allowNonTsExtensions: true
+                });
+
+                // Update cursor position display
+                editor.onDidChangeCursorPosition(e => {
+                    document.getElementById('cursor-position').textContent = `Ln ${e.position.lineNumber}, Col ${e.position.column}`;
+                });
+
+                // Setup file tabs
+                setupTabs();
+                
+                // Setup file tree
+                setupFileTree();
+
+                // Setup settings
+                setupSettings();
+
+                // Setup OpenRouter form
+                setupOpenRouterForm();
+
+                // Listen for editor content changes and save to VFS
+                editor.onDidChangeModelContent(() => {
+                    vfs.saveFile(currentFile, editor.getValue());
+                    document.getElementById('status-message').textContent = 'File modified';
+                });
+
+                // Register example extension
+                extensionManager.registerExtension('SyntaxHighlighter', '1.0.0', function() {
+                    log('SyntaxHighlighter extension activated');
+                });
+
+                extensionManager.activateExtensions();
+            });
+        });
+
+        // Helper functions
+        function getLanguageFromFilename(filename) {
+            const ext = filename.split('.').pop().toLowerCase();
+            const langMap = {
+                'js': 'javascript',
+                'html': 'html',
+                'css': 'css',
+                'json': 'json',
+                'ts': 'typescript',
+                'md': 'markdown',
+                'py': 'python',
+                'jsx': 'javascript',
+                'tsx': 'typescript',
+                'vue': 'html',
+                'scss': 'scss',
+                'less': 'less',
+                'xml': 'xml',
+                'sql': 'sql',
+                'yaml': 'yaml',
+                'yml': 'yaml'
+            };
+            return langMap[ext] || 'plaintext';
+        }
+
+        function setupTabs() {
+            const tabs = document.querySelectorAll('#editor-tabs .tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    const filename = tab.getAttribute('data-file');
+                    openFile(filename);
+                });
+            });
+        }
+
+        function setupFileTree() {
+            const fileItems = document.querySelectorAll('#file-tree li');
+            fileItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const filename = item.getAttribute('data-file');
+                    openFile(filename);
+                    
+                    // Also update tabs
+                    const tabs = document.querySelectorAll('#editor-tabs .tab');
+                    tabs.forEach(tab => {
+                        if (tab.getAttribute('data-file') === filename) {
+                            tabs.forEach(t => t.classList.remove('active'));
+                            tab.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
+
+        function openFile(filename) {
+            currentFile = filename;
+            const model = editor.getModel();
+            
+            if (model) {
+                monaco.editor.setModelLanguage(model, getLanguageFromFilename(filename));
+                editor.setValue(vfs.getFile(filename));
+            }
+            
+            document.getElementById('status-message').textContent = `Editing ${filename}`;
+        }
+
+        function setupSettings() {
+            const settingsBtn = document.getElementById('settings-btn');
+            const settingsModal = document.getElementById('settings-modal');
+            const closeBtn = document.querySelector('.close');
+            const applyBtn = document.getElementById('apply-settings');
+
+            settingsBtn.addEventListener('click', () => {
+                settingsModal.style.display = 'flex';
+            });
+
+            closeBtn.addEventListener('click', () => {
+                settingsModal.style.display = 'none';
+            });
+
+            window.addEventListener('click', (e) => {
+                if (e.target === settingsModal) {
+                    settingsModal.style.display = 'none';
+                }
+            });
+
+            applyBtn.addEventListener('click', () => {
+                const theme = document.getElementById('theme-select').value;
+                const fontSize = document.getElementById('font-size').value;
+                
+                monaco.editor.setTheme(theme);
+                editor.updateOptions({ fontSize: parseInt(fontSize) });
+                
+                settingsModal.style.display = 'none';
+            });
+        }
+
+        function setupOpenRouterForm() {
+            const form = document.getElementById('openrouter-form');
+            const apiKeyInput = document.getElementById('openrouter-api-key');
+            
+            // Set the stored API key if available
+            if (openRouter.apiKey) {
+                apiKeyInput.value = openRouter.apiKey;
+            }
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const apiKey = apiKeyInput.value.trim();
+                
+                if (apiKey) {
+                    openRouter.setApiKey(apiKey);
+                    document.getElementById('status-message').textContent = 'API key saved';
+                }
+            });
+        }
+    </script>
+</body>
+</html> 

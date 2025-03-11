@@ -1,84 +1,149 @@
-import React, { useState } from 'react';
-import { AgentConfig } from '../../modules/agent/config/AgentCoreTypes';
+import React, { useState, useEffect } from 'react';
 
-const AgentConfigForm: React.FC<{
+interface AgentConfig {
+  name: string;
+  description: string;
+  capabilities: string[];
+  protocols: string[];
+  model: string;
+}
+
+interface AgentConfigFormProps {
   initialConfig?: AgentConfig;
-  onSave: (config: AgentConfig) => void;
-}> = ({ initialConfig, onSave }) => {
-  const [config, setConfig] = useState<AgentConfig>(initialConfig || {
-    id: '',
-    name: '',
-    description: '',
-    capabilities: [],
-    rarity: 'common',
-    algorithm: { type: 'neural', complexity: 1, trainingDataHash: '' },
-    securityProtocols: [],
-    ownership: { currentOwner: '', ownershipHistory: [] },
-    deployment: { environments: [], currentEnv: 'dev', containerSpec: '' },
-    performanceMetrics: { accuracy: 0, speed: 0, reliability: 0 },
-    economicModel: { tokenStandard: 'ERC-20', rewardStructure: '', stakingRequirements: 0 },
-    governance: { votingSystem: 'quadratic' },
-    training: { datasets: [], lastTrained: new Date(), trainingCost: 0 },
-    plugins: { approved: [], blacklisted: [] },
-    network: { peers: [], reputationScore: 0 },
-    versioning: { current: '1.0.0', updateHistory: [] }
-  });
+  onSubmit: (config: AgentConfig) => void;
+}
 
-  // Implement form validation and submission logic
-  // Connect to IPFS for config storage
-  // Integrate with NFT minting functionality
-  
+const defaultConfig: AgentConfig = {
+  name: '',
+  description: '',
+  capabilities: [],
+  protocols: ['HTTP', 'WebSocket'],
+  model: 'gpt-4'
+};
+
+export function AgentConfigForm({ initialConfig, onSubmit }: AgentConfigFormProps) {
+  const [config, setConfig] = useState<AgentConfig>(initialConfig || defaultConfig);
+  const [capability, setCapability] = useState('');
+
+  useEffect(() => {
+    if (initialConfig) {
+      setConfig(initialConfig);
+    }
+  }, [initialConfig]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit(config);
+  };
+
+  const addCapability = () => {
+    if (capability && !config.capabilities.includes(capability)) {
+      setConfig({
+        ...config,
+        capabilities: [...config.capabilities, capability]
+      });
+      setCapability('');
+    }
+  };
+
+  const removeCapability = (cap: string) => {
+    setConfig({
+      ...config,
+      capabilities: config.capabilities.filter(c => c !== cap)
+    });
+  };
+
+  const toggleProtocol = (protocol: string) => {
+    if (config.protocols.includes(protocol)) {
+      setConfig({
+        ...config,
+        protocols: config.protocols.filter(p => p !== protocol)
+      });
+    } else {
+      setConfig({
+        ...config,
+        protocols: [...config.protocols, protocol]
+      });
+    }
+  };
+
   return (
-    <div className="agent-builder-panel">
-      <div className="gold-panel-header">
-        <h2>Agent Configuration Builder</h2>
-        <div className="complexity-meter">
-          <span>Complexity Level: {config.algorithm.complexity}</span>
-          <div className="gold-progress-bar">
-            <div 
-              style={{ width: `${config.algorithm.complexity * 10}%` }}
-              className="gold-progress-fill"
-            ></div>
-          </div>
-        </div>
+    <form onSubmit={handleSubmit} className="agent-config-form">
+      <div className="form-group">
+        <label htmlFor="name">Agent Name</label>
+        <input
+          type="text"
+          id="name"
+          value={config.name}
+          onChange={e => setConfig({ ...config, name: e.target.value })}
+          required
+        />
       </div>
-      
-      <div className="builder-section">
-        <h3>Core Identity</h3>
-        <div className="gold-input-group">
-          <label>Agent Name</label>
-          <input 
-            type="text" 
-            value={config.name}
-            onChange={(e) => setConfig({...config, name: e.target.value})}
-            className="gold-themed-input"
+
+      <div className="form-group">
+        <label htmlFor="description">Description</label>
+        <textarea
+          id="description"
+          value={config.description}
+          onChange={e => setConfig({ ...config, description: e.target.value })}
+          rows={3}
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Capabilities</label>
+        <div className="capability-input">
+          <input
+            type="text"
+            value={capability}
+            onChange={e => setCapability(e.target.value)}
+            placeholder="Add capability"
           />
+          <button type="button" onClick={addCapability}>Add</button>
         </div>
-        {/* More form elements following the theme */}
-      </div>
-      
-      <div className="security-section">
-        <h3>Security Protocols</h3>
-        <div className="protocol-grid">
-          {['encryptedStorage', 'multiSig', 'auditTrail'].map(protocol => (
-            <div 
-              key={protocol}
-              className={`protocol-card ${config.securityProtocols.includes(protocol) ? 'active' : ''}`}
-              onClick={() => toggleProtocol(protocol)}
-            >
-              <div className="protocol-icon"></div>
-              <span>{protocol}</span>
+        <div className="capabilities-list">
+          {config.capabilities.map(cap => (
+            <div key={cap} className="capability-tag">
+              <span>{cap}</span>
+              <button type="button" onClick={() => removeCapability(cap)}>×</button>
             </div>
           ))}
         </div>
       </div>
-      
-      <button 
-        className="gold-action-button"
-        onClick={() => onSave(config)}
-      >
-        Deploy Agent Configuration
-      </button>
-    </div>
+
+      <div className="form-group">
+        <label>Protocols</label>
+        <div className="protocols-list">
+          {['HTTP', 'WebSocket', 'MQTT', 'gRPC'].map(protocol => (
+            <div key={protocol} className="protocol-checkbox">
+              <input
+                type="checkbox"
+                id={`protocol-${protocol}`}
+                checked={config.protocols.includes(protocol)}
+                onChange={() => toggleProtocol(protocol)}
+              />
+              <label htmlFor={`protocol-${protocol}`}>{protocol}</label>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="model">AI Model</label>
+        <select
+          id="model"
+          value={config.model}
+          onChange={e => setConfig({ ...config, model: e.target.value })}
+        >
+          <option value="gpt-4">GPT-4</option>
+          <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+          <option value="claude-3-opus">Claude 3 Opus</option>
+          <option value="claude-3-sonnet">Claude 3 Sonnet</option>
+          <option value="llama-3-70b">Llama 3 70B</option>
+        </select>
+      </div>
+
+      <button type="submit" className="submit-button">Save Configuration</button>
+    </form>
   );
-}; 
+}

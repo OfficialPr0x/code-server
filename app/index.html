@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+  <link rel="stylesheet" href="../styles/globals.css">
+</head>
+<body>
+  <div id="root"></div>
+  
+  <!-- React and ReactDOM -->
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  
+  <!-- UUID library -->
+  <script src="https://unpkg.com/uuid@8.3.2/dist/umd/uuid.min.js"></script>
+  
+  <!-- Babel for JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./babel-config.js"></script>
+  
+  <!-- App Scripts -->
+  <script type="text/babel" data-type="module" src="../types/Todo.ts"></script>
+  <script type="text/babel" data-type="module" src="../context/TodoContext.tsx"></script>
+  <script type="text/babel" data-type="module" src="./components/TodoItem.tsx"></script>
+  <script type="text/babel" data-type="module" src="./components/TodoFilter.tsx"></script>
+  <script type="text/babel" data-type="module" src="./App.tsx"></script>
+  <script type="text/babel" data-type="module" src="./index.tsx"></script>
+</body>
+</html>

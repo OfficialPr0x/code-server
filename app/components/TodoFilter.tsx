@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { useTodoContext } from '../contexts/TodoContext';
+import React from 'react';
+import { useTodoContext } from '../../context/TodoContext';
 
 export default function TodoFilter() {
   const { filter, setFilter } = useTodoContext();
@@ -8,7 +8,10 @@ export default function TodoFilter() {
     <div className="todo-filter">
       <select 
         value={filter.status} 
-        onChange={(e) => setFilter({ ...filter, status: e.target.value })}
+        onChange={(e) => setFilter({ 
+          ...filter, 
+          status: e.target.value as 'all' | 'completed' | 'active' 
+        })}
       >
         <option value="all">All</option>
         <option value="completed">Completed</option>
@@ -17,7 +20,10 @@ export default function TodoFilter() {
       
       <select
         value={filter.priority}
-        onChange={(e) => setFilter({ ...filter, priority: e.target.value })}
+        onChange={(e) => setFilter({ 
+          ...filter, 
+          priority: e.target.value as 'all' | 'high' | 'medium' | 'low' 
+        })}
       >
         <option value="all">All Priorities</option>
         <option value="high">High</option>
@@ -26,4 +32,4 @@ export default function TodoFilter() {
       </select>
     </div>
   );
-} 
+}

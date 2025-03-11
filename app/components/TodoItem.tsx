@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
-import { useTodoContext } from '../contexts/TodoContext';
-import { Todo } from '../types/Todo';
+import React from 'react';
+import { useTodoContext } from '../../context/TodoContext';
+import { Todo } from '../../types/Todo';
 
 interface TodoItemProps {
   todo: Todo;
@@ -36,4 +36,4 @@ function TodoItem({ todo }: TodoItemProps) {
   );
 }
 
-export default TodoItem; 
+export default TodoItem;

@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI War Room | Code Server</title>
-  <!-- Load Monaco Editor from CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
+  <!-- Load Monaco Editor from local server -->
+  <script src="/vs/editor/loader.min.js"></script>
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <style>
     :root {
@@ -1949,8 +1949,8 @@
             this.handleAgentAction(agentId, actionType);
           });
         });
-      }
-      handleAgentAction(agentId, actionType) {
+            }
+            handleAgentAction(agentId, actionType) {
         const agent = this.agents.find(a => a.id === agentId);
         if (!agent) return;
         if (actionType === 'chat') {
@@ -1958,24 +1958,24 @@
         } else if (actionType === 'assign') {
           alert(`Assigning task to ${agent.name}`);
         }
-      }
-      // Add agent
-      addAgent(agent) {
+            }
+            // Add agent
+            addAgent(agent) {
         this.agents.push(agent);
         this.renderAgents();
         return agent;
-      }
-    }
-    // Agent interactions and WebSocket simulation
-    class AgentInteractions {
-      constructor() {
+            }
+          }
+          // Agent interactions and WebSocket simulation
+          class AgentInteractions {
+            constructor() {
         this.agents = [];
         this.socket = null;
         this.connected = false;
         // Register globally
         window.AgentInteractions = this;
-      }
-      async init() {
+            }
+            async init() {
         try {
           await this.loadAgents();
           this.setupWebSocket();
@@ -1985,111 +1985,193 @@
           console.error("Failed to initialize Agent Interactions:", error);
           return false;
         }
-      }
-      async loadAgents() {
+            }
+            async loadAgents() {
         try {
           // In a real app, this would fetch from a server
-          // We'll simulate a successful fetch with AgentManager's data
-          this.agents = window.AgentManager.agents;
+          const response = await fetch('/api/agents');
+          if (!response.ok) throw new Error('Failed to load agents');
+          this.agents = await response.json();
           return this.agents;
         } catch (error) {
           console.error("Error loading agents:", error);
           throw new Error("Failed to load agents");
         }
-      }
-      setupWebSocket() {
-        // In a real app, this would connect to a real WebSocket server
-        // For now, we'll simulate the connection
-        setTimeout(() => {
+            }
+            setupWebSocket() {
+        this.socket = new WebSocket('wss://example.com/socket');
+        this.socket.onopen = () => {
           this.connected = true;
-          // Simulate receiving a message
           this.handleWebSocketMessage({
             type: 'system',
             message: 'Connected to AI War Room'
           });
-        }, 1000);
-      }
-      handleWebSocketMessage(message) {
+        };
+        this.socket.onmessage = (event) => {
+          const message = JSON.parse(event.data);
+          this.handleWebSocketMessage(message);
+        };
+        this.socket.onclose = () => {
+          this.connected = false;
+          console.warn('WebSocket connection closed');
+        };
+        this.socket.onerror = (error) => {
+          console.error('WebSocket error:', error);
+        };
+            }
+            handleWebSocketMessage(message) {
         console.log("Received message:", message);
         // In a real app, this would handle different message types
-      }
-      sendMessage(message) {
+            }
+            sendMessage(message) {
         if (!this.connected) {
           console.warn("WebSocket not connected");
           return false;
         }
+        this.socket.send(JSON.stringify(message));
         console.log("Sending message:", message);
-        // In a real app, this would send the message to the server
         return true;
-      }
-    }
-    // Initialize when the DOM is loaded
-    document.addEventListener('DOMContentLoaded', function () {
-      // Create file system first
-      const fileSystem = new VirtualFileSystem();
-      // Create extension manager
-      const extensionManager = new ExtensionManager();
-      // Create OpenRouter Integration
-      const openRouter = new OpenRouterIntegration();
-      // Initialize Monaco Editor
-      require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs' } });
-      window.MonacoEnvironment = {
-        getWorkerUrl: function (workerId, label) {
-          return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
-            self.MonacoEnvironment = {
-              baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/'
+            }
+          }
+          // Initialize when the DOM is loaded
+          document.addEventListener('DOMContentLoaded', function () {
+            console.log('DOM loaded, initializing AI War Room');
+            
+            // Create file system first
+            const fileSystem = new VirtualFileSystem();
+            console.log('VirtualFileSystem initialized');
+            
+            // Create extension manager
+            const extensionManager = new ExtensionManager();
+            console.log('ExtensionManager initialized');
+            
+            // Create OpenRouter Integration
+            const openRouter = new OpenRouterIntegration();
+            console.log('OpenRouterIntegration initialized');
+            
+            // Load our monaco-fix.js directly
+            console.log('Loading monaco-fix.js');
+            const script = document.createElement('script');
+            script.src = '/monaco-fix.js';
+            script.onload = function() {
+        console.log('Monaco fix loaded successfully');
+        initializeEditor();
             };
-            importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/base/worker/workerMain.js');`)}`;
+            script.onerror = function(e) {
+        console.error('Failed to load monaco-fix.js', e);
+            };
+            document.head.appendChild(script);
+          });
+          
+          // Function to initialize the editor
+          function initializeEditor() {
+            console.log('Initializing editor with monaco:', window.monaco);
+            
+            if (window.monaco) {
+        try {
+          // Initialize the main editor
+          const editorElement = document.getElementById('monaco-editor');
+          if (editorElement) {
+            console.log('Creating main editor');
+            const editor = window.monaco.editor.create(editorElement, {
+              value: window.VirtualFileSystem.getFile('index.js') || '// Loading...',
+              language: 'javascript',
+              theme: 'vs-dark',
+              automaticLayout: true
+            });
+            
+            // Store editor instance globally
+            window.editor = editor;
+            
+            // Handle content changes
+            if (editor.onDidChangeModelContent) {
+              editor.onDidChangeModelContent(() => {
+          const currentTab = document.querySelector('.ai-ide-editor-tab.active');
+          if (currentTab) {
+            const file = currentTab.dataset.file;
+            window.VirtualFileSystem.saveFile(file, editor.getValue());
+          }
+              });
+            }
+            
+            console.log('Main editor initialized');
+          }
+          
+          // Initialize the lab editor
+          const labEditorElement = document.getElementById('lab-editor');
+          if (labEditorElement) {
+            console.log('Creating lab editor');
+            const labEditor = window.monaco.editor.create(labEditorElement, {
+              value: JSON.stringify({
+          "name": "Code Assistant",
+          "role": "coding",
+          "description": "Specialized in coding tasks",
+          "capabilities": ["write", "review", "debug", "explain", "optimize"],
+          "languages": ["JavaScript", "TypeScript", "Python", "Java"],
+          "model": "anthropic/claude-3-opus",
+          "temperature": 0.7
+              }, null, 2),
+              language: 'json',
+              theme: 'vs-dark',
+              automaticLayout: true
+            });
+            
+            // Store lab editor instance globally
+            window.labEditor = labEditor;
+            console.log('Lab editor initialized');
+          }
+          
+          // If we have pending content to set in the editor
+          if (window._pendingEditorContent && window.editor) {
+            console.log('Setting pending editor content');
+            window.editor.setValue(window._pendingEditorContent);
+            if (window._pendingEditorLanguage && window.monaco.editor.setModelLanguage && window.editor.getModel()) {
+              window.monaco.editor.setModelLanguage(window.editor.getModel(), window._pendingEditorLanguage);
+            }
+            window._pendingEditorContent = null;
+            window._pendingEditorLanguage = null;
+          }
+          
+          // Initialize other components
+          setupComponents();
+        } catch (error) {
+          console.error('Error initializing editors:', error);
         }
-      };
-    });
-    require(['vs/editor/editor.main'], function () {
-      // Initialize the editor with the current file
-      const editor = monaco.editor.create(document.getElementById('monaco-editor'), {
-        value: fileSystem.getFile('index.js'),
-        language: 'javascript',
-        theme: 'vs-dark',
-        automaticLayout: true
-      });
-      // Store editor instance globally
-      window.editor = editor;
-      // Initialize the lab editor
-      const labEditor = monaco.editor.create(document.getElementById('lab-editor'), {
-        value: { "name": "Code Assistant", "role": "coding", "description": "Specialized in coding tasks", "capabilities": ["write", "review", "debug", "explain", "optimize"], "languages": ["JavaScript", "TypeScript", "Python", "Java"], "model": "anthropic/claude-3-opus", "temperature": 0.7 },
-        language: 'json',
-        theme: 'vs-dark',
-        automaticLayout: true
-      });
-      // Store lab editor instance globally
-      window.labEditor = labEditor;
-      // Make sure editor is ready
-      editor.onDidChangeModelContent(() => {
-        const currentTab = document.querySelector('.ai-ide-editor-tab.active');
-        if (currentTab) {
-          const file = currentTab.dataset.file;
-          fileSystem.saveFile(file, editor.getValue());
-        }
-      });
-      // Initialize agent manager after the editor is ready
-      const agentManager = new AgentManager();
-      agentManager.initialize();
-      // Initialize agent interactions after agent manager
-      const agentInteractions = new AgentInteractions();
-      agentInteractions.init();
-      // Set up global theme functionality
-      window.setTheme = function (theme) {
+            } else {
+        console.error('Monaco editor not available');
+            }
+          }
+          
+          // Setup other components
+          function setupComponents() {
+            console.log('Setting up components');
+            
+            // Initialize agent manager
+            const agentManager = new AgentManager();
+            agentManager.initialize();
+            
+            // Initialize agent interactions
+            const agentInteractions = new AgentInteractions();
+            agentInteractions.init();
+            
+            // Set up global theme functionality
+            window.setTheme = function (theme) {
         document.documentElement.style.setProperty('--ai-gold-primary', theme === 'gold' ? '#d4af37' : '#0078d4');
         document.documentElement.style.setProperty('--ai-gold-secondary', theme === 'gold' ? '#b8860b' : '#0054a3');
-      };
-      // Set up event listeners
-      setupEventListeners();
-      // Set up OpenRouter status
-      updateOpenRouterStatus();
-    });
-    // Set up event listeners
-    function setupEventListeners() {
-      // File tabs click handler
-      document.querySelectorAll('.ai-ide-editor-tab').forEach(tab => {
+            };
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Set up OpenRouter status
+            updateOpenRouterStatus();
+            
+            console.log('All components initialized');
+          }
+          // Set up event listeners
+          function setupEventListeners() {
+            // File tabs click handler
+            document.querySelectorAll('.ai-ide-editor-tab').forEach(tab => {
         tab.addEventListener('click', function () {
           const file = this.dataset.file;
           openFile(file);
@@ -2102,9 +2184,9 @@
             closeFile(tab.dataset.file);
           });
         }
-      });
-      // Sidebar buttons click handler
-      document.querySelectorAll('.ai-ide-sidebar-btn').forEach(btn => {
+            });
+            // Sidebar buttons click handler
+            document.querySelectorAll('.ai-ide-sidebar-btn').forEach(btn => {
         btn.addEventListener('click', function () {
           const panelId = this.dataset.panel;
           if (panelId === 'lab') {
@@ -2113,12 +2195,12 @@
             showPanel(panelId);
           }
         });
-      });
-      // Lab controls
-      document.getElementById('close-lab').addEventListener('click', function () {
+            });
+            // Lab controls
+            document.getElementById('close-lab').addEventListener('click', function () {
         document.getElementById('ai-lab').style.display = 'none';
-      });
-      document.getElementById('minimize-lab').addEventListener('click', function () {
+            });
+            document.getElementById('minimize-lab').addEventListener('click', function () {
         const labContent = document.querySelector('.ai-lab-content');
         if (labContent.style.display === 'none') {
           labContent.style.display = 'flex';
@@ -2129,7 +2211,7 @@
           this.classList.remove('bx-minimize');
           this.classList.add('bx-maximize');
         }
-      });
+            });
       // Lab buttons
       document.getElementById('save-agent-config').addEventListener('click', function () {
         saveAgentConfig();
@@ -2177,63 +2259,26 @@
         const originalText = button.textContent;
         button.textContent = 'Testing...';
         button.disabled = true;
-        // Create temporary connection for testing
-        const tempOpenRouter = new OpenRouterIntegration();
-        tempOpenRouter.apiKey = apiKey;
-        try {
-          const success = await tempOpenRouter.testConnection();
-          if (success) {
-            alert('Connection successful!');
-          } else {
-            alert('Connection failed. Please check your API key.');
-          }
-        } catch (error) {
-          alert('Connection failed: ' + error.message);
-        } finally {
-          // Restore button state
-          button.textContent = originalText;
-          button.disabled = false;
+        const success = await window.OpenRouterIntegration.testConnection();
+        if (success) {
+          alert('OpenRouter connection successful!');
+        } else {
+          alert('OpenRouter connection failed. Please check your API key.');
         }
-      });
-      // Theme color picker
-      document.querySelectorAll('.color-option').forEach(option => {
-        option.addEventListener('click', function () {
-          const color = this.dataset.color;
-          // Update selected state
-          document.querySelectorAll('.color-option').forEach(opt => {
-            opt.classList.remove('selected');
-          });
-          this.classList.add('selected');
-          // Apply theme
-          if (color === 'gold') {
-            document.documentElement.style.setProperty('--ai-gold-primary', '#d4af37');
-            document.documentElement.style.setProperty('--ai-gold-secondary', '#b8860b');
-          } else if (color === 'blue') {
-            document.documentElement.style.setProperty('--ai-gold-primary', '#0078d4');
-            document.documentElement.style.setProperty('--ai-gold-secondary', '#0054a3');
-          } else if (color === 'purple') {
-            document.documentElement.style.setProperty('--ai-gold-primary', '#9e66bf');
-            document.documentElement.style.setProperty('--ai-gold-secondary', '#8045a3');
-          } else if (color === 'green') {
-            document.documentElement.style.setProperty('--ai-gold-primary', '#4cb050');
-            document.documentElement.style.setProperty('--ai-gold-secondary', '#2e8b57');
-          } else if (color === 'orange') {
-            document.documentElement.style.setProperty('--ai-gold-primary', '#e64a19');
-            document.documentElement.style.setProperty('--ai-gold-secondary', '#c41c00');
-          }
-        });
+        // Reset button state
+        button.textContent = 'Test Connection';
+        button.disabled = false;
       });
     }
-    // Update OpenRouter connection status
+    // Update OpenRouter status
     function updateOpenRouterStatus() {
-      const openRouter = window.OpenRouterIntegration;
-      const button = document.getElementById('openrouter-connect');
-      if (openRouter && openRouter.connected) {
-        button.querySelector('.openrouter-dot').style.backgroundColor = '#4caf50';
-        button.querySelector('span').textContent = 'OpenRouter';
+      const openRouterBtn = document.getElementById('openrouter-connect');
+      if (window.OpenRouterIntegration.connected) {
+        openRouterBtn.classList.add('connected');
+        openRouterBtn.textContent = 'OpenRouter Connected';
       } else {
-        button.querySelector('.openrouter-dot').style.backgroundColor = '#f44336';
-        button.querySelector('span').textContent = 'Connect AI';
+        openRouterBtn.classList.remove('connected');
+        openRouterBtn.textContent = 'Connect to OpenRouter';
       }
     }
     // Show OpenRouter Modal
@@ -2244,8 +2289,8 @@
       const openRouter = window.OpenRouterIntegration;
       if (openRouter) {
         // For security, don't show the full API key, but indicate if one exists
-        const apiKey = openRouter.apiKey ? 'sk-•••••••••••••••••••••••' : '';
-        document.getElementById('openrouter-api-key').value = '';
+        const apiKey = openRouter.apiKey ? 'sk-•••••••••••••••••••••••' : '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';
+        document.getElementById('openrouter-api-key').value = process.env.OPENROUTER_API_KEY || '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';
         document.getElementById('openrouter-api-key').placeholder = apiKey ? 'Enter to change API key' : 'Enter your OpenRouter API key';
         // Set the model dropdown
         const modelSelect = document.getElementById('openrouter-model');
@@ -2266,6 +2311,8 @@
     }
     // Open file in editor
     function openFile(file) {
+      console.log('Opening file:', file);
+      
       // Update active tab
       document.querySelectorAll('.ai-ide-editor-tab').forEach(tab => {
         if (tab.dataset.file === file) {
@@ -2274,11 +2321,15 @@
           tab.classList.remove('active');
         }
       });
+      
       // Update file tree selection
       document.querySelectorAll('.file-tree-item').forEach(item => {
         const fileSpan = item.querySelector('span');
         if (fileSpan && fileSpan.textContent === file) {
-          item.querySelector('.file-tree-item-content').style.backgroundColor = 'var(--ai-selection)';
+          const content = item.querySelector('.file-tree-item-content');
+          if (content) {
+            content.style.backgroundColor = 'var(--ai-selection)';
+          }
         } else {
           const content = item.querySelector('.file-tree-item-content');
           if (content) {
@@ -2286,12 +2337,60 @@
           }
         }
       });
+      
       // Load file content
+      if (!window.VirtualFileSystem) {
+        console.error('VirtualFileSystem not initialized');
+        return;
+      }
+      
       const fileContent = window.VirtualFileSystem.getFile(file);
-      if (fileContent) {
-        const language = getLanguageForFile(file);
-        monaco.editor.setModelLanguage(window.editor.getModel(), language);
-        window.editor.setValue(fileContent);
+      if (!fileContent) {
+        console.error('File content not found:', file);
+        return;
+      }
+      
+      const language = getLanguageForFile(file);
+      
+      // Check if monaco and editor are available
+      if (!window.monaco || !window.editor) {
+        console.error('Monaco editor not initialized');
+        
+        // Create a mock editor if needed
+        if (!window.editor && document.getElementById('monaco-editor')) {
+          console.log('Creating mock editor');
+          window.editor = {
+            setValue: function(content) {
+              console.log('Mock editor setValue called with content length:', content.length);
+              // Store content for when real editor is available
+              window._pendingEditorContent = content;
+              window._pendingEditorLanguage = language;
+            },
+            getModel: function() {
+              return null;
+            }
+          };
+          
+          // Store content for when real editor is available
+          window._pendingEditorContent = fileContent;
+          window._pendingEditorLanguage = language;
+        }
+        return;
+      }
+      
+      try {
+        // Set the language if possible
+        if (window.monaco.editor && window.monaco.editor.setModelLanguage && window.editor.getModel()) {
+          window.monaco.editor.setModelLanguage(window.editor.getModel(), language);
+        }
+        
+        // Set the content
+        if (window.editor && window.editor.setValue) {
+          window.editor.setValue(fileContent);
+          console.log('File content set successfully');
+        }
+      } catch (error) {
+        console.error('Error setting editor content:', error);
       }
     }
     // Close file tab
@@ -2370,15 +2469,76 @@
     }
     // Save agent configuration
     function saveAgentConfig() {
-      alert(`Configuration saved for ${config.name}`);
+      try {
+        // Get the current configuration from the editor
+        const configText = window.labEditor ? window.labEditor.getValue() : '{}';
+        const config = JSON.parse(configText);
+        
+        // Save the configuration (in a real app, this would save to a server)
+        console.log('Saving agent configuration:', config);
+        
+        // Store in localStorage for persistence
+        localStorage.setItem('agent_config', configText);
+        
+        alert(`Configuration saved for ${config.name || 'Agent'}`);
+      } catch (error) {
+        console.error('Error saving agent configuration:', error);
+        alert('Error saving configuration. Please check the JSON format.');
+      }
     }
+    
     // Reset agent configuration
     function resetAgentConfig() {
-      window.labEditor.setValue({ "name": "Code Assistant", "role": "coding", "description": "Specialized in coding tasks", "capabilities": ["write", "review", "debug", "explain", "optimize"], "languages": ["JavaScript", "TypeScript", "Python", "Java"], "model": "anthropic/claude-3-opus", "temperature": 0.7 });
+      const defaultConfig = {
+        "name": "Code Assistant", 
+        "role": "coding", 
+        "description": "Specialized in coding tasks", 
+        "capabilities": ["write", "review", "debug", "explain", "optimize"], 
+        "languages": ["JavaScript", "TypeScript", "Python", "Java"], 
+        "model": "anthropic/claude-3-opus", 
+        "temperature": 0.7
+      };
+      
+      if (window.labEditor) {
+        window.labEditor.setValue(JSON.stringify(defaultConfig, null, 2));
+      }
+      
+      console.log('Agent configuration reset to default');
     }
+    
     // Deploy test agent
     function deployTestAgent() {
-      alert(`Agent ${config.name} deployed successfully!`);
+      try {
+        // Get the current configuration from the editor
+        const configText = window.labEditor ? window.labEditor.getValue() : '{}';
+        const config = JSON.parse(configText);
+        
+        // In a real app, this would deploy the agent to a server
+        console.log('Deploying agent with configuration:', config);
+        
+        // Add the agent to the local agent manager
+        if (window.AgentManager) {
+          const newAgent = {
+            id: 'agent-' + Date.now(),
+            name: config.name || 'New Agent',
+            role: config.role || 'Custom Agent',
+            level: 1,
+            progress: 0,
+            avatar: {
+              type: 'icon',
+              value: 'bx-bot',
+              background: 'linear-gradient(135deg, var(--ai-accent-purple), #7c5295)'
+            }
+          };
+          
+          window.AgentManager.addAgent(newAgent);
+        }
+        
+        alert(`Agent ${config.name || 'New Agent'} deployed successfully!`);
+      } catch (error) {
+        console.error('Error deploying agent:', error);
+        alert('Error deploying agent. Please check the JSON format.');
+      }
     }
     // Show agent marketplace
     function showAgentMarketplace() {

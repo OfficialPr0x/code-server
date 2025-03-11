@@ -1,115 +1,156 @@
-# AI War Room IDE
+# AI War Room
 
-Welcome to the AI War Room IDE, a powerful code-server extension that brings intelligent AI agents into your development workflow. This extension transforms your coding experience by providing specialized AI assistants for different aspects of software development.
+A powerful development environment with integrated AI assistance for enhanced productivity.
 
-![AI War Room IDE](https://i.imgur.com/Z6wMgw0.png)
+## Overview
+
+AI War Room is a comprehensive IDE-like environment that integrates AI agents to assist with coding, research, debugging, and other development tasks. It provides a familiar VSCode-like interface with additional AI-powered features.
 
 ## Features
 
-- **AI Agent Ecosystem**: Interact with a diverse set of specialized AI agents, each with different skills and expertise
-- **Agent Leveling System**: Agents gain experience and level up as they assist you, becoming more effective over time
-- **Blockchain Integration**: Premium agents can be acquired and owned as NFTs on the blockchain
-- **Contextual Assistance**: Agents can analyze your code and provide contextual help and suggestions
-- **Task Assignment**: Delegate specific coding tasks to appropriate agents
-- **Agent Marketplace**: Discover and acquire new agents with specialized skills
-- **Real-time Collaboration**: Work alongside AI agents that understand your codebase and goals
+### Core Features
 
-## Agent Types
+- **VSCode-like Interface**: Familiar editor experience with syntax highlighting, file explorer, and more
+- **AI Agent Integration**: Interact with AI agents specialized in different tasks
+- **OpenRouter Integration**: Connect to advanced AI models like Claude 3 Opus, GPT-4 Turbo, and more
+- **Agent Marketplace**: Discover and add specialized AI agents to your workspace
+- **Todo App**: Integrated task management application
 
-- **Code Assistant**: Helps with code generation, refactoring, and best practices
-- **Debug Wizard**: Specialized in identifying and fixing bugs in your code
-- **Performance Optimizer**: Improves your code's efficiency and performance
-- **Security Guardian**: Identifies and fixes security vulnerabilities
-- **UI Architect**: Helps design and implement beautiful user interfaces
-- **DevOps Master**: Assists with deployment, CI/CD pipelines, and infrastructure
-- **Doc Maestro**: Creates clear, comprehensive documentation for your code
-- **System Architect**: Helps design scalable and maintainable software architecture
+### AI Capabilities
 
-## Setup
+- **Code Assistance**: Get help with writing, reviewing, and refactoring code
+- **Debugging**: AI-powered debugging suggestions and error analysis
+- **Research**: Use AI to gather and summarize information
+- **Custom Agents**: Create and configure custom AI agents for specific tasks
+
+## Components
+
+The AI War Room consists of several key components:
+
+1. **AI War Room IDE**: The main interface for interacting with the system
+2. **Agent Service**: Manages AI agents and their capabilities
+3. **OpenRouter Integration**: Connects to advanced AI models
+4. **Todo App**: Task management application
+
+## Getting Started
 
 ### Prerequisites
 
-- Node.js 16+
-- npm or yarn
-- An OpenRouter API key for AI model access
+- Node.js (v14 or higher)
+- npm (v6 or higher)
 
 ### Installation
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/code-server.git
-   cd code-server
-   ```
-
+1. Clone the repository
 2. Install dependencies:
-   ```
+   ```bash
    npm install
    ```
 
-3. Configure the AI agents:
-   Create a `.env` file in the root directory with the following content:
-   ```
-   OPENROUTER_API_KEY=your_openrouter_api_key
-   AGENT_CONFIG_DIR=./agent-config
-   ```
+### Running the Application
 
-4. Start the development server:
-   ```
-   npm run dev
-   ```
+To run the full AI War Room application:
 
-5. Build for production:
-   ```
-   npm run build
-   ```
+```bash
+node run-ai-warroom.js
+```
 
-## Usage
+This will start the server and make the following endpoints available:
 
-1. **Accessing the War Room**: Open the AI War Room panel by clicking the bot icon in the sidebar.
+- AI War Room IDE: http://localhost:3000/ai-warroom
+- Todo App: http://localhost:3000/todo
 
-2. **Chatting with Agents**: Click on any agent card to start a conversation. Agents will provide assistance based on their specialized roles.
+### Running the Todo App Separately
 
-3. **Assigning Tasks**: You can assign specific coding tasks to agents by clicking the "Assign Task" button on any agent card.
+To run just the Todo app:
 
-4. **Agent Marketplace**: Discover and acquire new agents through the marketplace by clicking the store icon in the sidebar.
+```bash
+# Build the Todo app
+node build-todo-app.js
 
-5. **Agent Leveling**: As you interact with agents, they'll gain experience and level up, becoming more capable and efficient.
+# Run the Todo app server
+node server.js
+```
+
+Then open your browser and navigate to http://localhost:3000
+
+### Deploying the Todo App
+
+To create a deployment package for the Todo app:
+
+```bash
+node deploy.js
+```
+
+This will create a `deploy` directory with everything needed to deploy the Todo app to a production server.
+
+## Configuration
+
+### OpenRouter API Key
+
+To use the AI capabilities, you need an OpenRouter API key. You can set it in the following ways:
+
+1. Environment variable: `OPENROUTER_API_KEY`
+2. Through the UI: Settings > AI Integration > OpenRouter API Key
+
+### Agent Configuration
+
+Agents can be configured through the AI Lab interface. Click on the lab icon in the sidebar to open the AI Lab and customize your agents.
+
+## Project Structure
+
+```
+├── app/                    # Todo app source files
+├── context/                # React context providers
+├── dist-todo/              # Production build of Todo app
+├── dist/                   # Compiled server files
+├── src/                    # Source files
+│   ├── browser/            # Frontend assets
+│   │   ├── pages/          # HTML pages
+│   │   │   └── ai-warroom.html  # Main AI War Room interface
+│   ├── common/             # Shared utilities
+│   ├── components/         # UI components
+│   ├── contexts/           # Context providers
+│   ├── contracts/          # Smart contract interfaces
+│   ├── modules/            # Core modules
+│   │   ├── agent/          # Agent management
+│   │   ├── security/       # Security framework
+│   │   └── ...
+│   ├── node/               # Server-side code
+│   │   ├── agents/         # Agent service and controller
+│   │   └── ...
+│   └── services/           # Service implementations
+├── styles/                 # CSS styles
+├── build-todo-app.js       # Todo app build script
+├── deploy.js               # Todo app deployment script
+├── run-ai-warroom.js       # AI War Room launcher
+└── server.js               # Todo app server
+```
 
 ## Development
 
-### Project Structure
+### Building the Todo App
 
-- `src/browser/pages`: Contains the front-end UI components
-- `src/node/agents`: Contains agent implementation and service classes
-- `src/node/routes`: API routes for agent interactions
+```bash
+node build-todo-app.js
+```
 
-### Adding New Agents
+### Creating a Deployment Package
 
-To create a new agent type, update the following files:
+```bash
+node deploy.js
+```
 
-1. `src/node/agents/types.ts` - Add the new role to the `AgentRole` type
-2. `src/node/agents/default-agents.ts` - Add a new agent configuration
-3. Update color and icon mappings in the same file
+### Running in Development Mode
 
-### Customizing Agents
+```bash
+# Run the Todo app in development mode
+node server.js
 
-Agents can be customized by editing their configuration in the `agent-config` directory. Each agent has:
-
-- **System Prompt**: Defines the agent's behavior and expertise
-- **Model**: The underlying AI model used by the agent
-- **Temperature**: Controls the creativity of the agent's responses
-- **Skills**: Areas of expertise for the agent
+# Run the full AI War Room in development mode
+node run-ai-warroom.js
+```
 
 ## License
 
 MIT
-
-## Acknowledgments
-
-- The code-server team for the amazing foundation
-- OpenRouter for providing access to state-of-the-art AI models
-- The open source community for inspiration and support
-
----
-
-Built with ❤️ by the AI War Room team 
